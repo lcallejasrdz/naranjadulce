@@ -28,27 +28,48 @@ class UserTableSeeder extends Seeder
             'role_id' 		=> 1,
 		));
 
+		$admin_2 = Sentinel::registerAndActivate(array(
+		    'slug'			=> Str::slug('Ricardo Zumarán'),
+		    'username'		=> 'rzumaran',
+            'password' 		=> 'abc123',
+			'first_name' 	=> 'Ricardo',
+            'last_name' 	=> 'Zumarán',
+            'email' 		=> 'rzumaran@rnetsys.com',
+            'role_id' 		=> 1,
+		));
+
 		$adminRole = Sentinel::getRoleRepository()->createModel()->create([
 			'slug' => 'administrador',
 			'name' => 'Administrador',
 			'permissions' => array('admin' => 1),
 		]);
 
+		$sellingRole = Sentinel::getRoleRepository()->createModel()->create([
+			'slug' => 'ventas',
+			'name' => 'Ventas',
+			'permissions' => array('admin' => 2),
+		]);
+
+		$financesRole = Sentinel::getRoleRepository()->createModel()->create([
+			'slug' => 'finanzas',
+			'name' => 'Finanzas',
+			'permissions' => array('admin' => 3),
+		]);
+
+		$productionRole = Sentinel::getRoleRepository()->createModel()->create([
+			'slug' => 'produccion',
+			'name' => 'Producción',
+			'permissions' => array('admin' => 4),
+		]);
+
+		$logisticRole = Sentinel::getRoleRepository()->createModel()->create([
+			'slug' => 'logistica',
+			'name' => 'Logistica',
+			'permissions' => array('admin' => 5),
+		]);
+
 		$admin_1->roles()->attach($adminRole);
-
-		for ($i=0; $i < 100; $i++) { 
-			$admin = Sentinel::registerAndActivate(array(
-			    'slug'			=> Str::slug('Test Name '.$i),
-			    'username'		=> 'test'.$i,
-	            'password' 		=> 'asdasd'.$i,
-				'first_name' 	=> 'Test Name '.$i,
-	            'last_name' 	=> 'Test Last Name '.$i,
-	            'email' 		=> 'test'.$i.'@gmail.com',
-            	'role_id' 		=> 1,
-			));
-
-			$admin->roles()->attach($adminRole);
-		}
+		$admin_2->roles()->attach($adminRole);
 
 		$this->command->info('Admin User created with username lcallejasrdz and password asdasd');
     }

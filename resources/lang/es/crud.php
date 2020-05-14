@@ -34,7 +34,7 @@ return [
             'error'                 => 'Error al actualizar el registro',
         ],
         'update'                => 'Actualizar',
-        'password_help'         => 'Si desea mantener la contraseña actual, mantenga el campo vacío'
+        'password_help'         => 'Si desea mantener la contraseña actual, deje el campo vacío, incluyendo espacios.'
     ],
 
     // Create

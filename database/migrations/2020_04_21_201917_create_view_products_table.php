@@ -13,13 +13,19 @@ class CreateViewProductsTable extends Migration
      */
     public function up()
     {
-        Schema::create('view_products', function (Blueprint $table) {
-            $table->id();
-            $table->string('slug');
-            $table->string('name');
-            $table->timestamps();
-            $table->softDeletes();
-        });
+        DB::statement("
+            CREATE VIEW view_products AS
+                SELECT
+                    products.id,
+                    products.slug,
+                    products.name,
+                    products.created_at,
+                    products.updated_at
+
+                FROM `products`
+
+                WHERE products.deleted_at IS NULL
+        ");
     }
 
     /**
@@ -29,6 +35,6 @@ class CreateViewProductsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('view_products');
+        DB::statement('DROP VIEW IF EXISTS view_products');
     }
 }

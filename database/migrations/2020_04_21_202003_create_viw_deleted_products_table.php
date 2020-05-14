@@ -13,13 +13,20 @@ class CreateViwDeletedProductsTable extends Migration
      */
     public function up()
     {
-        Schema::create('viw_deleted_products', function (Blueprint $table) {
-            $table->id();
-            $table->string('slug');
-            $table->string('name');
-            $table->timestamps();
-            $table->softDeletes();
-        });
+        DB::statement("
+            CREATE VIEW view_deleted_products AS
+                SELECT
+                    products.id,
+                    products.slug,
+                    products.name,
+                    products.created_at,
+                    products.updated_at,
+                    products.deleted_at
+
+                FROM `products`
+
+                WHERE products.deleted_at IS NOT NULL
+        ");
     }
 
     /**
@@ -29,6 +36,6 @@ class CreateViwDeletedProductsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('viw_deleted_products');
+        DB::statement('DROP VIEW IF EXISTS view_deleted_products');
     }
 }

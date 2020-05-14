@@ -37,6 +37,7 @@ class UserRequest extends FormRequest
                     'first_name' => 'required|min:3|max:255',
                     'last_name' => 'required|min:3|max:255',
                     'email' => 'required|email|unique:users,email',
+                    'role_id' => 'required',
                 ];
             }
             case 'PUT': {
@@ -46,6 +47,7 @@ class UserRequest extends FormRequest
                     'first_name' => 'required|min:3|max:255',
                     'last_name' => 'required|min:3|max:255',
                     'email' => 'required|email|unique:users,email,'.$this->id,
+                    'role_id' => 'required',
                 ];
             }
             case 'PATCH': {

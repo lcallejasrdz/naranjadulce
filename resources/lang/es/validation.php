@@ -188,7 +188,15 @@ return [
         'actions'               => 'acciones',
         'slug'                  => 'slug',
         'last_login'            => 'Último inicio de sesión',
-        'role_id'               => 'perfil',
+        'role_id'               => 'permisos',
+        'choose'                => 'elige una opción',
         'updated_at'            => 'actualizado',
+
+        // Roles
+        'administrator'         => 'administrador',
+        'selling'               => 'ventas',
+        'finances'              => 'finanzas',
+        'production'            => 'producción',
+        'logistic'              => 'logística',
     ],
 ];
