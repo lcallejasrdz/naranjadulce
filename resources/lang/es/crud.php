@@ -27,7 +27,7 @@ return [
         'title'                 => 'Información',
     ],
 
-    // Create
+    // Update
     'update'                => [
         'message'               => [
             'success'               => 'El registro se ha actualizado con éxito',
@@ -37,7 +37,7 @@ return [
         'password_help'         => 'Si desea mantener la contraseña actual, deje el campo vacío, incluyendo espacios.'
     ],
 
-    // Create
+    // Delete
     'delete'                => [
         'message'               => [
             'success'               => 'El registro se ha eliminado con éxito',
@@ -51,17 +51,27 @@ return [
         ],
     ],
 
-    // Create
+    // Restore
     'restore'                => [
         'message'               => [
-            'success'           => 'El registro se ha restaurado con éxito',
-            'error'             => 'Error al restaurar el registro',
+            'success'               => 'El registro se ha restaurado con éxito',
+            'error'                 => 'Error al restaurar el registro',
         ],
-        'modal'             => [
-            'title'             => 'Restaurar registro',
-            'question'          => '¿Seguro que deseas restaurar el registro con ID:',
-            'cancel'            => 'Cancelar',
-            'restore'           => 'Restaurar',
+        'modal'                 => [
+            'title'                 => 'Restaurar registro',
+            'question'              => '¿Seguro que deseas restaurar el registro con ID:',
+            'cancel'                => 'Cancelar',
+            'restore'               => 'Restaurar',
         ],
+    ],
+
+    // Buy
+    'buy'                   => [
+        'title'                 => 'Nuevo pedido',
+        'message'               => [
+            'success'               => 'El pedido se ha realizado con éxito con el folio: ',
+            'error'                 => 'Error al procesar el pedido',
+        ],
+        'submit'                => 'Realizar pedido',
     ],
 ];

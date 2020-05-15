@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 	<head>
 		@include('admin.layouts.sections.metas')
 		<title>{{ env('APP_NAME') }} @yield('title')</title>

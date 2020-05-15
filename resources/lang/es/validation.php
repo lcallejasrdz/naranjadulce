@@ -198,5 +198,21 @@ return [
         'finances'              => 'finanzas',
         'production'            => 'producción',
         'logistic'              => 'logística',
+
+        // Buys Form
+        'postal_code'           => 'código postal',
+        'state'                 => 'estado',
+        'municipality'          => 'municipio',
+        'colony'                => 'colonia',
+        'street'                => 'calle',
+        'no_ext'                => 'no. Exterior',
+        'no_int'                => 'no. Interior',
+        'package'               => 'paquete deseado',
+        'modifications'         => 'Modificaciones a la sorpresa (aquí escribes todos los cambios que se harán a la sorpresa o si quieres agregar algo adicional)',
+        'buy_message'           => '¿Algún mensaje?',
+        'delivery_date'         => 'fecha de entrega',
+        'delivery_schedule'     => 'horario de entrega',
+        'how_know_us'           => '¿Por qué medio te enteraste de nosotros?',
+        'how_know_us_other'     => 'Eespecifica por que medio te enteraste de nosotros',
     ],
 ];
