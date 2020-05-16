@@ -44,7 +44,7 @@ class BuyModuleTest extends DuskTestCase
                     ->type('package', 'Paquete Especial')
                     ->type('buy_message', 'Ejemplo de mensaje')
                     ->type('delivery_date', '10 de Mayo')
-                    ->select('delivery_schedule', '09:00 - 13:00')
+                    ->select('delivery_schedule', '09:00 - 12:00')
                     ->radio('how_know_us', 'Facebook')
                     ->press(ucfirst(trans('crud.buy.submit')))
                     ->waitForText(ucfirst(trans('crud.buy.message.success')))

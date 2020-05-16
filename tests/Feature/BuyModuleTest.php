@@ -44,7 +44,7 @@ class BuyModuleTest extends TestCase
             'package' => 'Paquete Chocolates',
             'buy_message' => 'Para nuestra madre',
             'delivery_date' => '10 de Mayo',
-            'delivery_schedule' => '09:00 - 13:00',
+            'delivery_schedule' => '09:00 - 12:00',
             'how_know_us' => 'Facebook',
         ];
 

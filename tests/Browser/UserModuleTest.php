@@ -107,6 +107,7 @@ class UserModuleTest extends DuskTestCase
                     ->type('first_name', 'User')
                     ->type('last_name', 'Example')
                     ->type('email', 'userexample@test.com')
+                    ->select('role_id', '2')
                     ->press(ucfirst(trans('crud.create.add')))
                     ->waitForText(ucfirst(trans('crud.create.message.success')))
                     ->assertSee(ucfirst(trans('validation.attributes.email')));

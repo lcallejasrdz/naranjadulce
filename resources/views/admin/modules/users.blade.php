@@ -44,7 +44,7 @@
 <div class="form-group">
     <label for="role_id">{{ ucfirst(trans('validation.attributes.role_id')) }}</label>
     <select class="form-control @error('role_id') is-invalid @enderror" id="role_id" name="role_id">
-      	<option>{{ ucfirst(trans('validation.attributes.choose')) }}:</option>
+      	<option selected disabled>{{ ucfirst(trans('validation.attributes.choose')) }}:</option>
       	<option value="1" @isset($item) {!! ($item->role_id == 1) ? 'selected' : '' !!} @endisset>{{ ucfirst(trans('validation.attributes.administrator')) }}</option>
       	<option value="2" @isset($item) {!! ($item->role_id == 2) ? 'selected' : '' !!} @endisset>{{ ucfirst(trans('validation.attributes.selling')) }}</option>
       	<option value="3" @isset($item) {!! ($item->role_id == 3) ? 'selected' : '' !!} @endisset>{{ ucfirst(trans('validation.attributes.finances')) }}</option>
