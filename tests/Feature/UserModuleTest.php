@@ -8,8 +8,6 @@ use Tests\TestCase;
 use App\User;
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
-use Sentinel;
-use Activation;
 
 class UserModuleTest extends TestCase
 {
@@ -22,22 +20,7 @@ class UserModuleTest extends TestCase
     {
         $route = 'users';
 
-        $item = factory(User::class)->create([
-            'slug' => Str::slug('John Connor'),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'first_name' => 'John',
-            'last_name' => 'Connor',
-            'email' => 'johnconnor@test.com',
-            'role_id' => 1,
-        ]);
-
-        $user = Sentinel::findById($item->id);
-        $activation = Activation::create($user);
-        Activation::complete($user, $activation->code);
-
-        $this->actingAs($item)
-            ->withSession(['foo' => 'bar'])
-            ->get('/'.$route)
+        $this->get('/'.$route)
             ->assertStatus(200);
     }
 
