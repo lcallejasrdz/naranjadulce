@@ -8,11 +8,13 @@ use Tests\TestCase;
 use App\User;
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
+use Sentinel;
+use Activation;
 
 class UserModuleTest extends TestCase
 {
     use RefreshDatabase;
-    
+
     /**
      * @test
      */
@@ -20,7 +22,22 @@ class UserModuleTest extends TestCase
     {
         $route = 'users';
 
-        $this->get('/'.$route)
+        $item = factory(User::class)->create([
+            'slug' => Str::slug('John Connor'),
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'first_name' => 'John',
+            'last_name' => 'Connor',
+            'email' => 'johnconnor@test.com',
+            'role_id' => 1,
+        ]);
+
+        $user = Sentinel::findById($item->id);
+        $activation = Activation::create($user);
+        Activation::complete($user, $activation->code);
+
+        $this->actingAs($item)
+            ->withSession(['foo' => 'bar'])
+            ->get('/'.$route)
             ->assertStatus(200);
     }
 
@@ -45,7 +62,6 @@ class UserModuleTest extends TestCase
 
         $user = factory(User::class)->create([
             'slug' => Str::slug('John Connor'),
-            'username' => 'johnconnor',
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'first_name' => 'John',
             'last_name' => 'Connor',
@@ -77,7 +93,6 @@ class UserModuleTest extends TestCase
 
         $user = factory(User::class)->create([
             'slug' => Str::slug('John Connor'),
-            'username' => 'johnconnor',
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'first_name' => 'John',
             'last_name' => 'Connor',
@@ -111,7 +126,6 @@ class UserModuleTest extends TestCase
 
         $user = [
             'slug'          => 'john-connor-1',
-            'username'      => 'johnconnor',
             'password'      => 'asdasd',
             'first_name'    => 'John',
             'last_name'     => 'Connor',
@@ -133,7 +147,6 @@ class UserModuleTest extends TestCase
 
         $user = [
             'slug'          => 'john-connor-1',
-            'username'      => 'johnconnor',
             'password'      => 'asdasd',
             'first_name'    => 'John',
             'last_name'     => 'Connor',
@@ -158,7 +171,6 @@ class UserModuleTest extends TestCase
 
         $user = [
             'slug'          => 'john-connor-1',
-            'username'      => 'johnconnor',
             'password'      => 'asdasd',
             'first_name'    => 'John',
             'last_name'     => 'Connor',
@@ -171,7 +183,6 @@ class UserModuleTest extends TestCase
 
         $user = [
             'slug'          => 'john-connor-1',
-            'username'      => 'johnconnor',
             'password'      => 'asdasd',
             'first_name'    => 'John',
             'last_name'     => 'Connor',

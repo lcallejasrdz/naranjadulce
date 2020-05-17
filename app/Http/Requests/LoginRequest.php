@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserRequest extends FormRequest
+class LoginRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -32,21 +32,12 @@ class UserRequest extends FormRequest
             }
             case 'POST': {
                 return [
-                    'password' => 'required|min:6|max:16',
-                    'first_name' => 'required|min:3|max:255',
-                    'last_name' => 'required|min:3|max:255',
-                    'email' => 'required|email|unique:users,email',
-                    'role_id' => 'required',
+                    'email' => 'email|required|min:3|max:360',
+                    'password' => 'required|min:6|max:16'
                 ];
             }
             case 'PUT': {
-                return [
-                    'password' => 'max:16',
-                    'first_name' => 'required|min:3|max:255',
-                    'last_name' => 'required|min:3|max:255',
-                    'email' => 'required|email|unique:users,email,'.$this->id,
-                    'role_id' => 'required',
-                ];
+                return [];
             }
             case 'PATCH': {
                 return [];

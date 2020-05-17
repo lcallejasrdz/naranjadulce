@@ -14,7 +14,6 @@ class ViewDeletedUser extends Model
     protected $fillable = [
     	'id',
         'slug',
-        'username',
         'last_login',
         'first_name',
         'last_name',

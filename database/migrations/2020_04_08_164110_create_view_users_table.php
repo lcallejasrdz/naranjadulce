@@ -18,7 +18,6 @@ class CreateViewUsersTable extends Migration
                 SELECT
                     users.id,
                     users.slug,
-                    users.username,
                     users.last_login,
                     users.first_name,
                     users.last_name,

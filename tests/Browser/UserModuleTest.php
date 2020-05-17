@@ -102,7 +102,6 @@ class UserModuleTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->visit('/users/create')
                     ->waitForText(ucfirst(trans('crud.create.add')))
-                    ->type('username', 'userexample')
                     ->type('password', 'abc123')
                     ->type('first_name', 'User')
                     ->type('last_name', 'Example')
@@ -147,8 +146,6 @@ class UserModuleTest extends DuskTestCase
             $browser->visit('/users/'.$user->id.'/edit')
                     ->waitForText(ucfirst(trans('crud.sidebar.edit')))
                     ->assertInputValue('email', $user->email)
-                    ->clear('username')
-                    ->type('username', 'useredited')
                     ->clear('last_name')
                     ->type('last_name', 'Edited')
                     ->clear('email')

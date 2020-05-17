@@ -20,7 +20,6 @@ class UserTableSeeder extends Seeder
 
 		$admin_1 = Sentinel::registerAndActivate(array(
 		    'slug'			=> Str::slug('Eduardo Callejas'),
-		    'username'		=> 'lcallejasrdz',
             'password' 		=> 'asdasd',
 			'first_name' 	=> 'Eduardo',
             'last_name' 	=> 'Callejas',
@@ -30,7 +29,6 @@ class UserTableSeeder extends Seeder
 
 		$admin_2 = Sentinel::registerAndActivate(array(
 		    'slug'			=> Str::slug('Ricardo Zumarán'),
-		    'username'		=> 'rzumaran',
             'password' 		=> 'abc123',
 			'first_name' 	=> 'Ricardo',
             'last_name' 	=> 'Zumarán',
@@ -71,6 +69,6 @@ class UserTableSeeder extends Seeder
 		$admin_1->roles()->attach($adminRole);
 		$admin_2->roles()->attach($adminRole);
 
-		$this->command->info('Admin User created with username lcallejasrdz and password asdasd');
+		$this->command->info('Admin User created with email lcallejasrdz and password asdasd');
     }
 }
