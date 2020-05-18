@@ -14,7 +14,7 @@
 @endsection
 
 @section('content')
-    <form class="user" method="post" action="{{ route($active.'.store') }}">
+    <form class="user" method="POST" action="{{ route($active.'.store') }}">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <div class="form-group">
             <input type="text" class="form-control form-control-user @error('email') is-invalid @enderror" id="email" name="email" placeholder="{{ ucfirst(trans('validation.attributes.email')) }}">
