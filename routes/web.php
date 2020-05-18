@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(array('middleware' => 'guest'), function () {
 	Route::get('/', array('as' => 'auth', 'uses' => 'AuthController@getLogin'));
-	Route::post('/', array('as' => 'auth.store', 'uses' => 'AuthController@postLogin'));
+	Route::post('/login', array('as' => 'auth.store', 'uses' => 'AuthController@postLogin'));
 });
 
 /*
