@@ -28,6 +28,10 @@ return [
         'error'             => 'Estas credenciales no coinciden con nuestros registros.',
     ],
     'logout'            => [
+        'question'          => '¿Seguro que deseas cerrar sesión?',
+        'message'           => 'Presiona el botón "Logout" si estás listo para cerrar la sesión.',
+        'title'             => 'Cerrar sesión',
+        'cancel'            => 'Cancelar',
         'success'           => 'Sesión cerrada exitosamente.',
         'error'             => 'Error al cerrar tu sesión.',
     ],
