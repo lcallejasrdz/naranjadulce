@@ -152,7 +152,6 @@ class UserModuleTest extends DuskTestCase
                     ->type('email', 'useredited@test.com')
                     ->press(ucfirst(trans('crud.update.update')))
                     ->waitForText(ucfirst(trans('crud.update.message.success')))
-                    ->assertInputValue('username', ' useredited ')
                     ->assertInputValue('last_name', ' Edited ')
                     ->assertInputValue('email', 'useredited@test.com');
         });

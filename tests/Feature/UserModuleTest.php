@@ -9,19 +9,62 @@ use App\User;
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
 
+use Sentinel;
+use Activation;
+
 class UserModuleTest extends TestCase
 {
     use RefreshDatabase;
 
+    public function authenticated()
+    {
+        $adminRole = Sentinel::getRoleRepository()->createModel()->create([
+            'slug' => 'administrador',
+            'name' => 'Administrador',
+            'permissions' => array('admin' => 1),
+        ]);
+
+        $authuser = factory(User::class)->create();
+
+        $user = Sentinel::findById($authuser->id);
+        $activation = Activation::create($user);
+        Activation::complete($user, $activation->code);
+
+        $role = Sentinel::findRoleById($authuser->role_id);
+        $role->users()->attach($user);
+
+        $user = Sentinel::findById($authuser->id);
+        Sentinel::login($user);
+
+        return $this->actingAs($authuser)
+            ->assertAuthenticatedAs($authuser);
+    }
+
+    public function newUser()
+    {
+        $newuser = [
+            'slug'          => 'john-connor-1',
+            'password'      => 'asdasd',
+            'first_name'    => 'John',
+            'last_name'     => 'Connor',
+            'email'         => 'johnconnor@test.com',
+            'role_id'       => 1,
+        ];
+
+        return $newuser;
+    }
+
     /**
      * @test
      */
-    function itLoadsTheUsersListPage()
+    public function itLoadsTheUsersListPage()
     {
         $route = 'users';
 
-        $this->get('/'.$route)
-            ->assertStatus(200);
+        $this->authenticated()
+            ->get('/'.$route)
+            ->assertStatus(200)
+            ->assertSee(trans('module_'.$route.'.controller.word'));
     }
 
     /**
@@ -32,8 +75,10 @@ class UserModuleTest extends TestCase
         $slug = 'john-connor-1';
         $route = 'users';
 
-        $this->get('/'.$route.'/'.$slug)
-            ->assertStatus(200);
+        $this->authenticated()
+            ->get('/'.$route.'/'.$slug)
+            ->assertStatus(200)
+            ->assertSee(trans('module_'.$route.'.controller.word'));
     }
 
     /**
@@ -43,17 +88,15 @@ class UserModuleTest extends TestCase
     {
         $route = 'users';
 
-        $user = factory(User::class)->create([
-            'slug' => Str::slug('John Connor'),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'first_name' => 'John',
-            'last_name' => 'Connor',
-            'email' => 'johnconnor@test.com',
-            'role_id' => 1,
-        ]);
+        $user = factory(User::class)->create();
 
-        $this->call('DELETE', '/'.$route.'/delete', ['id' => $user->id, '_token' => csrf_token()]);
-        $this->assertCount(0, User::all());
+        $this->authenticated()
+            ->call('DELETE', '/'.$route.'/delete', ['id' => $user->id, '_token' => csrf_token()])
+            ->assertStatus(302)
+            ->assertRedirect('/'.$route);
+
+        $this->assertSoftDeleted($user)
+            ->assertCount(1, User::all());
     }
     
     /**
@@ -63,7 +106,8 @@ class UserModuleTest extends TestCase
     {
         $route = 'users';
 
-        $this->get('/'.$route.'/deleted')
+        $this->authenticated()
+            ->get('/'.$route.'/deleted')
             ->assertStatus(200);
     }
 
@@ -74,19 +118,21 @@ class UserModuleTest extends TestCase
     {
         $route = 'users';
 
-        $user = factory(User::class)->create([
-            'slug' => Str::slug('John Connor'),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'first_name' => 'John',
-            'last_name' => 'Connor',
-            'email' => 'johnconnor@test.com',
-            'role_id' => 1,
-        ]);
+        $user = factory(User::class)->create();
 
-        $this->call('DELETE', '/'.$route.'/delete', ['id' => $user->id, '_token' => csrf_token()]);
-        $this->assertCount(0, User::all());
-        $this->call('POST', '/'.$route.'/restore', ['id' => $user->id, '_token' => csrf_token()]);
-        $this->assertCount(1, User::all());
+        $this->authenticated()
+            ->call('DELETE', '/'.$route.'/delete', ['id' => $user->id, '_token' => csrf_token()])
+            ->assertStatus(302)
+            ->assertRedirect('/'.$route);
+
+        $this->assertSoftDeleted($user)
+            ->assertCount(1, User::all());
+
+        $this->call('POST', '/'.$route.'/restore', ['id' => $user->id, '_token' => csrf_token()])
+            ->assertStatus(302)
+            ->assertRedirect('/'.$route.'/deleted');
+
+        $this->assertCount(2, User::all());
     }
     
     /**
@@ -96,7 +142,8 @@ class UserModuleTest extends TestCase
     {
         $route = 'users';
 
-        $this->get('/'.$route.'/create')
+        $this->authenticated()
+            ->get('/'.$route.'/create')
             ->assertStatus(200);
     }
 
@@ -107,17 +154,14 @@ class UserModuleTest extends TestCase
     {
         $route = 'users';
 
-        $user = [
-            'slug'          => 'john-connor-1',
-            'password'      => 'asdasd',
-            'first_name'    => 'John',
-            'last_name'     => 'Connor',
-            'email'         => 'johnconnor@test.com',
-            'role_id'       => 1,
-        ];
+        $newuser = $this->newUser();
 
-        $this->call('POST', '/'.$route.'/create', $user);
-        $this->assertCount(1, User::all());
+        $this->authenticated()
+            ->call('POST', '/'.$route.'/create', $newuser)
+            ->assertStatus(302)
+            ->assertRedirect('/'.$route.'/create');
+
+        $this->assertCount(2, User::all());
     }
     
     /**
@@ -128,19 +172,16 @@ class UserModuleTest extends TestCase
         $route = 'users';
         $title = trans('module_'.$route.'.controller.edit_word');
 
-        $user = [
-            'slug'          => 'john-connor-1',
-            'password'      => 'asdasd',
-            'first_name'    => 'John',
-            'last_name'     => 'Connor',
-            'email'         => 'johnconnor@test.com',
-            'role_id'       => 1,
-        ];
+        $newuser = $this->newUser();
 
-        $this->call('POST', '/'.$route.'/create', $user);
-        $this->assertCount(1, User::all());
+        $this->authenticated()
+            ->call('POST', '/'.$route.'/create', $newuser)
+            ->assertStatus(302)
+            ->assertRedirect('/'.$route.'/create');
 
-        $this->get('/'.$route.'/1/edit')
+        $this->assertCount(2, User::all());
+
+        $this->get('/'.$route.'/2/edit')
             ->assertStatus(200)
             ->assertSee($title);
     }
@@ -152,28 +193,28 @@ class UserModuleTest extends TestCase
     {
         $route = 'users';
 
-        $user = [
-            'slug'          => 'john-connor-1',
-            'password'      => 'asdasd',
-            'first_name'    => 'John',
-            'last_name'     => 'Connor',
-            'email'         => 'johnconnor@test.com',
+        $newuser = $this->newUser();
+
+        $this->authenticated()
+            ->call('POST', '/'.$route.'/create', $newuser)
+            ->assertStatus(302)
+            ->assertRedirect('/'.$route.'/create');
+
+        $editeduser = [
+            'slug'          => 'edited-user-1',
+            'password'      => '987hjd',
+            'first_name'    => 'Edited',
+            'last_name'     => 'User',
+            'email'         => 'editeduser@test.com',
             'role_id'       => 1,
         ];
 
-        $this->call('POST', '/'.$route.'/create', $user);
-        $this->assertCount(1, User::all());
+        $this->call('PUT', '/'.$route.'/2/edit', $editeduser)
+            ->assertStatus(302);
 
-        $user = [
-            'slug'          => 'john-connor-1',
-            'password'      => 'asdasd',
-            'first_name'    => 'John',
-            'last_name'     => 'Connor',
-            'email'         => 'johnconnor@test.com',
-            'role_id'       => 1,
-        ];
-
-        $this->call('PUT', '/'.$route.'/1/edit', $user);
-        $this->assertCount(1, User::all());
+        $this->assertDatabaseHas($route, [
+                'email' => $editeduser['email'],
+            ])
+            ->assertCount(2, User::all());
     }
 }
