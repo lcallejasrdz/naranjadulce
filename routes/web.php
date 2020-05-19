@@ -22,6 +22,9 @@ Route::group(array('middleware' => 'guest'), function () {
  * Admin
  */
 Route::group(array('middleware' => 'sentinelAuth'), function () {
+	// Logout
+	Route::get('/logout', array('as' => 'logout', 'uses' => 'AuthController@logout'));
+
 	// Datatables
 	Route::post('/datatables', array('as' => 'datatables', 'uses' => 'DataTablesController@data'));
 

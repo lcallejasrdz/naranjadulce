@@ -7,19 +7,57 @@ use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 
 use App\User;
+use Sentinel;
+use Activation;
 
 class UserModuleTest extends DuskTestCase
 {
+    public function authenticated()
+    {
+        Sentinel::logout();
+
+        $createuser = [
+            'password'      => 'asdasd',
+            'role_id'       => 1,
+        ];
+
+        $authuser = factory(User::class)->create($createuser);
+
+        $user = Sentinel::findById($authuser->id);
+        $activation = Activation::create($user);
+        Activation::complete($user, $activation->code);
+
+        $role = Sentinel::findRoleById($authuser->role_id);
+        $role->users()->attach($user);
+
+        $newuser = [
+            'password'      => $createuser['password'],
+            'email'         => $user->email
+        ];
+
+        return $newuser;
+    }
+
     /**
      * @test
      */
     public function itLoadsTheUsersListPage()
     {
-        $this->browse(function (Browser $browser) {
-            $browser->visit('/users')
+        $authuser = $this->authenticated();
+
+        $this->browse(function (Browser $browser) use ($authuser) {
+            $browser->visit('/')
+                    ->type('email', $authuser['email'])
+                    ->type('password', $authuser['password'])
+                    ->press('Iniciar sesión')
                     ->waitForText('Mostrando registros')
-                    ->assertSee(ucfirst(trans('validation.attributes.email')));
+                    ->assertSee(ucfirst(trans('validation.attributes.email')))
+                    ->visit('/logout')
+                    ->waitForText(trans('auth.title'));
         });
+
+        $authuserdel = User::where('email', $authuser['email'])->first();
+        $authuserdel->forceDelete();
     }
 
     /**
@@ -27,15 +65,25 @@ class UserModuleTest extends DuskTestCase
      */
     function itLoadsTheUserDetailPage()
     {
-        $user = User::where('id', '!=', 1)->first();
+        $authuser = $this->authenticated();
 
-        $this->browse(function (Browser $browser) use ($user) {
-            $browser->visit('/users')
+        $user = User::find(2);
+
+        $this->browse(function (Browser $browser) use ($user, $authuser) {
+            $browser->visit('/')
+                    ->type('email', $authuser['email'])
+                    ->type('password', $authuser['password'])
+                    ->press('Iniciar sesión')
                     ->waitForText('Mostrando registros')
-                    ->click('tr:nth-child(1) td a.btn-primary')
+                    ->click('a[href="'.env('APP_URL').'/users/'.$user->slug.'"]')
                     ->assertPathIs('/users/'.$user->slug)
-                    ->assertSee($user->email);
+                    ->assertSee($user->email)
+                    ->visit('/logout')
+                    ->waitForText(trans('auth.title'));
         });
+
+        $authuserdel = User::where('email', $authuser['email'])->first();
+        $authuserdel->forceDelete();
     }
 
     /**
@@ -43,15 +91,25 @@ class UserModuleTest extends DuskTestCase
      */
     function itTestsTheUserDeleteModal()
     {
-        $this->browse(function (Browser $browser) {
-            $browser->visit('/users')
+        $authuser = $this->authenticated();
+
+        $this->browse(function (Browser $browser) use ($authuser) {
+            $browser->visit('/')
+                    ->type('email', $authuser['email'])
+                    ->type('password', $authuser['password'])
+                    ->press('Iniciar sesión')
                     ->waitForText('Mostrando registros')
-                    ->click('tr:nth-child(1) td a.btn-danger')
+                    ->click('a[onclick="deleteModal(2)"]')
                     ->waitForText(ucfirst(trans('crud.delete.modal.title')))
                     ->assertSee(ucfirst(trans('crud.delete.modal.delete')))
                     ->press(ucfirst(trans('crud.delete.modal.delete')))
-                    ->waitForText(ucfirst(trans('crud.delete.message.success')));
+                    ->waitForText(ucfirst(trans('crud.delete.message.success')))
+                    ->visit('/logout')
+                    ->waitForText(trans('auth.title'));
         });
+
+        $authuserdel = User::where('email', $authuser['email'])->first();
+        $authuserdel->forceDelete();
     }
     
     /**
@@ -59,11 +117,23 @@ class UserModuleTest extends DuskTestCase
      */
     function itLoadsTheDeletedUsersListPage()
     {
-        $this->browse(function (Browser $browser) {
-            $browser->visit('/users/deleted')
+        $authuser = $this->authenticated();
+
+        $this->browse(function (Browser $browser) use ($authuser) {
+            $browser->visit('/')
+                    ->type('email', $authuser['email'])
+                    ->type('password', $authuser['password'])
+                    ->press('Iniciar sesión')
                     ->waitForText('Mostrando registros')
-                    ->assertSee(ucfirst(trans('validation.attributes.email')));
+                    ->visit('/users/deleted')
+                    ->waitForText('Mostrando registros')
+                    ->assertSee(ucfirst(trans('validation.attributes.email')))
+                    ->visit('/logout')
+                    ->waitForText(trans('auth.title'));
         });
+
+        $authuserdel = User::where('email', $authuser['email'])->first();
+        $authuserdel->forceDelete();
     }
 
     /**
@@ -71,15 +141,27 @@ class UserModuleTest extends DuskTestCase
      */
     function itTestsTheUserRestoreModal()
     {
-        $this->browse(function (Browser $browser) {
-            $browser->visit('/users/deleted')
+        $authuser = $this->authenticated();
+
+        $this->browse(function (Browser $browser) use ($authuser) {
+            $browser->visit('/')
+                    ->type('email', $authuser['email'])
+                    ->type('password', $authuser['password'])
+                    ->press('Iniciar sesión')
                     ->waitForText('Mostrando registros')
-                    ->click('tr:nth-child(1) td a.btn-warning')
+                    ->visit('/users/deleted')
+                    ->waitForText('Mostrando registros')
+                    ->click('a[onclick="restoreModal(2)"]')
                     ->waitForText(ucfirst(trans('crud.restore.modal.title')))
                     ->assertSee(ucfirst(trans('crud.restore.modal.restore')))
                     ->press(ucfirst(trans('crud.restore.modal.restore')))
-                    ->waitForText(ucfirst(trans('crud.restore.message.success')));
+                    ->waitForText(ucfirst(trans('crud.restore.message.success')))
+                    ->visit('/logout')
+                    ->waitForText(trans('auth.title'));
         });
+
+        $authuserdel = User::where('email', $authuser['email'])->first();
+        $authuserdel->forceDelete();
     }
     
     /**
@@ -87,11 +169,23 @@ class UserModuleTest extends DuskTestCase
      */
     function itLoadsTheUserFormPage()
     {
-        $this->browse(function (Browser $browser) {
-            $browser->visit('/users/create')
+        $authuser = $this->authenticated();
+
+        $this->browse(function (Browser $browser) use ($authuser) {
+            $browser->visit('/')
+                    ->type('email', $authuser['email'])
+                    ->type('password', $authuser['password'])
+                    ->press('Iniciar sesión')
+                    ->waitForText('Mostrando registros')
+                    ->visit('/users/create')
                     ->waitForText(ucfirst(trans('crud.create.add')))
-                    ->assertSee(ucfirst(trans('validation.attributes.email')));
+                    ->assertSee(ucfirst(trans('validation.attributes.email')))
+                    ->visit('/logout')
+                    ->waitForText(trans('auth.title'));
         });
+
+        $authuserdel = User::where('email', $authuser['email'])->first();
+        $authuserdel->forceDelete();
     }
 
     /**
@@ -99,8 +193,15 @@ class UserModuleTest extends DuskTestCase
      */
     function itTestsTheCreateUserMethod()
     {
-        $this->browse(function (Browser $browser) {
-            $browser->visit('/users/create')
+        $authuser = $this->authenticated();
+
+        $this->browse(function (Browser $browser) use ($authuser) {
+            $browser->visit('/')
+                    ->type('email', $authuser['email'])
+                    ->type('password', $authuser['password'])
+                    ->press('Iniciar sesión')
+                    ->waitForText('Mostrando registros')
+                    ->visit('/users/create')
                     ->waitForText(ucfirst(trans('crud.create.add')))
                     ->type('password', 'abc123')
                     ->type('first_name', 'User')
@@ -109,8 +210,13 @@ class UserModuleTest extends DuskTestCase
                     ->select('role_id', '2')
                     ->press(ucfirst(trans('crud.create.add')))
                     ->waitForText(ucfirst(trans('crud.create.message.success')))
-                    ->assertSee(ucfirst(trans('validation.attributes.email')));
+                    ->assertSee(ucfirst(trans('validation.attributes.email')))
+                    ->visit('/logout')
+                    ->waitForText(trans('auth.title'));
         });
+
+        $authuserdel = User::where('email', $authuser['email'])->first();
+        $authuserdel->forceDelete();
 
         $user = User::where('email', 'userexample@test.com')->first();
         $user->forceDelete();
@@ -121,18 +227,28 @@ class UserModuleTest extends DuskTestCase
      */
     function itLoadsTheEditUserFormPage()
     {
-        $user = User::where('id', '!=', 1)->first();
+        $authuser = $this->authenticated();
 
-        $this->browse(function (Browser $browser) use ($user) {
-            $browser->visit('/users')
+        $user = User::find(2);
+
+        $this->browse(function (Browser $browser) use ($user, $authuser) {
+            $browser->visit('/')
+                    ->type('email', $authuser['email'])
+                    ->type('password', $authuser['password'])
+                    ->press('Iniciar sesión')
                     ->waitForText('Mostrando registros')
-                    ->click('tr:nth-child(1) td a.btn-success')
+                    ->click('a[href="'.env('APP_URL').'/users/'.$user->id.'/edit"]')
                     ->assertPathIs('/users/'.$user->id.'/edit')
                     ->waitForText(ucfirst(trans('crud.sidebar.edit')))
-                    ->assertInputValue('email', $user->email);
+                    ->assertInputValue('email', $user->email)
+                    ->visit('/logout')
+                    ->waitForText(trans('auth.title'));
         });
 
         $user->save();
+
+        $authuserdel = User::where('email', $authuser['email'])->first();
+        $authuserdel->forceDelete();
     }
 
     /**
@@ -140,10 +256,17 @@ class UserModuleTest extends DuskTestCase
      */
     function itTestsTheUpdateUserMethod()
     {
+        $authuser = $this->authenticated();
+
         $user = User::where('id', '!=', 1)->first();
 
-        $this->browse(function (Browser $browser) use ($user) {
-            $browser->visit('/users/'.$user->id.'/edit')
+        $this->browse(function (Browser $browser) use ($user, $authuser) {
+            $browser->visit('/')
+                    ->type('email', $authuser['email'])
+                    ->type('password', $authuser['password'])
+                    ->press('Iniciar sesión')
+                    ->waitForText('Mostrando registros')
+                    ->visit('/users/'.$user->id.'/edit')
                     ->waitForText(ucfirst(trans('crud.sidebar.edit')))
                     ->assertInputValue('email', $user->email)
                     ->clear('last_name')
@@ -153,9 +276,14 @@ class UserModuleTest extends DuskTestCase
                     ->press(ucfirst(trans('crud.update.update')))
                     ->waitForText(ucfirst(trans('crud.update.message.success')))
                     ->assertInputValue('last_name', ' Edited ')
-                    ->assertInputValue('email', 'useredited@test.com');
+                    ->assertInputValue('email', 'useredited@test.com')
+                    ->visit('/logout')
+                    ->waitForText(trans('auth.title'));
         });
 
         $user->save();
+
+        $authuserdel = User::where('email', $authuser['email'])->first();
+        $authuserdel->forceDelete();
     }
 }
