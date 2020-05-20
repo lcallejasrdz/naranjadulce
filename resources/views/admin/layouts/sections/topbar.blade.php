@@ -10,7 +10,7 @@
 		<li class="nav-item dropdown no-arrow">
 			<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				<span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Sentinel::getUser()->first_name }} {{ Sentinel::getUser()->last_name }}</span>
-				<img class="img-profile rounded-circle" src="http://lorempixel.com/60/60/people">
+				<img class="img-profile rounded-circle" src="https://picsum.photos/60">
 			</a>
 			<!-- Dropdown - User Information -->
 			<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">

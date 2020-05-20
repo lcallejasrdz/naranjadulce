@@ -30,6 +30,11 @@ class BuyTableSeeder extends Seeder
 	        'delivery_date' => '10 de Mayo',
 	        'delivery_schedule' => '09:00 - 13:00',
 	        'how_know_us' => 'Facebook',
+	        'address_references' => 'Entre la calle principal y la calle secundaria',
+            'address_type' => 'Particular',
+            'parking' => 'No',
+            'who_sends' => 'Eduardo Callejas',
+            'who_receives' => 'Fernanda Martinez',
 		]);
     }
 }

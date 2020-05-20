@@ -34,6 +34,11 @@ class Buy extends Model
         'delivery_schedule',
         'how_know_us',
         'how_know_us_other',
+        'address_references',
+        'address_type',
+        'parking',
+        'who_sends',
+        'who_receives',
     ];
 
     /**

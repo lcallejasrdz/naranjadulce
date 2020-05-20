@@ -32,7 +32,7 @@ class BuyRequest extends FormRequest
             }
             case 'POST': {
                 return [
-                    'email' => 'required|email',
+                    'email' => 'nullable|email',
                     'first_name' => 'required|min:3|max:255',
                     'last_name' => 'required|min:3|max:255',
                     'phone' => 'required|min:3|max:255',
@@ -42,14 +42,19 @@ class BuyRequest extends FormRequest
                     'colony' => 'required|min:3|max:255',
                     'street' => 'required|min:3|max:255',
                     'no_ext' => 'required|max:255',
-                    'no_int' => 'max:255',
+                    'no_int' => 'nullable|max:255',
                     'package' => 'required|min:3|max:255',
-                    'modifications' => 'max:255',
-                    'buy_message' => 'max:255',
+                    'modifications' => 'nullable|min:3|max:255',
+                    'buy_message' => 'nullable|min:3|max:255',
                     'delivery_date' => 'required|min:3|max:255',
                     'delivery_schedule' => 'required',
                     'how_know_us' => 'required',
                     'how_know_us_other' => 'required_if:how_know_us,Otro|max:255',
+                    'address_references' => 'required|min:3|max:255',
+                    'address_type' => 'required',
+                    'parking' => 'required',
+                    'who_sends' => 'required|min:3|max:255',
+                    'who_receives' => 'required|min:3|max:255',
                 ];
             }
             case 'PUT': {

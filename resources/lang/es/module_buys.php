@@ -37,8 +37,19 @@ return [
             'delivery_schedule',
             'how_know_us',
             'how_know_us_other',
+            'address_references',
+            'address_type',
+            'parking',
+            'who_sends',
+            'who_receives',
         ],
         'word'                  => $plural_ucfirst,
+    ],
+    'publicity_message'     => 'Déjanos tu correo si deseas recibir nuestras promociones.',
+    'titles'                => [
+        'contact_data'          => 'Datos de contacto',
+        'delivery_address'      => 'Dirección de entrega',
+        'delivery_data'         => 'Datos de entrega',
     ],
     'how_know_us'           => [
         'facebook'              => 'facebook',
@@ -47,8 +58,18 @@ return [
         'site_web'              => 'sitio web',
         'other'                 => 'otro',
     ],
-    'delivery_schedule'           => [
-        'early'             => '09:00 - 12:00',
-        'late'              => '13:00 - 18:00',
+    'delivery_schedule'     => [
+        'early'                 => '09:00 - 12:00',
+        'late'                  => '13:00 - 18:00',
+    ],
+    'address_type'          => [
+        'private'               => 'Particular',
+        'business'              => 'Negocio',
+        'company'               => 'Empresa',
+    ],
+    'parking'               => [
+        'yes'                   => 'Si',
+        'no'                    => 'No',
+        'unknow'                => 'Desconozco',
     ],
 ];

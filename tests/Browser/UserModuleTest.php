@@ -13,7 +13,7 @@ use Activation;
 class UserModuleTest extends DuskTestCase
 {
     public function authenticated()
-    {
+    {   
         Sentinel::logout();
 
         $createuser = [
