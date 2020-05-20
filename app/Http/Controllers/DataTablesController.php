@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use Carbon\Carbon;
 use Yajra\Datatables\Datatables;
+use DB;
 
 class DataTablesController extends Controller
 {
@@ -20,12 +21,21 @@ class DataTablesController extends Controller
         $model = $request->model;
         $view = $request->view;
         $actions_value = $request->actions;
-        if($view == 'index' || $view == 'sales'){
+        if($view == 'index'){
             $full_model = 'App\\View'.$request->model;
+            $rows = $full_model::data();
+        }else if($view == 'sales'){
+            $full_model = 'App\\View'.$request->model;
+            $rows = $full_model::whereNotExists(function($query)
+                                {
+                                    $query->select(DB::raw(1))
+                                          ->from('sales')
+                                          ->whereRaw('sales.slug = view_buys.slug');
+                                })->data();
         }else{
             $full_model = 'App\\ViewDeleted'.$request->model;
+            $rows = $full_model::data();
         }
-        $rows = $full_model::data();
 
         return Datatables::of($rows)
             ->editColumn('created_at', '{!! \Carbon\Carbon::parse($created_at)->diffForHumans() !!}')
