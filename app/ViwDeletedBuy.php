@@ -29,7 +29,10 @@ class ViwDeletedBuy extends Model
         'delivery_date',
         'delivery_schedule',
         'how_know_us',
-        'how_know_us_other'
+        'how_know_us_other',
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     public function scopeData($query)

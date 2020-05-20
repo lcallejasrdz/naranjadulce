@@ -208,7 +208,7 @@ return [
         'no_ext'                => 'no. Exterior',
         'no_int'                => 'no. Interior',
         'package'               => 'paquete deseado',
-        'modifications'         => 'Modificaciones a la sorpresa (aquí escribes todos los cambios que se harán a la sorpresa o si quieres agregar algo adicional)',
+        'modifications'         => 'modificaciones a la sorpresa (aquí escribes todos los cambios que se harán  a la sorpresa o si quieres agregar algo adicional)',
         'buy_message'           => 'Dedicatoria',
         'delivery_date'         => 'fecha de entrega',
         'delivery_schedule'     => 'horario de entrega',
@@ -219,5 +219,11 @@ return [
         'parking'               => '¿Cuénta con estacionamiento?',
         'who_sends'             => '¿Quién envía?',
         'who_receives'          => '¿Quién recibe?',
+
+        // Sales
+        'proof_of_payment'      => 'comprobante de compra',
+        'seller_package'        => 'paquete deseado',
+        'seller_modifications'  => 'modificaciones a la sorpresa',
+        'delivery_type'         => 'tipo de envío',
     ],
 ];

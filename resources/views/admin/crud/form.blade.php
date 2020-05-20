@@ -19,10 +19,10 @@
     <div class="card shadow mb-4">
         <div class="card-body">
         	@if($view == 'create')
-            	<form method="POST" action="{{ route($active.'.store') }}">
+            	<form method="POST" action="{{ route($active.'.store') }}" enctype="multipart/form-data">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
             @else
-            	<form method="POST" action="{{ route($active.'.update', ['id' => $item->id]) }}">
+            	<form method="POST" action="{{ route($active.'.update', ['id' => $item->id]) }}" enctype="multipart/form-data">
 	            	<input type="hidden" name="_method" value="PUT">
 	            	<input type="hidden" name="_token" value="{{ csrf_token() }}">
             @endif

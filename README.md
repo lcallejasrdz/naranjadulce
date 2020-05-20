@@ -79,16 +79,18 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 ## Steps to create a new module
 
+Note: before migrate, eject "composer require doctrine/dbal"
+
 1. Create Controller using: php artisan make:controller {Singular}Controller --resource --model={Singular}
 2. Create Request using: php artisan make:request {Singular}Request
 3. Create Migration using: php artisan make:migration create_{plural}_table
 4. Create View using: php artisan make:model View{Singular} -m
 5. Create ViewDeleted using: php artisan make:model ViwDeleted{Singular} -m
 6. Create Seeder using: php artisan make:seeder {Singular}TableSeeder
-7. Create Lang File in: /resources/lang/{lang}/module_{plural}.php
-8. Create Form HTML in: /resources/views/admin/modules/{plural}.blade.php
 9. Create FrontEnd Automatic Test using: php artisan dusk:make {Singular}ModuleTest
 10. Create Backend Automatic Test using: php artisan make:test {Singular}ModuleTest
+7. Create Lang File in: /resources/lang/{lang}/module_{plural}.php
+8. Create Form HTML in: /resources/views/admin/modules/{plural}.blade.php
 
 ## Steps to modify the new files
 

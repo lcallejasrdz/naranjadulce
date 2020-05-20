@@ -20,7 +20,7 @@ class DataTablesController extends Controller
         $model = $request->model;
         $view = $request->view;
         $actions_value = $request->actions;
-        if($view == 'index'){
+        if($view == 'index' || $view == 'sales'){
             $full_model = 'App\\View'.$request->model;
         }else{
             $full_model = 'App\\ViewDeleted'.$request->model;
@@ -39,14 +39,22 @@ class DataTablesController extends Controller
                     // 6 = (edit)
                     // 7 = (delete)
                     $actions = '';
-                    if($actions_value == 1 || $actions_value == 2 || $actions_value == 3 || $actions_value == 5){
+                    if($actions_value == 1){
                         $actions .= ' <a href="'. route($active.'.show', $row->slug) .'" class="btn btn-primary btn-circle btn-sm"><i class="fas fa-info-circle"></i></a>';
                     }
-                    if($actions_value == 1 || $actions_value == 2 || $actions_value == 4 || $actions_value == 6){
+                    if($actions_value == 1){
+                        $actions .= ' <a href="'. route($active.'.show', $row->slug) .'" class="btn btn-primary btn-circle btn-sm"><i class="fas fa-info-circle"></i></a>';
+                    }
+                    if($actions_value == 1){
                         $actions .= ' <a href="'. route($active.'.edit', $row->id) .'" class="btn btn-success btn-circle btn-sm"><i class="fas fa-edit"></i></a>';
                     }
-                    if($actions_value == 1 || $actions_value == 3 || $actions_value == 4 || $actions_value == 7){
+                    if($actions_value == 1){
                         $actions .= ' <a href="#" class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#deleteModal" onClick="deleteModal('.$row->id.')"><i class="fas fa-trash"></i></a>';
+                    }
+                }else if($view == 'sales'){
+                    $actions = '';
+                    if($actions_value == 1 || $actions_value == 2){
+                        $actions .= ' <a href="'. route($active.'.create', $row->slug) .'" class="btn btn-success btn-circle btn-sm"><i class="fas fa-edit"></i></a>';
                     }
                 }else{
                 	$actions = '';

@@ -21,7 +21,7 @@ class ViewDeletedUser extends Model
         'role_id',
         'created_at',
         'updated_at',
-        'deleted_at'
+        'deleted_at',
     ];
 
     public function scopeData($query)
