@@ -32,6 +32,14 @@ class DataTablesController extends Controller
                                           ->from('sales')
                                           ->whereRaw('sales.slug = view_buys.slug');
                                 })->data();
+        }else if($view == 'finances'){
+            $full_model = 'App\\View'.$request->model;
+            $rows = $full_model::whereNotExists(function($query)
+                                {
+                                    $query->select(DB::raw(1))
+                                          ->from('finances')
+                                          ->whereRaw('finances.slug = view_buys.slug');
+                                })->data();
         }else{
             $full_model = 'App\\ViewDeleted'.$request->model;
             $rows = $full_model::data();
@@ -58,7 +66,7 @@ class DataTablesController extends Controller
                     if($actions_value == 1){
                         $actions .= ' <a href="#" class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#deleteModal" onClick="deleteModal('.$row->id.')"><i class="fas fa-trash"></i></a>';
                     }
-                }else if($view == 'sales'){
+                }else if($view == 'sales' || $view == 'finances'){
                     $actions = '';
                     if($actions_value == 1 || $actions_value == 2){
                         $actions .= ' <a href="'. route($active.'.create', $row->slug) .'" class="btn btn-success btn-circle btn-sm"><i class="fas fa-edit"></i></a>';

@@ -87,10 +87,10 @@ Note: before migrate, eject "composer require doctrine/dbal"
 4. Create View using: php artisan make:model View{Singular} -m
 5. Create ViewDeleted using: php artisan make:model ViwDeleted{Singular} -m
 6. Create Seeder using: php artisan make:seeder {Singular}TableSeeder
-9. Create FrontEnd Automatic Test using: php artisan dusk:make {Singular}ModuleTest
-10. Create Backend Automatic Test using: php artisan make:test {Singular}ModuleTest
-7. Create Lang File in: /resources/lang/{lang}/module_{plural}.php
-8. Create Form HTML in: /resources/views/admin/modules/{plural}.blade.php
+7. Create FrontEnd Automatic Test using: php artisan dusk:make {Singular}ModuleTest
+8. Create Backend Automatic Test using: php artisan make:test {Singular}ModuleTest
+9. Create Lang File in: /resources/lang/{lang}/module_{plural}.php
+10. Create Form HTML in: /resources/views/admin/modules/{plural}.blade.php
 
 ## Steps to modify the new files
 

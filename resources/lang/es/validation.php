@@ -209,7 +209,7 @@ return [
         'no_int'                => 'no. Interior',
         'package'               => 'paquete deseado',
         'modifications'         => 'modificaciones a la sorpresa (aquí escribes todos los cambios que se harán  a la sorpresa o si quieres agregar algo adicional)',
-        'buy_message'           => 'Dedicatoria',
+        'buy_message'           => 'dedicatoria',
         'delivery_date'         => 'fecha de entrega',
         'delivery_schedule'     => 'horario de entrega',
         'how_know_us'           => '¿Por qué medio te enteraste de nosotros?',
@@ -225,5 +225,8 @@ return [
         'seller_package'        => 'paquete deseado',
         'seller_modifications'  => 'modificaciones a la sorpresa',
         'delivery_type'         => 'tipo de envío',
+
+        // Finances
+        'verified_payment'      => 'verificación de pago',
     ],
 ];

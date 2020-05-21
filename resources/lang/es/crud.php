@@ -74,4 +74,13 @@ return [
         ],
         'submit'                => 'Realizar pedido',
     ],
+
+    // Create
+    'finance'               => [
+        'message'               => [
+            'success'               => 'El pago se ha verificado con éxito',
+            'error'                 => 'Error al verificar el pago',
+        ],
+        'add'                   => 'Verificar pago',
+    ],
 ];

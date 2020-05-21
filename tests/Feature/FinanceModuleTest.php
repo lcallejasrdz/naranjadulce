@@ -10,12 +10,13 @@ use Illuminate\Support\Facades\Storage;
 use App\User;
 use App\Sale;
 use App\Buy;
+use App\Finance;
 use DB;
 
 use Sentinel;
 use Activation;
 
-class SaleModuleTest extends TestCase
+class FinanceModuleTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -72,24 +73,35 @@ class SaleModuleTest extends TestCase
 
     public function newSale()
     {
-        $newsale = [
+        DB::table('sales')->insert([
             'slug' => 'kaljdshfkjadsht6t676thagvjdsfASDF',
             'user_id' => 1,
             'proof_of_payment' => UploadedFile::fake()->image('test.jpg'),
             'seller_package' => 'Paquete ejemplo para test',
             'seller_modifications' => 'Sin modificaciones',
             'delivery_type' => 'Especial',
+        ]);
+
+        Storage::delete('receipts/kaljdshfkjadsht6t676thagvjdsfASDF.jpeg');
+    }
+
+    public function newFinance()
+    {
+        $newfinance = [
+            'slug' => 'kaljdshfkjadsht6t676thagvjdsfASDF',
+            'user_id' => 1,
+            'verified_payment' => 1,
         ];
 
-        return $newsale;
+        return $newfinance;
     }
 
     /**
      * @test
      */
-    public function itLoadsTheSalesListPage()
+    public function itLoadsTheFinancesListPage()
     {
-        $route = 'sales';
+        $route = 'finances';
 
         $this->authenticated()
             ->get('/'.$route)
@@ -100,12 +112,14 @@ class SaleModuleTest extends TestCase
     /**
      * @test
      */
-    function itLoadsTheSaleFormPage()
+    function itLoadsTheFinanceFormPage()
     {
         $this->newBuy();
-        
-        $route = 'sales';
 
+        $this->newSale();
+        
+        $route = 'finances';
+        
         $this->authenticated()
             ->get('/'.$route.'/kaljdshfkjadsht6t676thagvjdsfASDF')
             ->assertStatus(200);
@@ -114,19 +128,21 @@ class SaleModuleTest extends TestCase
     /**
      * @test
      */
-    function itTestsTheCreateSaleMethod()
+    function itTestsTheCreateFinanceMethod()
     {
-        $route = 'sales';
+        $this->newBuy();
 
-        $newsale = $this->newSale();
+        $this->newSale();
+
+        $route = 'finances';
+
+        $newfinance = $this->newFinance();
 
         $this->authenticated()
-            ->call('POST', '/'.$route.'/create', $newsale)
+            ->call('POST', '/'.$route.'/create', $newfinance)
             ->assertStatus(302)
             ->assertRedirect('/'.$route);
 
-        Storage::delete('receipts/kaljdshfkjadsht6t676thagvjdsfASDF.jpeg');
-
-        $this->assertCount(1, Sale::all());
+        $this->assertCount(1, Finance::all());
     }
 }
