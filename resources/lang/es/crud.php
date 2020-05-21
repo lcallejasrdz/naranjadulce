@@ -83,4 +83,13 @@ return [
         ],
         'add'                   => 'Verificar pago',
     ],
+
+    // Create
+    'building'              => [
+        'message'               => [
+            'success'               => 'El paquete se ha verificado con éxito',
+            'error'                 => 'Error al verificar el paquete',
+        ],
+        'add'                   => 'Verificar paquete',
+    ],
 ];

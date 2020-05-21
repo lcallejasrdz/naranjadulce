@@ -39,6 +39,25 @@ class DataTablesController extends Controller
                                     $query->select(DB::raw(1))
                                           ->from('finances')
                                           ->whereRaw('finances.slug = view_buys.slug');
+                                })
+                                ->whereExists(function($query)
+                                {
+                                    $query->select(DB::raw(1))
+                                          ->from('sales')
+                                          ->whereRaw('sales.slug = view_buys.slug');
+                                })->data();
+        }else if($view == 'buildings'){
+            $full_model = 'App\\View'.$request->model;
+            $rows = $full_model::whereExists(function($query)
+                                {
+                                    $query->select(DB::raw(1))
+                                          ->from('sales')
+                                          ->whereRaw('sales.slug = view_buys.slug');
+                                })->whereNotExists(function($query)
+                                {
+                                    $query->select(DB::raw(1))
+                                          ->from('buildings')
+                                          ->whereRaw('buildings.slug = view_buys.slug');
                                 })->data();
         }else{
             $full_model = 'App\\ViewDeleted'.$request->model;
@@ -66,7 +85,7 @@ class DataTablesController extends Controller
                     if($actions_value == 1){
                         $actions .= ' <a href="#" class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#deleteModal" onClick="deleteModal('.$row->id.')"><i class="fas fa-trash"></i></a>';
                     }
-                }else if($view == 'sales' || $view == 'finances'){
+                }else if($view == 'sales' || $view == 'finances' || $view == 'buildings'){
                     $actions = '';
                     if($actions_value == 1 || $actions_value == 2){
                         $actions .= ' <a href="'. route($active.'.create', $row->slug) .'" class="btn btn-success btn-circle btn-sm"><i class="fas fa-edit"></i></a>';

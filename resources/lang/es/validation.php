@@ -228,5 +228,8 @@ return [
 
         // Finances
         'verified_payment'      => 'verificación de pago',
+
+        // Buildings
+        'verified_building'     => 'verificación de paquete',
     ],
 ];
