@@ -92,4 +92,13 @@ return [
         ],
         'add'                   => 'Verificar paquete',
     ],
+
+    // Create
+    'shipping'              => [
+        'message'               => [
+            'success'               => 'El envío se ha verificado con éxito',
+            'error'                 => 'Error al verificar el envío',
+        ],
+        'add'                   => 'Verificar envío',
+    ],
 ];

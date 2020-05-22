@@ -231,5 +231,8 @@ return [
 
         // Buildings
         'verified_building'     => 'verificación de paquete',
+
+        // Shippings
+        'verified_sent'         => 'verificación de envío',
     ],
 ];
