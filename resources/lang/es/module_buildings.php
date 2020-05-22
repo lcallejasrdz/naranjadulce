@@ -31,6 +31,6 @@ return [
     'sidebar'               => [
         'route_title_singular'  => $singular_ucfirst,
         'route_title_plural'    => $plural_ucfirst,
-        'route_font_awesome'    => 'money-bill-alt',
+        'route_font_awesome'    => 'shopping-basket',
     ],
 ];
