@@ -234,5 +234,8 @@ return [
 
         // Shippings
         'verified_sent'         => 'verificación de envío',
+
+        // Deliveries
+        'verified_delivered'    => 'verificación de entrega',
     ],
 ];

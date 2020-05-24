@@ -101,4 +101,13 @@ return [
         ],
         'add'                   => 'Verificar envío',
     ],
+
+    // Create
+    'delivery'              => [
+        'message'               => [
+            'success'               => 'La entrega se ha verificado con éxito',
+            'error'                 => 'Error al verificar la entrega',
+        ],
+        'add'                   => 'Verificar entrega',
+    ],
 ];
