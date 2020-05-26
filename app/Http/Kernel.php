@@ -63,5 +63,13 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'sentinelAuth' => \App\Http\Middleware\SentinelAuth::class,
+
+        //Modules
+        'moduleUsers' => \App\Http\Middleware\ModuleUsersMiddleware::class,
+        'moduleSales' => \App\Http\Middleware\ModuleSalesMiddleware::class,
+        'moduleFinances' => \App\Http\Middleware\ModuleFinancesMiddleware::class,
+        'moduleBuildings' => \App\Http\Middleware\ModuleBuildingsMiddleware::class,
+        'moduleShippings' => \App\Http\Middleware\ModuleShippingsMiddleware::class,
+        'moduleDeliveries' => \App\Http\Middleware\ModuleDeliveriesMiddleware::class,
     ];
 }

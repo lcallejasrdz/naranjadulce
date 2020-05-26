@@ -15,6 +15,8 @@ class FinanceController extends Controller
 {
     public function __construct()
     {
+        $this->middleware('moduleFinances');
+        
         // General
         $this->active = explode('.',\Request::route()->getName())[0];
         $this->word = trans('module_'.$this->active.'.controller.word');

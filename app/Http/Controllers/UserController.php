@@ -13,6 +13,8 @@ class UserController extends Controller
 {
     public function __construct()
     {
+        $this->middleware('moduleUsers');
+        
         // General
         $this->active = explode('.',\Request::route()->getName())[0];
         $this->model = trans('module_'.$this->active.'.controller.model');
