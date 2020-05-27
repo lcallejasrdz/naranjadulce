@@ -85,7 +85,7 @@ class DeliveryController extends Controller
         $item = DB::table('buys')
                     ->where('buys.slug', $slug)
                     ->join('sales', 'buys.slug', '=', 'sales.slug')
-                    ->select('buys.id', 'buys.slug', 'buys.postal_code', 'buys.state', 'buys.municipality', 'buys.colony', 'buys.street', 'buys.no_ext', 'buys.no_int', 'buys.address_references', 'buys.address_type', 'buys.parking', 'sales.seller_package', 'sales.seller_modifications', 'sales.delivery_type', 'buys.buy_message', 'buys.who_sends', 'buys.who_receives', 'buys.delivery_date', 'buys.delivery_schedule')
+                    ->select('buys.id', 'buys.slug', 'buys.postal_code', 'buys.state', 'buys.municipality', 'buys.colony', 'buys.street', 'buys.no_ext', 'buys.no_int', 'buys.address_references', 'buys.address_type', 'buys.parking', 'sales.seller_package', 'sales.seller_modifications', 'sales.delivery_type', 'buys.buy_message', 'buys.who_sends', 'buys.who_receives', 'buys.delivery_date', 'buys.delivery_schedule', 'buys.observations')
                     ->first();
         $buy = [
             'id' => $item->id,
@@ -107,7 +107,8 @@ class DeliveryController extends Controller
             'who_sends' => $item->who_sends,
             'who_receives' => $item->who_receives,
             'delivery_date' => $item->delivery_date,
-            'delivery_schedule' => $item->delivery_schedule
+            'delivery_schedule' => $item->delivery_schedule,
+            'observations' => $item->observations
         ];
         $item = null;
 

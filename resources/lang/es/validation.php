@@ -212,6 +212,7 @@ return [
         'buy_message'           => 'dedicatoria',
         'delivery_date'         => 'fecha de entrega',
         'delivery_schedule'     => 'horario de entrega',
+        'observations'          => '¿Alguna observación?',
         'how_know_us'           => '¿Por qué medio te enteraste de nosotros?',
         'how_know_us_other'     => 'especifica por que medio te enteraste de nosotros',
         'address_references'    => 'referencias',

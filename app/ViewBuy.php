@@ -28,6 +28,7 @@ class ViewBuy extends Model
         'message',
         'delivery_date',
         'delivery_schedule',
+        'observations',
         'how_know_us',
         'how_know_us_other',
         'created_at',

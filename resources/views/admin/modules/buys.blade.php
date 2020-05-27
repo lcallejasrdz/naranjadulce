@@ -3,6 +3,20 @@
 @section('title', '| '.$word)
 
 @section('styles')
+    <style>
+        .form-logo img{
+            width: 150px;
+            max-width: 75%;
+        }
+        .bg-register-image {
+            background-color: #E45C64;
+            /*background: url("/img/bannerformcustomer.jpg");*/
+            background-image: none;
+            background-position: center;
+            background-size: cover;
+        }
+    </style>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 @endsection
 
 @section('page-image')
@@ -10,7 +24,12 @@
 @endsection
 
 @section('panel-heading')
+    <div class="form-logo">
+        <img src="/img/logo.png" alt="Naranja Dulce Logo">
+    </div>
+    <br>
     <h1 class="h4 text-gray-900 mb-4">{{ trans('crud.buy.title') }}</h1>
+    <p>Favor de llenar la información solicitada completa para una entrega sin contratiempos.</p>
 @endsection
 
 @section('content')
@@ -111,7 +130,7 @@
             </div>
         </div>
         <div class="form-group">
-            <textarea class="form-control form-control-user @error('address_references') is-invalid @enderror" id="address_references" name="address_references" placeholder="{{ ucfirst(trans('validation.attributes.address_references')) }}"></textarea>
+            <textarea class="form-control form-control-user @error('address_references') is-invalid @enderror" id="address_references" name="address_references" placeholder="{{ ucfirst(trans('validation.attributes.address_references')) }} *"></textarea>
             @error('address_references')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
@@ -163,7 +182,7 @@
         </div>
         <div class="form-group row">
             <div class="col-sm-6 mb-3 mb-sm-0">
-                <input type="text" class="form-control form-control-user @error('delivery_date') is-invalid @enderror" id="delivery_date" name="delivery_date" placeholder="{{ ucfirst(trans('validation.attributes.delivery_date')) }} *">
+                <input type="text" class="form-control form-control-user @error('delivery_date') is-invalid @enderror" id="datepicker" name="delivery_date" placeholder="{{ ucfirst(trans('validation.attributes.delivery_date')) }} *" readonly>
                 @error('delivery_date')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
@@ -173,11 +192,18 @@
                     <option selected disabled>{{ ucfirst(trans('validation.attributes.delivery_schedule')) }} *</option>
                     <option value="{{ ucfirst(trans('module_buys.delivery_schedule.early')) }}">{{ ucfirst(trans('module_buys.delivery_schedule.early')) }}</option>
                     <option value="{{ ucfirst(trans('module_buys.delivery_schedule.late')) }}">{{ ucfirst(trans('module_buys.delivery_schedule.late')) }}</option>
+                    <option value="{{ ucfirst(trans('module_buys.delivery_schedule.preferential')) }}">{{ ucfirst(trans('module_buys.delivery_schedule.preferential')) }}</option>
                 </select>
                 @error('delivery_schedule')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
             </div>
+        </div>
+        <div class="form-group">
+            <textarea class="form-control form-control-user @error('observations') is-invalid @enderror" id="observations" name="observations" placeholder="{{ ucfirst(trans('validation.attributes.observations')) }}"></textarea>
+            @error('observations')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
         </div>
         <hr>
         <div class="form-group">
@@ -231,4 +257,16 @@
 @endsection
 
 @section('scripts')
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(function(){
+            $("#datepicker").datepicker({
+                showOtherMonths: true,
+                selectOtherMonths: true,
+                dateFormat: "dd/mm/yy",
+                minDate: 0
+            });
+        });
+    </script>
 @endsection

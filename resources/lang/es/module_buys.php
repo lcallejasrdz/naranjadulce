@@ -35,6 +35,7 @@ return [
             'buy_message',
             'delivery_date',
             'delivery_schedule',
+            'observations',
             'how_know_us',
             'how_know_us_other',
             'address_references',
@@ -61,6 +62,7 @@ return [
     'delivery_schedule'     => [
         'early'                 => '09:00 - 12:00',
         'late'                  => '13:00 - 18:00',
+        'preferential'          => 'Horario preferencial',
     ],
     'address_type'          => [
         'private'               => 'Particular',
