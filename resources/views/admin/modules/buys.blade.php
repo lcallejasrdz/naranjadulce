@@ -25,7 +25,7 @@
 
 @section('panel-heading')
     <div class="form-logo">
-        <img src="/img/logo.png" alt="Naranja Dulce Logo">
+        <img src="{{ env('APP_URL') }}/img/logo.png" alt="Naranja Dulce Logo">
     </div>
     <br>
     <h1 class="h4 text-gray-900 mb-4">{{ trans('crud.buy.title') }}</h1>
