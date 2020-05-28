@@ -28,7 +28,20 @@ class AuthController extends Controller
 		];
 
 		if(Sentinel::authenticate($credentials)){
-            return Redirect::route('users')->with('success', trans('auth.login.success'));
+            if(Sentinel::getUser()->role_id == 1){
+                return Redirect::route('users')->with('success', trans('auth.login.success'));
+            }else if(Sentinel::getUser()->role_id == 2){
+                return Redirect::route('sales')->with('success', trans('auth.login.success'));
+            }else if(Sentinel::getUser()->role_id == 3){
+                return Redirect::route('finances')->with('success', trans('auth.login.success'));
+            }else if(Sentinel::getUser()->role_id == 4){
+                return Redirect::route('buildings')->with('success', trans('auth.login.success'));
+            }else if(Sentinel::getUser()->role_id == 5){
+                return Redirect::route('shippings')->with('success', trans('auth.login.success'));
+            }else{
+                Sentinel::logout();
+                return Redirect::route('auth')->with('error', trans('auth.login.error'));
+            }
 		}else{
 			return Redirect::back()->with('error', trans('auth.login.error'));
 		}
