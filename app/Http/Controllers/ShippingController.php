@@ -84,11 +84,53 @@ class ShippingController extends Controller
         $item = DB::table('buys')
                     ->where('buys.slug', $slug)
                     ->join('sales', 'buys.slug', '=', 'sales.slug')
-                    ->select('buys.id', 'buys.slug', 'sales.seller_package', 'sales.seller_modifications', 'sales.delivery_type', 'buys.buy_message', 'buys.who_sends', 'buys.who_receives', 'buys.delivery_date', 'buys.delivery_schedule', 'buys.observations')
+                    ->select(
+                        'buys.id',
+                        'buys.slug',
+                        'buys.email',
+                        'buys.first_name',
+                        'buys.last_name',
+                        'buys.phone',
+                        'buys.postal_code',
+                        'buys.state',
+                        'buys.municipality',
+                        'buys.colony',
+                        'buys.street',
+                        'buys.no_ext',
+                        'buys.no_int',
+                        'buys.address_references',
+                        'buys.address_type',
+                        'buys.parking',
+                        'sales.seller_package',
+                        'sales.seller_modifications',
+                        'sales.delivery_type',
+                        'buys.buy_message',
+                        'buys.who_sends',
+                        'buys.who_receives',
+                        'buys.delivery_date',
+                        'buys.delivery_schedule',
+                        'buys.observations',
+                        'buys.how_know_us',
+                        'buys.how_know_us_other'
+                    )
                     ->first();
         $buy = [
             'id' => $item->id,
             'slug' => $item->slug,
+            'email' => $item->email,
+            'first_name' => $item->first_name,
+            'last_name' => $item->last_name,
+            'phone' => $item->phone,
+            'postal_code' => $item->postal_code,
+            'state' => $item->state,
+            'municipality' => $item->municipality,
+            'colony' => $item->colony,
+            'street' => $item->street,
+            'no_ext' => $item->no_ext,
+            'no_int' => $item->no_int,
+            'address_references' => $item->address_references,
+            'address_type' => $item->address_type,
+            'parking' => $item->parking,
             'seller_package' => $item->seller_package,
             'seller_modifications' => $item->seller_modifications,
             'delivery_type' => $item->delivery_type,
@@ -97,7 +139,9 @@ class ShippingController extends Controller
             'who_receives' => $item->who_receives,
             'delivery_date' => $item->delivery_date,
             'delivery_schedule' => $item->delivery_schedule,
-            'observations' => $item->observations
+            'observations' => $item->observations,
+            'how_know_us' => $item->how_know_us,
+            'how_know_us_other' => $item->how_know_us_other,
         ];
         $item = null;
 
