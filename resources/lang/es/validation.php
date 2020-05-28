@@ -223,9 +223,13 @@ return [
 
         // Sales
         'proof_of_payment'      => 'comprobante de compra',
+        'quantity'              => 'cantidad',
         'seller_package'        => 'paquete deseado',
         'seller_modifications'  => 'modificaciones a la sorpresa',
         'delivery_type'         => 'tipo de envío',
+        'preferential_schedule' => 'horario preferencial',
+        'seller_observations'   => 'observaciones',
+        'shipping_cost'         => 'costo de envío',
 
         // Finances
         'verified_payment'      => 'verificación de pago',

@@ -18,9 +18,13 @@ class Sale extends Model
         'slug',
         'user_id',
         'proof_of_payment',
+        'quantity',
         'seller_package',
         'seller_modifications',
         'delivery_type',
+        'preferential_schedule',
+        'seller_observations',
+        'shipping_cost'
     ];
 
     /**

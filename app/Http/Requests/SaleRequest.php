@@ -33,9 +33,13 @@ class SaleRequest extends FormRequest
             case 'POST': {
                 return [
                     'proof_of_payment' => 'required|mimes:pdf,jpg,jpeg',
+                    'quantity' => 'required|numeric',
                     'seller_package' => 'required|min:3|max:255',
                     'seller_modifications' => 'required|min:3|max:255',
                     'delivery_type' => 'required',
+                    'preferential_schedule' => 'nullable|min:3|max:255',
+                    'seller_observations' => 'required|min:3|max:255',
+                    'shipping_cost' => 'required|numeric',
                 ];
             }
             case 'PUT': {

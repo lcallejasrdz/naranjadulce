@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str as Str;
 use Illuminate\Support\Arr;
-use App\Buy;
+use App\ViewBuy;
 
 use Redirect;
 
@@ -78,7 +78,30 @@ class SaleController extends Controller
         $select = null;
         $columns = null;
         $actions = null;
-        $item = Buy::where('slug', $slug)->first();
+        $item = ViewBuy::where('slug', $slug)
+                ->select(
+                    'id',
+                    'slug',
+                    'first_name',
+                    'last_name',
+                    'package',
+                    'modifications',
+                    'buy_message',
+                    'delivery_date',
+                    'delivery_schedule',
+                    'who_sends',
+                    'who_receives',
+                    'postal_code',
+                    'state',
+                    'municipality',
+                    'colony',
+                    'street',
+                    'no_ext',
+                    'no_int',
+                    'how_know_us',
+                    'how_know_us_other'
+                )
+                ->first();
         $buy = $item ? $item->toArray() : array();
         $item = null;
 

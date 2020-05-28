@@ -77,9 +77,13 @@ class SaleModuleTest extends TestCase
             'slug' => 'kaljdshfkjadsht6t676thagvjdsfASDF',
             'user_id' => 1,
             'proof_of_payment' => UploadedFile::fake()->image('test.jpg'),
+            'quantity' => 2,
             'seller_package' => 'Paquete ejemplo para test',
             'seller_modifications' => 'Sin modificaciones',
             'delivery_type' => 'Especial',
+            'preferential_schedule' => '13:30',
+            'seller_observations' => 'Sin observaciones',
+            'shipping_cost' => 80,
         ];
 
         return $newsale;
