@@ -39,5 +39,6 @@ return [
         'route_title_singular'  => $singular_ucfirst,
         'route_title_plural'    => $plural_ucfirst,
         'route_font_awesome'    => 'shopping-cart',
+        'title'                 => 'Por confirmar',
     ],
 ];

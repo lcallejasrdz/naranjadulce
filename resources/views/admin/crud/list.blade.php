@@ -8,7 +8,11 @@
 @section('page-header', $word)
 
 @section('panel-heading')
-    <i class="fa fa-list fa-fw"></i> {{ trans('crud.sidebar.list') }}
+    @if($active == 'sales')
+        <i class="fa fa-list fa-fw"></i> {{ trans('module_'.$active.'.sidebar.title') }}
+    @else
+        <i class="fa fa-list fa-fw"></i> {{ trans('crud.sidebar.list') }}
+    @endif
 @endsection
 
 @section('content')
