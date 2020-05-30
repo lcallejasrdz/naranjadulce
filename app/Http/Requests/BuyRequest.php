@@ -32,9 +32,9 @@ class BuyRequest extends FormRequest
             }
             case 'POST': {
                 return [
-                    'email' => 'nullable|email',
                     'first_name' => 'required|min:3|max:255',
                     'last_name' => 'required|min:3|max:255',
+                    'email' => 'nullable|email',
                     'phone' => 'required|min:3|max:255',
                     'postal_code' => 'required|min:4|max:5',
                     'state' => 'required|min:3|max:255',
@@ -43,6 +43,11 @@ class BuyRequest extends FormRequest
                     'street' => 'required|min:3|max:255',
                     'no_ext' => 'required|max:255',
                     'no_int' => 'nullable|max:255',
+                    'address_type' => 'required',
+                    'address_references' => 'required|min:3|max:255',
+                    'parking' => 'required',
+                    'who_sends' => 'required|min:3|max:255',
+                    'who_receives' => 'required|min:3|max:255',
                     'package' => 'required|min:3|max:255',
                     'modifications' => 'nullable|min:3|max:255',
                     'buy_message' => 'nullable|min:3|max:255',
@@ -51,11 +56,6 @@ class BuyRequest extends FormRequest
                     'observations' => 'nullable|max:255',
                     'how_know_us' => 'required',
                     'how_know_us_other' => 'required_if:how_know_us,Otro|max:255',
-                    'address_references' => 'required|min:3|max:255',
-                    'address_type' => 'required',
-                    'parking' => 'required',
-                    'who_sends' => 'required|min:3|max:255',
-                    'who_receives' => 'required|min:3|max:255',
                 ];
             }
             case 'PUT': {
