@@ -181,6 +181,8 @@ return [
         'title'                 => 'título',
         'username'              => 'usuario',
         'year'                  => 'año',
+        'user_id'               => 'Usuario',
+        'deleted_at'            => 'Eliminado',
 
         // Users
         'id'                    => 'ID',

@@ -18,22 +18,51 @@
                 <table class="table table-bordered table-striped">
                     <tbody>
                         @foreach($item as $column => $value)
-                            <tr>
-                                <th>
-                                    {{ ucfirst(trans('validation.attributes.'.$column)) }}
-                                </th>
-                                <td>
-                                    @if(($column == 'last_login' && $value != "") || ($column == 'created_at' && $value != "") || ($column == 'updated_at' && $value != "") || ($column == 'deleted_at' && $value != ""))
-                                        {{ \Carbon\Carbon::parse($value)->diffForHumans() }}
-                                    @else
-                                        {{ $value }}
-                                    @endif
-                                </td>
-                            </tr>
+                            @if($value != '')
+                                <tr>
+                                    <th>
+                                        {{ ucfirst(trans('validation.attributes.'.$column)) }}
+                                    </th>
+                                    <td>
+                                        @if(($column == 'last_login' && $value != "") || ($column == 'created_at' && $value != "") || ($column == 'updated_at' && $value != "") || ($column == 'deleted_at' && $value != ""))
+                                            {{ \Carbon\Carbon::parse($value)->diffForHumans() }}
+                                        @else
+                                            {{ $value }}
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endif
                         @endforeach
                     </tbody>
                 </table>
             </div>
+            @isset($sale)
+                <hr>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <tbody>
+                            @foreach($sale as $column => $value)
+                                @if($value != '')
+                                    <tr>
+                                        <th>
+                                            {{ ucfirst(trans('validation.attributes.'.$column)) }}
+                                        </th>
+                                        <td>
+                                            @if(($column == 'last_login' && $value != "") || ($column == 'created_at' && $value != "") || ($column == 'updated_at' && $value != "") || ($column == 'deleted_at' && $value != ""))
+                                                {{ \Carbon\Carbon::parse($value)->diffForHumans() }}
+                                            @elseif($column == 'proof_of_payment')
+                                                <i class="fa fa-download"></i>{!! link_to($value, ' Download File', ['target' => '_blank']) !!}
+                                            @else
+                                                {{ $value }}
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endif
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            @endisset
         </div>
     </div>
 @endsection

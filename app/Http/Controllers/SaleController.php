@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str as Str;
 use Illuminate\Support\Arr;
 use App\ViewBuy;
+use App\ViewSale;
+use App\Sale;
 
 use Redirect;
 
@@ -133,6 +135,94 @@ class SaleController extends Controller
             Storage::delete($path);
             return Redirect::back()->with('error', trans('crud.create.message.error'));
         }
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function finished()
+    {
+        $view = 'finished';
+
+        $active = $this->active;
+        $word = $this->word;
+        $model = trans('module_buys.controller.model');
+        $select = $this->select;
+        $columns = $this->columns;
+        $actions = $this->actions;
+        $item = null;
+
+        return view('admin.crud.list', compact($this->compact));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($slug)
+    {
+        $view = 'show';
+
+        $active = $this->active;
+        $word = $this->word;
+        $model = null;
+        $select = null;
+        $columns = null;
+        $actions = null;
+        
+        $item = ViewBuy::where('slug', $slug)
+                ->select(
+                    'id',
+                    'first_name',
+                    'last_name',
+                    'email',
+                    'phone',
+                    'postal_code',
+                    'state',
+                    'municipality',
+                    'colony',
+                    'street',
+                    'no_ext',
+                    'no_int',
+                    'address_type',
+                    'address_references',
+                    'parking',
+                    'who_sends',
+                    'who_receives',
+                    'package',
+                    'modifications',
+                    'buy_message',
+                    'delivery_date',
+                    'delivery_schedule',
+                    'observations',
+                    'how_know_us',
+                    'how_know_us_other',
+                    'created_at'
+                )
+                ->first();
+        $item = $item ? $item->toArray() : array();
+        
+        $sale = Sale::where('slug', $slug)
+                ->select(
+                    'user_id',
+                    'quantity',
+                    'seller_package',
+                    'seller_modifications',
+                    'delivery_type',
+                    'preferential_schedule',
+                    'seller_observations',
+                    'shipping_cost',
+                    'proof_of_payment',
+                    'created_at'
+                )
+                ->first();
+        $sale = $sale ? $sale->toArray() : array();
+
+        return view('admin.crud.show', compact($this->compact, 'sale'));
     }
 }
 

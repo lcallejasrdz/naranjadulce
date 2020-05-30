@@ -90,6 +90,20 @@ class DataTablesController extends Controller
                                           ->from('deliveries')
                                           ->whereRaw('deliveries.slug = view_buys.slug');
                                 })->data();
+        }else if($view == 'finished'){
+            $full_model = 'App\\View'.$request->model;
+            $rows = $full_model::whereExists(function($query)
+                                {
+                                    $query->select(DB::raw(1))
+                                          ->from('sales')
+                                          ->whereRaw('sales.slug = view_buys.slug');
+                                })
+                                ->whereExists(function($query)
+                                {
+                                    $query->select(DB::raw(1))
+                                          ->from('deliveries')
+                                          ->whereRaw('deliveries.slug = view_buys.slug');
+                                })->data();
         }else{
             $full_model = 'App\\ViewDeleted'.$request->model;
             $rows = $full_model::data();
@@ -120,6 +134,11 @@ class DataTablesController extends Controller
                     $actions = '';
                     if($actions_value == 1 || $actions_value == 2){
                         $actions .= ' <a href="'. route($active.'.create', $row->slug) .'" class="btn btn-success btn-circle btn-sm"><i class="fas fa-edit"></i></a>';
+                    }
+                }else if($view == 'finished'){
+                    $actions = '';
+                    if($actions_value == 1 || $actions_value == 2){
+                        $actions .= ' <a href="'. route($active.'.show', $row->slug) .'" class="btn btn-success btn-circle btn-sm"><i class="fas fa-edit"></i></a>';
                     }
                 }else{
                 	$actions = '';
