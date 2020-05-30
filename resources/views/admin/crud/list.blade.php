@@ -9,7 +9,11 @@
 
 @section('panel-heading')
     @if($active == 'sales')
-        <i class="fa fa-list fa-fw"></i> {{ trans('module_'.$active.'.sidebar.title') }}
+        @if($view == 'finished')
+            <i class="fa fa-list fa-fw"></i> {{ trans('module_'.$active.'.sidebar.finished') }}
+        @else
+            <i class="fa fa-list fa-fw"></i> {{ trans('module_'.$active.'.sidebar.title') }}
+        @endif
     @else
         <i class="fa fa-list fa-fw"></i> {{ trans('crud.sidebar.list') }}
     @endif
