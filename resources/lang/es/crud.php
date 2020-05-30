@@ -69,7 +69,7 @@ return [
     'buy'                   => [
         'title'                 => 'Nuevo pedido',
         'message'               => [
-            'success'               => 'El pedido se ha realizado con éxito con el folio: ',
+            'success'               => 'El pedido se ha realizado con éxito con el folio: NDS-',
             'error'                 => 'Error al procesar el pedido',
         ],
         'submit'                => 'Realizar pedido',
