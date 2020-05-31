@@ -27,7 +27,9 @@
 	            	<input type="hidden" name="_token" value="{{ csrf_token() }}">
             @endif
                 @include('admin.modules.'.$active)
-                <input type="submit" class="btn {{ (isset($item) ? 'btn-success' : 'btn-primary') }}" value="{{ (isset($item) ? trans('crud.update.update') : trans('crud.create.add'))  }}">
+                @if(($active != 'sales') || ($active == 'sales' && $buy['status_id'] == 'Por confirmar'))
+                    <input type="submit" class="btn {{ (isset($item) ? 'btn-success' : 'btn-primary') }}" value="{{ (isset($item) ? trans('crud.update.update') : trans('crud.create.add'))  }}">
+                @endif
             </form>
         </div>
     </div>

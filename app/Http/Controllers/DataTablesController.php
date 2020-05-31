@@ -29,8 +29,8 @@ class DataTablesController extends Controller
             $rows = $full_model::whereNotExists(function($query)
                                 {
                                     $query->select(DB::raw(1))
-                                          ->from('sales')
-                                          ->whereRaw('sales.slug = view_buys.slug');
+                                          ->from('deliveries')
+                                          ->whereRaw('deliveries.slug = view_buys.slug');
                                 })->data();
         }else if($view == 'finances'){
             $full_model = 'App\\View'.$request->model;
@@ -93,12 +93,6 @@ class DataTablesController extends Controller
         }else if($view == 'finished'){
             $full_model = 'App\\View'.$request->model;
             $rows = $full_model::whereExists(function($query)
-                                {
-                                    $query->select(DB::raw(1))
-                                          ->from('sales')
-                                          ->whereRaw('sales.slug = view_buys.slug');
-                                })
-                                ->whereExists(function($query)
                                 {
                                     $query->select(DB::raw(1))
                                           ->from('deliveries')

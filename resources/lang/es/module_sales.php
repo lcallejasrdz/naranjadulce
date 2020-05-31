@@ -15,6 +15,7 @@ return [
             'first_name',
             'last_name',
             'package',
+            'status_id',
             'created_at',
         ],
         'create_fields'         => [

@@ -69,6 +69,6 @@ class UserTableSeeder extends Seeder
 		$admin_1->roles()->attach($adminRole);
 		$admin_2->roles()->attach($adminRole);
 
-		$this->command->info('Admin User created with email lcallejasrdz and password asdasd');
+		$this->command->info('Admin User created with email rzumaran@rnetsys.com and password abc123');
     }
 }

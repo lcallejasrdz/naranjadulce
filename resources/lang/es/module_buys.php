@@ -15,6 +15,7 @@ return [
             'first_name',
             'last_name',
             'email',
+            'status_id',
             'created_at',
         ],
         'create_fields'         => [
@@ -43,6 +44,7 @@ return [
             'parking',
             'who_sends',
             'who_receives',
+            'status_id',
         ],
         'word'                  => $plural_ucfirst,
     ],

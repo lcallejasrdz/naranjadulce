@@ -252,6 +252,7 @@
         </div>
         <hr>
         <input type="hidden" value="slug" id="slug" name="slug">
+        <input type="hidden" value="1" id="status_id" name="status_id">
         <input type="submit" class="btn btn-primary btn-user btn-block" value="{{ ucfirst(trans('crud.buy.submit')) }}">
     </form>
 @endsection

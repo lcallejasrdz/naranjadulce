@@ -222,6 +222,7 @@ return [
         'parking'               => '¿Cuénta con estacionamiento?',
         'who_sends'             => '¿Quién envía?',
         'who_receives'          => '¿Quién recibe?',
+        'status_id'             => 'estatus',
 
         // Sales
         'proof_of_payment'      => 'comprobante de compra',

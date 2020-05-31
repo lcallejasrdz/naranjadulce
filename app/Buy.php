@@ -40,6 +40,7 @@ class Buy extends Model
         'parking',
         'who_sends',
         'who_receives',
+        'status_id',
     ];
 
     /**

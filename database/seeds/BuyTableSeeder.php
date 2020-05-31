@@ -36,6 +36,7 @@ class BuyTableSeeder extends Seeder
             'parking' => 'No',
             'who_sends' => 'Eduardo Callejas',
             'who_receives' => 'Fernanda Martinez',
+            'status_id' => 7,
 		]);
     }
 }

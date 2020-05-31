@@ -10,6 +10,7 @@ use Illuminate\Support\Arr;
 use App\ViewBuy;
 use App\ViewSale;
 use App\Sale;
+use App\Buy;
 
 use Redirect;
 
@@ -101,7 +102,8 @@ class SaleController extends Controller
                     'no_ext',
                     'no_int',
                     'how_know_us',
-                    'how_know_us_other'
+                    'how_know_us_other',
+                    'status_id'
                 )
                 ->first();
         $buy = $item ? $item->toArray() : array();
@@ -128,11 +130,18 @@ class SaleController extends Controller
 
         $item->proof_of_payment = $path;
 
-        if($item->save()){
+        $buy = Buy::where('slug', $item->slug)->first();
+        $buy->status_id = 2;
+
+        if($item->save() && $buy->save()){
             return Redirect::route($this->active)->with('success', trans('crud.create.message.success'));
         }else{
             $item->forceDelete();
             Storage::delete($path);
+
+            $buy->status_id = 1;
+            $buy->save();
+
             return Redirect::back()->with('error', trans('crud.create.message.error'));
         }
     }
@@ -201,6 +210,7 @@ class SaleController extends Controller
                     'observations',
                     'how_know_us',
                     'how_know_us_other',
+                    'status_id',
                     'created_at'
                 )
                 ->first();

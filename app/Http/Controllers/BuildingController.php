@@ -112,10 +112,20 @@ class BuildingController extends Controller
     {
         $item = $this->full_model::create($request->only($this->create_fields));
 
-        if($item->save()){
+        $buy = Buy::where('slug', $item->slug)->first();
+        $status_back = $buy->status_id;
+        if($status_back == 2){
+            $buy->status_id = 4;
+        }else{
+            $buy->status_id = 5;
+        }
+
+        if($item->save() && $buy->save()){
             return Redirect::route($this->active)->with('success', trans('crud.building.message.success'));
         }else{
             $item->forceDelete();
+            $buy->status_id = $status_back;
+            $buy->save();
             return Redirect::back()->with('error', trans('crud.building.message.error'));
         }
     }

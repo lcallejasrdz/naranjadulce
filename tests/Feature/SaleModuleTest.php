@@ -11,6 +11,7 @@ use App\User;
 use App\Sale;
 use App\Buy;
 use DB;
+use Illuminate\Support\Str;
 
 use Sentinel;
 use Activation;
@@ -41,6 +42,44 @@ class SaleModuleTest extends TestCase
 
         return $this->actingAs($authuser)
             ->assertAuthenticatedAs($authuser);
+    }
+
+    public function createStatus()
+    {
+        DB::table('status')->insert([
+            'slug' => Str::slug('Por confirmar'),
+            'name' => 'Por confirmar',
+        ]);
+
+        DB::table('status')->insert([
+            'slug' => Str::slug('En produccion pendiente de pago'),
+            'name' => 'En producción, pendiente de pago',
+        ]);
+
+        DB::table('status')->insert([
+            'slug' => Str::slug('En produccion'),
+            'name' => 'En producción',
+        ]);
+
+        DB::table('status')->insert([
+            'slug' => Str::slug('Pendiente de pago'),
+            'name' => 'Pendiente de pago',
+        ]);
+
+        DB::table('status')->insert([
+            'slug' => Str::slug('Pendiente de envio'),
+            'name' => 'Pendiente de envío',
+        ]);
+
+        DB::table('status')->insert([
+            'slug' => Str::slug('En ruta'),
+            'name' => 'En ruta',
+        ]);
+
+        DB::table('status')->insert([
+            'slug' => Str::slug('Entregado'),
+            'name' => 'Entregado',
+        ]);
     }
 
     public function newBuy()
@@ -107,6 +146,8 @@ class SaleModuleTest extends TestCase
      */
     function itLoadsTheSaleFormPage()
     {
+        $this->createStatus();
+
         $this->newBuy();
         
         $route = 'sales';
@@ -122,6 +163,10 @@ class SaleModuleTest extends TestCase
     function itTestsTheCreateSaleMethod()
     {
         $route = 'sales';
+
+        $this->createStatus();
+
+        $this->newBuy();
 
         $newsale = $this->newSale();
 

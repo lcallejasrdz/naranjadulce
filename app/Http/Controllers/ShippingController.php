@@ -158,10 +158,15 @@ class ShippingController extends Controller
     {
         $item = $this->full_model::create($request->only($this->create_fields));
 
-        if($item->save()){
+        $buy = Buy::where('slug', $item->slug)->first();
+        $buy->status_id = 6;
+
+        if($item->save() && $buy->save()){
             return Redirect::route($this->active)->with('success', trans('crud.shipping.message.success'));
         }else{
             $item->forceDelete();
+            $buy->status_id = 5;
+            $buy->save();
             return Redirect::back()->with('error', trans('crud.shipping.message.error'));
         }
     }
