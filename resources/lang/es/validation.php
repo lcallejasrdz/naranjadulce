@@ -232,6 +232,9 @@ return [
         'delivery_type'         => 'tipo de envío',
         'preferential_schedule' => 'horario preferencial',
         'seller_observations'   => 'observaciones',
+        'observations_finances' => 'observaciones para finanzas',
+        'observations_buildings'=> 'observaciones para producción',
+        'observations_shippings'=> 'observaciones para logística',
         'shipping_cost'         => 'costo de envío',
 
         // Finances

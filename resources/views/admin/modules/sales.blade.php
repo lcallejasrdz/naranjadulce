@@ -67,9 +67,25 @@
 	</div>
 
 	<div class="form-group">
-		<label for="seller_observations">{{ ucfirst(trans('validation.attributes.seller_observations')) }} *</label>
-		<textarea class="form-control form-control-user @error('seller_observations') is-invalid @enderror" id="seller_observations" name="seller_observations" placeholder="{{ ucfirst(trans('validation.attributes.seller_observations')) }}">@if(isset($item)){{ $item->seller_observations }}@else{{ old('seller_observations') }}@endif</textarea>
-		@error('seller_observations')
+		<label for="observations_finances">{{ ucfirst(trans('validation.attributes.observations_finances')) }} *</label>
+		<textarea class="form-control form-control-user @error('observations_finances') is-invalid @enderror" id="observations_finances" name="observations_finances" placeholder="{{ ucfirst(trans('validation.attributes.observations_finances')) }}">@if(isset($item)){{ $item->observations_finances }}@else{{ old('observations_finances') }}@endif</textarea>
+		@error('observations_finances')
+		    <div class="alert alert-danger">{{ $message }}</div>
+		@enderror
+	</div>
+
+	<div class="form-group">
+		<label for="observations_buildings">{{ ucfirst(trans('validation.attributes.observations_buildings')) }} *</label>
+		<textarea class="form-control form-control-user @error('observations_buildings') is-invalid @enderror" id="observations_buildings" name="observations_buildings" placeholder="{{ ucfirst(trans('validation.attributes.observations_buildings')) }}">@if(isset($item)){{ $item->observations_buildings }}@else{{ old('observations_buildings') }}@endif</textarea>
+		@error('observations_buildings')
+		    <div class="alert alert-danger">{{ $message }}</div>
+		@enderror
+	</div>
+
+	<div class="form-group">
+		<label for="observations_shippings">{{ ucfirst(trans('validation.attributes.observations_shippings')) }} *</label>
+		<textarea class="form-control form-control-user @error('observations_shippings') is-invalid @enderror" id="observations_shippings" name="observations_shippings" placeholder="{{ ucfirst(trans('validation.attributes.observations_shippings')) }}">@if(isset($item)){{ $item->observations_shippings }}@else{{ old('observations_shippings') }}@endif</textarea>
+		@error('observations_shippings')
 		    <div class="alert alert-danger">{{ $message }}</div>
 		@enderror
 	</div>

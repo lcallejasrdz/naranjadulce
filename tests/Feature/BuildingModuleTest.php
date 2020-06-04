@@ -122,7 +122,9 @@ class BuildingModuleTest extends TestCase
             'seller_modifications' => 'Sin modificaciones',
             'delivery_type' => 'Especial',
             'preferential_schedule' => '13:30',
-            'seller_observations' => 'Sin observaciones',
+            'observations_finances' => 'Sin observaciones para finanzas',
+            'observations_buildings' => 'Sin observaciones para producción',
+            'observations_shippings' => 'Sin observaciones para logística',
             'shipping_cost' => 80,
         ]);
 

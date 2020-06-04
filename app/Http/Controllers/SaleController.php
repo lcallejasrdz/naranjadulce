@@ -225,6 +225,9 @@ class SaleController extends Controller
                     'delivery_type',
                     'preferential_schedule',
                     'seller_observations',
+                    'observations_finances',
+                    'observations_buildings',
+                    'observations_shippings',
                     'shipping_cost',
                     'proof_of_payment',
                     'created_at'
