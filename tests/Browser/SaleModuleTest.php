@@ -113,7 +113,7 @@ class SaleModuleTest extends DuskTestCase
                     ->waitForText('Mostrando registros')
                     ->assertSee(ucfirst(trans('validation.attributes.email')))
                     ->visit('/sales/'.$buy->slug)
-                    ->waitForText(ucfirst(trans('validation.attributes.delivery_type')))
+                    ->waitForText(ucfirst(trans('validation.attributes.package')))
                     ->assertSee(ucfirst(trans('validation.attributes.first_name')))
                     ->visit('/logout')
                     ->waitForText(trans('auth.title'));
@@ -173,7 +173,7 @@ class SaleModuleTest extends DuskTestCase
                     ->waitForText('Mostrando registros')
                     ->assertSee(ucfirst(trans('validation.attributes.email')))
                     ->visit('/sales/'.$buy->slug)
-                    ->waitForText(ucfirst(trans('validation.attributes.delivery_type')))
+                    ->waitForText(ucfirst(trans('validation.attributes.package')))
                     ->assertSee(ucfirst(trans('validation.attributes.first_name')))
                     ->type('quantity', '2')
                     ->type('seller_package', 'Paquete de prueba en dusk')

@@ -9,6 +9,7 @@ use Tests\DuskTestCase;
 use App\User;
 use App\Buy;
 use App\Sale;
+use App\Finance;
 use App\Building;
 use App\Shipping;
 use App\Delivery;
@@ -117,7 +118,7 @@ class DeliveryModuleTest extends DuskTestCase
                     ->waitForText('Mostrando registros')
                     ->assertSee(ucfirst(trans('validation.attributes.email')))
                     ->visit('/sales/'.$slug)
-                    ->waitForText(ucfirst(trans('validation.attributes.delivery_type')))
+                    ->waitForText(ucfirst(trans('validation.attributes.package')))
                     ->assertSee(ucfirst(trans('validation.attributes.first_name')))
                     ->type('quantity', '2')
                     ->type('seller_package', 'Paquete de prueba en dusk')
@@ -130,6 +131,12 @@ class DeliveryModuleTest extends DuskTestCase
                     ->press(ucfirst(trans('crud.create.add')))
                     ->waitForText(ucfirst(trans('crud.create.message.success')))
                     ->assertSee(ucfirst(trans('validation.attributes.first_name')))
+                    ->visit('/finances/'.$slug)
+                    ->waitForText(ucfirst(trans('module_finances.controller.create_word')))
+                    ->assertSee(ucfirst(trans('validation.attributes.package')))
+                    ->press(ucfirst(trans('crud.create.add')))
+                    ->waitForText(ucfirst(trans('crud.finance.message.success')))
+                    ->assertSee(ucfirst(trans('validation.attributes.email')))
                     ->visit('/buildings/'.$slug)
                     ->waitForText(ucfirst(trans('module_buildings.controller.create_word')))
                     ->assertSee(ucfirst(trans('validation.attributes.package')))
@@ -156,6 +163,9 @@ class DeliveryModuleTest extends DuskTestCase
 
         $sale = Sale::where('slug', $buy->slug)->first();
         $sale->forceDelete();
+
+        $finance = Finance::where('slug', $buy->slug)->first();
+        $finance->forceDelete();
 
         $building = Building::where('slug', $buy->slug)->first();
         $building->forceDelete();
@@ -226,6 +236,12 @@ class DeliveryModuleTest extends DuskTestCase
                     ->press(ucfirst(trans('crud.create.add')))
                     ->waitForText(ucfirst(trans('crud.create.message.success')))
                     ->assertSee(ucfirst(trans('validation.attributes.first_name')))
+                    ->visit('/finances/'.$slug)
+                    ->waitForText(ucfirst(trans('module_finances.controller.create_word')))
+                    ->assertSee(ucfirst(trans('validation.attributes.package')))
+                    ->press(ucfirst(trans('crud.create.add')))
+                    ->waitForText(ucfirst(trans('crud.finance.message.success')))
+                    ->assertSee(ucfirst(trans('validation.attributes.email')))
                     ->visit('/buildings/'.$slug)
                     ->waitForText(ucfirst(trans('module_buildings.controller.create_word')))
                     ->assertSee(ucfirst(trans('validation.attributes.package')))
@@ -253,6 +269,9 @@ class DeliveryModuleTest extends DuskTestCase
 
         $sale = Sale::where('slug', $buy->slug)->first();
         $sale->forceDelete();
+
+        $finance = Finance::where('slug', $buy->slug)->first();
+        $finance->forceDelete();
 
         $building = Building::where('slug', $buy->slug)->first();
         $building->forceDelete();
