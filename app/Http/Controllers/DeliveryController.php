@@ -85,34 +85,20 @@ class DeliveryController extends Controller
         $item = DB::table('buys')
                     ->where('buys.slug', $slug)
                     ->join('sales', 'buys.slug', '=', 'sales.slug')
-                    ->select('buys.id', 'buys.slug', 'buys.postal_code', 'buys.state', 'buys.municipality', 'buys.colony', 'buys.street', 'buys.no_ext', 'buys.no_int', 'buys.address_references', 'buys.address_type', 'buys.parking', 'sales.seller_package', 'sales.seller_modifications', 'sales.delivery_type', 'buys.buy_message', 'buys.who_sends', 'buys.who_receives', 'buys.delivery_date', 'buys.delivery_schedule', 'buys.observations')
+                    ->select(
+                        'buys.id',
+                        'buys.slug',
+                        'buys.first_name',
+                        'buys.last_name',
+                        'buys.phone',
+                        'sales.delivery_type',
+                        'buys.delivery_date',
+                        'buys.delivery_schedule',
+                        'sales.preferential_schedule'
+                    )
                     ->first();
-        $buy = [
-            'id' => $item->id,
-            'slug' => $item->slug,
-            'postal_code' => $item->postal_code,
-            'state' => $item->state,
-            'municipality' => $item->municipality,
-            'colony' => $item->colony,
-            'street' => $item->street,
-            'no_ext' => $item->no_ext,
-            'no_int' => $item->no_int,
-            'address_references' => $item->address_references,
-            'address_type' => $item->address_type,
-            'parking' => $item->parking,
-            'seller_package' => $item->seller_package,
-            'seller_modifications' => $item->seller_modifications,
-            'delivery_type' => $item->delivery_type,
-            'buy_message' => $item->buy_message,
-            'who_sends' => $item->who_sends,
-            'who_receives' => $item->who_receives,
-            'delivery_date' => $item->delivery_date,
-            'delivery_schedule' => $item->delivery_schedule,
-            'observations' => $item->observations
-        ];
-        $item = null;
 
-        return view('admin.crud.form', compact($this->compact, 'buy'));
+        return view('admin.crud.form', compact($this->compact));
     }
 
     /**

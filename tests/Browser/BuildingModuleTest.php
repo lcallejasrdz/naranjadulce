@@ -57,7 +57,7 @@ class BuildingModuleTest extends DuskTestCase
                     ->assertSee(ucfirst(trans('validation.attributes.email')))
                     ->visit('/buildings')
                     ->waitForText('Mostrando registros')
-                    ->assertSee(ucfirst(trans('validation.attributes.email')))
+                    ->assertSee(ucfirst(trans('validation.attributes.delivery_date')))
                     ->visit('/logout')
                     ->waitForText(trans('auth.title'));
         });
@@ -130,8 +130,8 @@ class BuildingModuleTest extends DuskTestCase
                     ->waitForText(ucfirst(trans('crud.create.message.success')))
                     ->assertSee(ucfirst(trans('validation.attributes.first_name')))
                     ->visit('/buildings/'.$buy->slug)
-                    ->waitForText(ucfirst(trans('module_buildings.controller.create_word')))
-                    ->assertSee(ucfirst(trans('validation.attributes.package')))
+                    ->waitForText(ucfirst(trans('module_buildings.controller.word')))
+                    ->assertSee(ucfirst(trans('validation.attributes.delivery_date')))
                     ->visit('/logout')
                     ->waitForText(trans('auth.title'));
         });
@@ -211,10 +211,10 @@ class BuildingModuleTest extends DuskTestCase
                     ->assertSee(ucfirst(trans('validation.attributes.first_name')))
                     ->visit('/buildings/'.$slug)
                     ->waitForText(ucfirst(trans('module_buildings.controller.create_word')))
-                    ->assertSee(ucfirst(trans('validation.attributes.package')))
+                    ->assertSee(ucfirst(trans('validation.attributes.delivery_date')))
                     ->press(ucfirst(trans('crud.create.add')))
                     ->waitForText(ucfirst(trans('crud.building.message.success')))
-                    ->assertSee(ucfirst(trans('validation.attributes.email')))
+                    ->assertSee(ucfirst(trans('validation.attributes.delivery_date')))
                     ->visit('/logout')
                     ->waitForText(trans('auth.title'));
         });

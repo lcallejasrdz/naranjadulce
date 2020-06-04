@@ -92,6 +92,7 @@ class SaleController extends Controller
                     'buy_message',
                     'delivery_date',
                     'delivery_schedule',
+                    'observations',
                     'who_sends',
                     'who_receives',
                     'postal_code',

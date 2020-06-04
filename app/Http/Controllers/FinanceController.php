@@ -8,6 +8,7 @@ use Illuminate\Support\Str as Str;
 use Illuminate\Support\Arr;
 use App\Buy;
 use App\Sale;
+use DB;
 
 use Redirect;
 
@@ -78,13 +79,27 @@ class FinanceController extends Controller
         $select = null;
         $columns = null;
         $actions = null;
-        $item = Buy::where('slug', $slug)->first();
-        $buy = $item ? $item->toArray() : array();
-        $item = Sale::where('slug', $slug)->first();
+        $item = DB::table('buys')
+                    ->where('buys.slug', $slug)
+                    ->join('sales', 'buys.slug', '=', 'sales.slug')
+                    ->select(
+                        'buys.id',
+                        'buys.slug',
+                        'buys.first_name',
+                        'buys.last_name',
+                        'sales.seller_package',
+                        'sales.seller_modifications',
+                        'sales.observations_finances',
+                        'sales.shipping_cost',
+                        'sales.proof_of_payment',
+                        'buys.delivery_date',
+                        'buys.delivery_schedule',
+                        'sales.preferential_schedule'
+                    )
+                    ->first();
         $proof_of_payment = $item->proof_of_payment;
-        $item = null;
 
-        return view('admin.crud.form', compact($this->compact, 'buy', 'proof_of_payment'));
+        return view('admin.crud.form', compact($this->compact, 'proof_of_payment'));
     }
 
     /**

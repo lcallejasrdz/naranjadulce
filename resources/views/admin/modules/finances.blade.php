@@ -1,7 +1,7 @@
 <table class="table table-striped">
 	<tbody>
-		@foreach($buy as $column => $value)
-			@if($column != 'last_login' && $column != 'created_at' && $column != 'updated_at' && $column != 'deleted_at' && $column != 'slug')
+		@foreach($item as $column => $value)
+			@if($column != 'last_login' && $column != 'created_at' && $column != 'updated_at' && $column != 'deleted_at' && $column != 'slug' && $column != 'proof_of_payment' && $value != '')
 	            <tr>
 	                <th>
 	                    {{ ucfirst(trans('validation.attributes.'.$column)) }}
@@ -29,6 +29,6 @@
 
 <hr>
 
-<input type="hidden" value="{{ $buy['slug'] }}" id="slug" name="slug">
+<input type="hidden" value="{{ $item->slug }}" id="slug" name="slug">
 <input type="hidden" value="{{ Sentinel::getUser()->id }}" id="user_id" name="user_id">
 <input type="hidden" value="1" id="verified_payment" name="verified_payment">

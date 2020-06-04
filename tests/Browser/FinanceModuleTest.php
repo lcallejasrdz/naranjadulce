@@ -57,7 +57,7 @@ class FinanceModuleTest extends DuskTestCase
                     ->assertSee(ucfirst(trans('validation.attributes.email')))
                     ->visit('/finances')
                     ->waitForText('Mostrando registros')
-                    ->assertSee(ucfirst(trans('validation.attributes.email')))
+                    ->assertSee(ucfirst(trans('validation.attributes.delivery_date')))
                     ->visit('/logout')
                     ->waitForText(trans('auth.title'));
         });
@@ -131,7 +131,7 @@ class FinanceModuleTest extends DuskTestCase
                     ->assertSee(ucfirst(trans('validation.attributes.first_name')))
                     ->visit('/finances/'.$buy->slug)
                     ->waitForText(ucfirst(trans('module_finances.controller.create_word')))
-                    ->assertSee(ucfirst(trans('validation.attributes.address_references')))
+                    ->assertSee(ucfirst(trans('validation.attributes.delivery_date')))
                     ->visit('/logout')
                     ->waitForText(trans('auth.title'));
         });
@@ -209,11 +209,11 @@ class FinanceModuleTest extends DuskTestCase
                     ->waitForText(ucfirst(trans('crud.create.message.success')))
                     ->assertSee(ucfirst(trans('validation.attributes.first_name')))
                     ->visit('/finances/'.$buy->slug)
-                    ->waitForText(ucfirst(trans('validation.attributes.address_references')))
-                    ->assertSee(ucfirst(trans('validation.attributes.address_references')))
+                    ->waitForText(ucfirst(trans('validation.attributes.delivery_date')))
+                    ->assertSee(ucfirst(trans('validation.attributes.delivery_date')))
                     ->press(ucfirst(trans('crud.create.add')))
                     ->waitForText(ucfirst(trans('crud.finance.message.success')))
-                    ->assertSee(ucfirst(trans('validation.attributes.email')))
+                    ->assertSee(ucfirst(trans('validation.attributes.delivery_date')))
                     ->visit('/logout')
                     ->waitForText(trans('auth.title'));
         });

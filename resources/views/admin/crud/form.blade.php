@@ -28,8 +28,11 @@
             @endif
                 @include('admin.modules.'.$active)
                 
-                @if(($active != 'sales' && $active != 'shippings') || ($active == 'shippings' && $buy['status_id'] == 5) || ($active == 'sales' && $buy['status_id'] == 'Por confirmar'))
+                @if($active == 'users')
                     <input type="submit" class="btn {{ (isset($item) ? 'btn-success' : 'btn-primary') }}" value="{{ (isset($item) ? trans('crud.update.update') : trans('crud.create.add'))  }}">
+                @elseif(($active != 'sales' && $active != 'shippings') || ($active == 'shippings' && $item->status_id == 5) || ($active == 'sales' && $buy['status_id'] == 'Por confirmar'))
+                    {{-- <input type="submit" class="btn {{ (isset($item) ? 'btn-success' : 'btn-primary') }}" value="{{ (isset($item) ? trans('crud.update.update') : trans('crud.create.add'))  }}"> --}}
+                    <input type="submit" class="btn btn-primary" value="{{ trans('crud.create.add') }}">
                 @endif
             </form>
         </div>
