@@ -111,7 +111,8 @@ class ShippingController extends Controller
                         'buys.delivery_schedule',
                         'buys.observations',
                         'buys.how_know_us',
-                        'buys.how_know_us_other'
+                        'buys.how_know_us_other',
+                        'buys.status_id'
                     )
                     ->first();
         $buy = [
@@ -142,6 +143,7 @@ class ShippingController extends Controller
             'observations' => $item->observations,
             'how_know_us' => $item->how_know_us,
             'how_know_us_other' => $item->how_know_us_other,
+            'status_id' => $item->status_id,
         ];
         $item = null;
 

@@ -27,7 +27,8 @@
 	            	<input type="hidden" name="_token" value="{{ csrf_token() }}">
             @endif
                 @include('admin.modules.'.$active)
-                @if(($active != 'sales') || ($active == 'sales' && $buy['status_id'] == 'Por confirmar'))
+                
+                @if(($active != 'sales' && $active != 'shippings') || ($active == 'shippings' && $buy['status_id'] == 5) || ($active == 'sales' && $buy['status_id'] == 'Por confirmar'))
                     <input type="submit" class="btn {{ (isset($item) ? 'btn-success' : 'btn-primary') }}" value="{{ (isset($item) ? trans('crud.update.update') : trans('crud.create.add'))  }}">
                 @endif
             </form>

@@ -64,13 +64,8 @@ class DataTablesController extends Controller
             $rows = $full_model::whereExists(function($query)
                                 {
                                     $query->select(DB::raw(1))
-                                          ->from('finances')
-                                          ->whereRaw('finances.slug = view_buys.slug');
-                                })->whereExists(function($query)
-                                {
-                                    $query->select(DB::raw(1))
-                                          ->from('buildings')
-                                          ->whereRaw('buildings.slug = view_buys.slug');
+                                          ->from('sales')
+                                          ->whereRaw('sales.slug = view_buys.slug');
                                 })->whereNotExists(function($query)
                                 {
                                     $query->select(DB::raw(1))
