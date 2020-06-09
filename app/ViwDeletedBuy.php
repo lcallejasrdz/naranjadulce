@@ -24,6 +24,7 @@ class ViwDeletedBuy extends Model
         'no_ext',
         'no_int',
         'package',
+        'thematic',
         'modifications',
         'message',
         'delivery_date',

@@ -32,6 +32,7 @@ return [
             'no_ext',
             'no_int',
             'package',
+            'thematic',
             'modifications',
             'buy_message',
             'delivery_date',
