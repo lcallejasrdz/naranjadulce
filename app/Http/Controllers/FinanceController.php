@@ -87,6 +87,7 @@ class FinanceController extends Controller
                         'buys.slug',
                         'buys.first_name',
                         'buys.last_name',
+                        'sales.quantity',
                         'sales.seller_package',
                         'sales.seller_modifications',
                         'sales.observations_finances',

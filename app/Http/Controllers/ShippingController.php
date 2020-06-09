@@ -90,6 +90,7 @@ class ShippingController extends Controller
                         'buys.first_name',
                         'buys.last_name',
                         'buys.phone',
+                        'sales.quantity',
                         'sales.seller_package',
                         'sales.seller_modifications',
                         'buys.buy_message',
