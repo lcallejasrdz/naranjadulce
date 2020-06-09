@@ -48,6 +48,7 @@ class BuyModuleTest extends DuskTestCase
                     ->type('no_ext', '10')
                     ->type('no_int', '12')
                     ->type('package', 'Paquete Especial')
+                    ->type('thematic', 'Cumpleaños')
                     ->type('buy_message', 'Ejemplo de mensaje')
                     ->value('#datepicker', '06/06/2020')
                     ->select('delivery_schedule', '09:00 - 12:00')

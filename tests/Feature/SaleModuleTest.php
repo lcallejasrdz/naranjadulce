@@ -97,6 +97,7 @@ class SaleModuleTest extends TestCase
             'street' => 'Dominicos',
             'no_ext' => '11',
             'package' => 'Paquete Friendzone',
+            'thematic' => 'Cumpleaños',
             'buy_message' => 'Ahorita no joven',
             'delivery_date' => '10 de Mayo',
             'delivery_schedule' => '09:00 - 13:00',

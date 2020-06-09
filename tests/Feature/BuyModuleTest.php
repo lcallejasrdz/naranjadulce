@@ -84,6 +84,7 @@ class BuyModuleTest extends TestCase
             'street' => 'Dominicos',
             'no_ext' => '11',
             'package' => 'Paquete Chocolates',
+            'thematic' => 'Cumpleaños',
             'buy_message' => 'Para nuestra madre',
             'delivery_date' => '10 de Mayo',
             'delivery_schedule' => '09:00 - 12:00',

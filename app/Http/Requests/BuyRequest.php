@@ -49,6 +49,7 @@ class BuyRequest extends FormRequest
                     'who_sends' => 'required|min:3|max:255',
                     'who_receives' => 'required|min:3|max:255',
                     'package' => 'required|min:3|max:255',
+                    'thematic' => 'required|min:3|max:255',
                     'modifications' => 'nullable|min:3|max:255',
                     'buy_message' => 'nullable|min:3|max:255',
                     'delivery_date' => 'required|min:3|max:255',

@@ -89,6 +89,7 @@ class BuildingController extends Controller
                         'buys.last_name',
                         'sales.quantity',
                         'sales.seller_package',
+                        'buys.thematic',
                         'sales.seller_modifications',
                         'sales.observations_buildings',
                         'buys.buy_message',

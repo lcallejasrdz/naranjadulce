@@ -92,6 +92,7 @@ class ShippingController extends Controller
                         'buys.phone',
                         'sales.quantity',
                         'sales.seller_package',
+                        'buys.thematic',
                         'sales.seller_modifications',
                         'buys.buy_message',
                         'buys.who_sends',

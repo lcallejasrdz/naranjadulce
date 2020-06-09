@@ -210,6 +210,7 @@ return [
         'no_ext'                => 'no. Exterior',
         'no_int'                => 'no. Interior',
         'package'               => 'paquete deseado',
+        'thematic'              => 'temática',
         'modifications'         => 'modificaciones a la sorpresa (aquí escribes todos los cambios que se harán  a la sorpresa o si quieres agregar algo adicional)',
         'buy_message'           => 'dedicatoria',
         'delivery_date'         => 'fecha de entrega',
