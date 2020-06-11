@@ -243,6 +243,7 @@ return [
 
         // Buildings
         'verified_building'     => 'verificación de paquete',
+        'return_reason'         => 'razón por la cuál se regresa el pedido',
 
         // Shippings
         'verified_sent'         => 'verificación de envío',

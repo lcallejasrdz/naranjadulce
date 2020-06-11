@@ -50,6 +50,9 @@
 		</a>
 		<!-- Logout Modal-->
 		@include('admin.layouts.modals.logout_modal')
+		@if($active == 'buildings' && isset($item))
+			@include('admin.layouts.modals.return_modal')
+		@endif
 		<!-- Other Modals-->
 		@yield('modals')
 		@include('admin.layouts.sections.scripts')

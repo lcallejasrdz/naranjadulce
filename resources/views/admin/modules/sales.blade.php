@@ -19,7 +19,7 @@
 	</tbody>
 </table>
 
-@if($buy['status_id'] == 'Por confirmar')
+@if($buy['status_id'] == 'Por confirmar' || $buy['status_id'] == 'Verificar')
 	<hr>
 
 	<input type="hidden" value="{{ $buy['slug'] }}" id="slug" name="slug">

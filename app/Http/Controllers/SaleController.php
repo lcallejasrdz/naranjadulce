@@ -9,6 +9,7 @@ use Illuminate\Support\Str as Str;
 use Illuminate\Support\Arr;
 use App\ViewBuy;
 use App\ViewSale;
+use App\Finance;
 use App\Sale;
 use App\Buy;
 
@@ -105,6 +106,7 @@ class SaleController extends Controller
                     'no_int',
                     'how_know_us',
                     'how_know_us_other',
+                    'return_reason',
                     'status_id'
                 )
                 ->first();
@@ -133,7 +135,13 @@ class SaleController extends Controller
         $item->proof_of_payment = $path;
 
         $buy = Buy::where('slug', $item->slug)->first();
-        $buy->status_id = 2;
+
+        $count = Finance::where('slug', $request->slug)->count();
+        if($count == 0){
+            $buy->status_id = 2;
+        }else{
+            $buy->status_id = 3;
+        }
 
         if($item->save() && $buy->save()){
             return Redirect::route($this->active)->with('success', trans('crud.create.message.success'));
@@ -213,6 +221,7 @@ class SaleController extends Controller
                     'observations',
                     'how_know_us',
                     'how_know_us_other',
+                    'return_reason',
                     'status_id',
                     'created_at'
                 )

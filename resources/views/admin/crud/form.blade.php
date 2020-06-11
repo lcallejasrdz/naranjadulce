@@ -30,7 +30,11 @@
                 
                 @if($active == 'users')
                     <input type="submit" class="btn {{ (isset($item) ? 'btn-success' : 'btn-primary') }}" value="{{ (isset($item) ? trans('crud.update.update') : trans('crud.create.add'))  }}">
-                @elseif(($active != 'sales' && $active != 'shippings') || ($active == 'shippings' && $item->status_id == 5) || ($active == 'sales' && $buy['status_id'] == 'Por confirmar'))
+                @elseif($active == 'buildings')
+                    {{-- <input type="submit" class="btn {{ (isset($item) ? 'btn-success' : 'btn-primary') }}" value="{{ (isset($item) ? trans('crud.update.update') : trans('crud.create.add'))  }}"> --}}
+                    <input type="submit" class="btn btn-primary" value="{{ trans('crud.create.add') }}">
+                    <a class="btn btn-warning" href="#" data-toggle="modal" data-target="#returnModal">{{ trans('crud.building.return') }}</a>
+                @elseif(($active != 'sales' && $active != 'shippings') || ($active == 'shippings' && $item->status_id == 5) || ($active == 'sales' && ($buy['status_id'] == 'Por confirmar' || $buy['status_id'] == 'Verificar')))
                     {{-- <input type="submit" class="btn {{ (isset($item) ? 'btn-success' : 'btn-primary') }}" value="{{ (isset($item) ? trans('crud.update.update') : trans('crud.create.add'))  }}"> --}}
                     <input type="submit" class="btn btn-primary" value="{{ trans('crud.create.add') }}">
                 @endif

@@ -26,73 +26,30 @@ class DataTablesController extends Controller
             $rows = $full_model::data();
         }else if($view == 'sales'){
             $full_model = 'App\\View'.$request->model;
-            $rows = $full_model::whereNotExists(function($query)
-                                {
-                                    $query->select(DB::raw(1))
-                                          ->from('deliveries')
-                                          ->whereRaw('deliveries.slug = view_buys.slug');
-                                })->data();
+            $rows = $full_model::where('status_id', '!=', 'Entregado')
+                                    ->data();
         }else if($view == 'finances'){
             $full_model = 'App\\View'.$request->model;
-            $rows = $full_model::whereNotExists(function($query)
-                                {
-                                    $query->select(DB::raw(1))
-                                          ->from('finances')
-                                          ->whereRaw('finances.slug = view_buys.slug');
-                                })
-                                ->whereExists(function($query)
-                                {
-                                    $query->select(DB::raw(1))
-                                          ->from('sales')
-                                          ->whereRaw('sales.slug = view_buys.slug');
-                                })->data();
+            $rows = $full_model::where('status_id', 'En producción, pendiente de pago')
+                                    ->orWhere('status_id', 'Pendiente de pago')
+                                    ->data();
         }else if($view == 'buildings'){
             $full_model = 'App\\View'.$request->model;
-            $rows = $full_model::whereExists(function($query)
-                                {
-                                    $query->select(DB::raw(1))
-                                          ->from('sales')
-                                          ->whereRaw('sales.slug = view_buys.slug');
-                                })->whereNotExists(function($query)
-                                {
-                                    $query->select(DB::raw(1))
-                                          ->from('buildings')
-                                          ->whereRaw('buildings.slug = view_buys.slug');
-                                })->data();
+            $rows = $full_model::where('status_id', 'En producción, pendiente de pago')
+                                    ->orWhere('status_id', 'En producción')
+                                    ->data();
         }else if($view == 'shippings'){
             $full_model = 'App\\View'.$request->model;
-            $rows = $full_model::whereExists(function($query)
-                                {
-                                    $query->select(DB::raw(1))
-                                          ->from('sales')
-                                          ->whereRaw('sales.slug = view_buys.slug');
-                                })->whereNotExists(function($query)
-                                {
-                                    $query->select(DB::raw(1))
-                                          ->from('shippings')
-                                          ->whereRaw('shippings.slug = view_buys.slug');
-                                })->data();
+            $rows = $full_model::where('status_id', 'Pendiente de envío')
+                                    ->data();
         }else if($view == 'deliveries'){
             $full_model = 'App\\View'.$request->model;
-            $rows = $full_model::whereExists(function($query)
-                                {
-                                    $query->select(DB::raw(1))
-                                          ->from('shippings')
-                                          ->whereRaw('shippings.slug = view_buys.slug');
-                                })->whereNotExists(function($query)
-                                {
-                                    $query->select(DB::raw(1))
-                                          ->from('deliveries')
-                                          ->whereRaw('deliveries.slug = view_buys.slug');
-                                })->data();
+            $rows = $full_model::where('status_id', 'En ruta')
+                                    ->data();
         }else if($view == 'finished'){
             $full_model = 'App\\View'.$request->model;
-            $rows = $full_model::whereExists(function($query)
-                                {
-                                    $query->select(DB::raw(1))
-                                          ->from('deliveries')
-                                          ->whereRaw('deliveries.slug = view_buys.slug');
-                                })->data();
+            $rows = $full_model::where('status_id', 'Entregado')
+                                    ->data();
         }else{
             $full_model = 'App\\ViewDeleted'.$request->model;
             $rows = $full_model::data();

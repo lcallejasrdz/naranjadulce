@@ -37,7 +37,9 @@ class BuildingRequest extends FormRequest
                 return [];
             }
             case 'PATCH': {
-                return [];
+                return [
+                    'return_reason' => 'required|min:3|max:255',
+                ];
             }
             default: {
                 break;

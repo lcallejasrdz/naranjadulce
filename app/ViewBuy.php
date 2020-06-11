@@ -12,6 +12,7 @@ class ViewBuy extends Model
      * @var array
      */
     protected $fillable = [
+        'slug',
         'email',
         'first_name',
         'last_name',
@@ -26,14 +27,19 @@ class ViewBuy extends Model
         'package',
         'thematic',
         'modifications',
-        'message',
+        'buy_message',
         'delivery_date',
         'delivery_schedule',
         'observations',
         'how_know_us',
         'how_know_us_other',
-        'created_at',
-        'updated_at',
+        'address_references',
+        'address_type',
+        'parking',
+        'who_sends',
+        'who_receives',
+        'return_reason',
+        'status_id',
     ];
 
     public function scopeData($query)

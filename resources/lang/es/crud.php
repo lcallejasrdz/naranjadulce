@@ -89,8 +89,15 @@ return [
         'message'               => [
             'success'               => 'El paquete se ha verificado con éxito',
             'error'                 => 'Error al verificar el paquete',
+            'returned'              => 'El pedido fue regresado a ventas con éxito',
+            'error_returned'        => 'Error al regresar el pedido a ventas',
         ],
         'add'                   => 'Verificar paquete',
+        'return'                => 'Regresar pedido',
+        'modal'                 => [
+            'question'              => '¿Seguro que deseas regresar el pedido?',
+            'message'               => 'Escribe la razón por la cual será regresado el pedido a ventas:',
+        ],
     ],
 
     // Create
