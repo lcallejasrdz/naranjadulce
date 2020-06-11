@@ -22,14 +22,13 @@ class DatabaseSeeder extends Seeder
             $this->call(ShippingTableSeeder::class);
             $this->call(DeliveryTableSeeder::class);
             $this->call(StatusTableSeeder::class);
+            $this->call(AddVerificarStatusSeeder::class);
         }
         else if(env('APP_ENV') == 'testing')
         {
-
         }
         else
         {
-            $this->call(AddVerificarStatusSeeder::class);
         }
     }
 }
