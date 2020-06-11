@@ -14,30 +14,7 @@
 @section('content')
     <div class="card shadow mb-4">
         <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-bordered table-striped">
-                    <tbody>
-                        @foreach($item as $column => $value)
-                            @if($value != '')
-                                <tr>
-                                    <th>
-                                        {{ ucfirst(trans('validation.attributes.'.$column)) }}
-                                    </th>
-                                    <td>
-                                        @if(($column == 'last_login' && $value != "") || ($column == 'created_at' && $value != "") || ($column == 'updated_at' && $value != "") || ($column == 'deleted_at' && $value != ""))
-                                            {{ \Carbon\Carbon::parse($value)->diffForHumans() }}
-                                        @else
-                                            {{ $value }}
-                                        @endif
-                                    </td>
-                                </tr>
-                            @endif
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
             @isset($sale)
-                <hr>
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped">
                         <tbody>
@@ -62,7 +39,30 @@
                         </tbody>
                     </table>
                 </div>
+                <hr>
             @endisset
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <tbody>
+                        @foreach($item as $column => $value)
+                            @if($value != '')
+                                <tr>
+                                    <th>
+                                        {{ ucfirst(trans('validation.attributes.'.$column)) }}
+                                    </th>
+                                    <td>
+                                        @if(($column == 'last_login' && $value != "") || ($column == 'created_at' && $value != "") || ($column == 'updated_at' && $value != "") || ($column == 'deleted_at' && $value != ""))
+                                            {{ \Carbon\Carbon::parse($value)->diffForHumans() }}
+                                        @else
+                                            {{ $value }}
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endif
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 @endsection
