@@ -204,7 +204,7 @@ return [
         // Buys Form
         'postal_code'           => 'código postal',
         'state'                 => 'estado',
-        'municipality'          => 'municipio',
+        'municipality'          => 'delegación o municipio',
         'colony'                => 'colonia',
         'street'                => 'calle',
         'no_ext'                => 'no. Exterior',

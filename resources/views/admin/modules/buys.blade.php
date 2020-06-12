@@ -169,7 +169,14 @@
             @enderror
         </div>
         <div class="form-group">
-            <input type="text" class="form-control form-control-user @error('thematic') is-invalid @enderror" id="thematic" name="thematic" placeholder="{{ ucfirst(trans('validation.attributes.thematic')) }} *" value="{{ old('thematic') }}">
+            <select class="form-control @error('thematic') is-invalid @enderror" id="thematic" name="thematic">
+                <option selected disabled>{{ ucfirst(trans('validation.attributes.thematic')) }} *</option>
+                <option value="{{ ucfirst(trans('module_buys.thematic.birthdate')) }}" {{ old('thematic') == ucfirst(trans('module_buys.thematic.birthdate')) ? 'selected' : '' }}>{{ ucfirst(trans('module_buys.thematic.birthdate')) }}</option>
+                <option value="{{ ucfirst(trans('module_buys.thematic.anniversary')) }}" {{ old('thematic') == ucfirst(trans('module_buys.thematic.anniversary')) ? 'selected' : '' }}>{{ ucfirst(trans('module_buys.thematic.anniversary')) }}</option>
+                <option value="{{ ucfirst(trans('module_buys.thematic.love')) }}" {{ old('thematic') == ucfirst(trans('module_buys.thematic.love')) ? 'selected' : '' }}>{{ ucfirst(trans('module_buys.thematic.love')) }}</option>
+                <option value="{{ ucfirst(trans('module_buys.thematic.friendship')) }}" {{ old('thematic') == ucfirst(trans('module_buys.thematic.friendship')) ? 'selected' : '' }}>{{ ucfirst(trans('module_buys.thematic.friendship')) }}</option>
+                <option value="{{ ucfirst(trans('module_buys.thematic.other')) }}" {{ old('thematic') == ucfirst(trans('module_buys.thematic.other')) ? 'selected' : '' }}>{{ ucfirst(trans('module_buys.thematic.other')) }}</option>
+            </select>
             @error('thematic')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror

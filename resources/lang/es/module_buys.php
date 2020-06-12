@@ -78,4 +78,11 @@ return [
         'no'                    => 'No',
         'unknow'                => 'Desconozco',
     ],
+    'thematic'               => [
+        'birthdate'             => 'Cumpleaños',
+        'anniversary'           => 'Aniversario',
+        'love'                  => 'Amor',
+        'friendship'            => 'Amistad',
+        'other'                 => 'Otro',
+    ],
 ];
