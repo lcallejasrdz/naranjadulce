@@ -66,7 +66,7 @@ return [
     'delivery_schedule'     => [
         'early'                 => '09:00 - 12:00',
         'late'                  => '13:00 - 18:00',
-        'preferential'          => 'Horario preferencial',
+        'preferential'          => 'Horario preferencial (costo extra)',
     ],
     'address_type'          => [
         'private'               => 'Particular',
