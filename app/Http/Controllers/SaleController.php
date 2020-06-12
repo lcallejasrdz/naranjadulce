@@ -144,7 +144,7 @@ class SaleController extends Controller
         }
 
         if($item->save() && $buy->save()){
-            return Redirect::route($this->active)->with('success', trans('crud.create.message.success'));
+            return Redirect::route($this->active)->with('success', trans('crud.sale.message.success'));
         }else{
             $item->forceDelete();
             Storage::delete($path);
@@ -152,7 +152,7 @@ class SaleController extends Controller
             $buy->status_id = 1;
             $buy->save();
 
-            return Redirect::back()->with('error', trans('crud.create.message.error'));
+            return Redirect::back()->with('error', trans('crud.sale.message.error'));
         }
     }
 

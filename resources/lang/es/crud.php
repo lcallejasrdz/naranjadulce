@@ -75,6 +75,16 @@ return [
         'submit'                => 'Realizar pedido',
     ],
 
+    // Buy
+    'sale'                   => [
+        'title'                 => 'Confirmar',
+        'message'               => [
+            'success'               => 'El pedido se ha confirmado con éxito',
+            'error'                 => 'Error al confirmar el pedido',
+        ],
+        'submit'                => 'Confirmar',
+    ],
+
     // Create
     'finance'               => [
         'message'               => [
@@ -82,6 +92,7 @@ return [
             'error'                 => 'Error al verificar el pago',
         ],
         'add'                   => 'Verificar pago',
+        'submit'                => 'Aceptar',
     ],
 
     // Create
@@ -98,6 +109,7 @@ return [
             'question'              => '¿Seguro que deseas regresar el pedido?',
             'message'               => 'Escribe la razón por la cual será regresado el pedido a ventas:',
         ],
+        'submit'                => 'Realizado',
     ],
 
     // Create
@@ -107,6 +119,7 @@ return [
             'error'                 => 'Error al verificar el envío',
         ],
         'add'                   => 'Verificar envío',
+        'submit'                => 'Enviar',
     ],
 
     // Create
@@ -116,5 +129,6 @@ return [
             'error'                 => 'Error al verificar la entrega',
         ],
         'add'                   => 'Verificar entrega',
+        'submit'                => 'Entregado',
     ],
 ];
