@@ -99,4 +99,38 @@
 			</div>
 		</div>
 	</li>
+	{{-- Almacén --}}
+	@php
+	    $route_module = '';
+	@endphp
+	<!-- Nav Item - Pages Collapse Menu -->
+	<li class="nav-item">
+		<a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseAlmacen" aria-expanded="true" aria-controls="collapseAlmacen">
+			<i class="fas fa-fw fa-warehouse"></i>
+			<span>Almacén</span>
+		</a>
+		<div id="collapseAlmacen" class="collapse" aria-labelledby="heading" data-parent="#accordionSidebar">
+			<div class="bg-white py-2 collapse-inner rounded">
+				<h6 class="collapse-header">{{ trans('crud.manage') }} almacén:</h6>
+				<a class="collapse-item" href="#">{{ trans('crud.sidebar.list') }}</a>
+			</div>
+		</div>
+	</li>
+	{{-- Paquetes --}}
+	@php
+	    $route_module = '';
+	@endphp
+	<!-- Nav Item - Pages Collapse Menu -->
+	<li class="nav-item">
+		<a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePaquetes" aria-expanded="true" aria-controls="collapsePaquetes">
+			<i class="fas fa-fw fa-box-open"></i>
+			<span>Paquetes</span>
+		</a>
+		<div id="collapsePaquetes" class="collapse" aria-labelledby="heading" data-parent="#accordionSidebar">
+			<div class="bg-white py-2 collapse-inner rounded">
+				<h6 class="collapse-header">{{ trans('crud.manage') }} paquetes:</h6>
+				<a class="collapse-item" href="#">{{ trans('crud.sidebar.list') }}</a>
+			</div>
+		</div>
+	</li>
 @endif

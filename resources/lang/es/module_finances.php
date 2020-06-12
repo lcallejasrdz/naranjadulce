@@ -4,7 +4,7 @@ $model = "Finance";
 
 $singular_ucfirst = "Confirmación de pago";
 $singular_lcfirst = "confirmación de pago";
-$plural_ucfirst = "Pagos";
+$plural_ucfirst = "Finanzas";
 
 return [
     // Controller
@@ -25,7 +25,7 @@ return [
         'word'                  => $plural_ucfirst,
         'create_word'           => 'Agregar '.$singular_lcfirst,
         'edit_word'             => 'Editar '.$singular_lcfirst,
-        'deleted_word'          => $plural_ucfirst.' eliminados',
+        'deleted_word'          => $plural_ucfirst.' eliminadas',
     ],
     // Sidebar
     'sidebar'               => [

@@ -4,7 +4,7 @@ $model = "Shipping";
 
 $singular_ucfirst = "Confirmación de envío";
 $singular_lcfirst = "confirmación de envío";
-$plural_ucfirst = "Envios";
+$plural_ucfirst = "Logística";
 
 return [
     // Controller
@@ -25,7 +25,7 @@ return [
         'word'                  => $plural_ucfirst,
         'create_word'           => 'Agregar '.$singular_lcfirst,
         'edit_word'             => 'Editar '.$singular_lcfirst,
-        'deleted_word'          => $plural_ucfirst.' eliminados',
+        'deleted_word'          => 'Logisticas eliminadas',
     ],
     // Sidebar
     'sidebar'               => [
