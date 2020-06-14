@@ -39,7 +39,7 @@ return [
     ],
     'delivery_type'         => [
         'normal'                => 'normal',
-        'special'               => 'especial',
+        'special'               => 'preferencial',
     ],
     // Sidebar
     'sidebar'               => [

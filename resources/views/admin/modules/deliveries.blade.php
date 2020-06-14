@@ -1,7 +1,7 @@
 <table class="table table-striped">
 	<tbody>
 		@foreach($item as $column => $value)
-			@if($column != 'last_login' && $column != 'created_at' && $column != 'updated_at' && $column != 'deleted_at' && $column != 'slug')
+			@if($column != 'last_login' && $column != 'created_at' && $column != 'updated_at' && $column != 'deleted_at' && $column != 'slug' && $value != '')
 	            <tr>
 	                <th>
 	                    {{ ucfirst(trans('validation.attributes.'.$column)) }}

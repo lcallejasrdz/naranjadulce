@@ -24,6 +24,8 @@
 
 	<input type="hidden" value="{{ $buy['slug'] }}" id="slug" name="slug">
 	<input type="hidden" value="{{ Sentinel::getUser()->id }}" id="user_id" name="user_id">
+	<input type="hidden" value="{{ $buy['delivery_schedule'] }}" id="delivery_schedule" name="delivery_schedule">
+
 
 	<div class="form-group">
 		<label for="quantity">{{ ucfirst(trans('validation.attributes.quantity')) }} *</label>
@@ -59,8 +61,8 @@
 	</div>
 
 	<div class="form-group">
-		<label for="preferential_schedule">{{ ucfirst(trans('validation.attributes.preferential_schedule')) }}</label>
-		<input type="text" class="form-control @error('preferential_schedule') is-invalid @enderror" id="preferential_schedule" name="preferential_schedule" value="@if(isset($item)){{ $item->preferential_schedule }}@else{{ old('preferential_schedule') }}@endif">
+		<label for="preferential_schedule">{{ ucfirst(trans('validation.attributes.preferential_schedule')) }} @if($buy['delivery_schedule'] == ucfirst(trans('module_buys.delivery_schedule.preferential')))*@endif</label>
+		<input type="text" class="form-control @error('preferential_schedule') is-invalid @enderror" id="preferential_schedule" name="preferential_schedule" value="@if(isset($item)){{ $item->preferential_schedule }}@else{{ old('preferential_schedule') }}@endif"  @if($buy['delivery_schedule'] != ucfirst(trans('module_buys.delivery_schedule.preferential'))) {{ 'readonly' }} @endif>
 		@error('preferential_schedule')
 		    <div class="alert alert-danger">{{ $message }}</div>
 		@enderror
