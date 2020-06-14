@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str as Str;
 use Illuminate\Support\Arr;
 use App\Buy;
+use App\ViewBuy;
 use App\Sale;
 use DB;
 
