@@ -15,6 +15,7 @@ return [
             'first_name',
             'last_name',
             'package',
+            'delivery_date',
             'status_id',
             'created_at',
         ],

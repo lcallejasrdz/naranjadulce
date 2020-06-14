@@ -40,6 +40,7 @@ class SaleModuleTest extends DuskTestCase
                     ->assertSee(ucfirst(trans('validation.attributes.first_name')))
                     ->assertSee(ucfirst(trans('validation.attributes.last_name')))
                     ->assertSee(ucfirst(trans('validation.attributes.package')))
+                    ->assertSee(ucfirst(trans('validation.attributes.delivery_date')))
                     ->assertSee(ucfirst(trans('validation.attributes.status_id')))
                     ->assertSee(ucfirst(trans('validation.attributes.created_at')))
                     ->assertSee(ucfirst(trans('validation.attributes.actions')))
