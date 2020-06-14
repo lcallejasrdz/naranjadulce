@@ -130,5 +130,65 @@ class FinanceController extends Controller
             return Redirect::back()->with('error', trans('crud.finance.message.error'));
         }
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function finished()
+    {
+        $view = 'financefinished';
+
+        $active = $this->active;
+        $word = $this->word;
+        $model = trans('module_buys.controller.model');
+        $select = $this->select;
+        $columns = $this->columns;
+        $actions = $this->actions;
+        $item = null;
+
+        return view('admin.crud.list', compact($this->compact));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($slug)
+    {
+        $view = 'show';
+
+        $active = $this->active;
+        $word = $this->word;
+        $model = null;
+        $select = null;
+        $columns = null;
+        $actions = null;
+
+        $item = DB::table('view_buys')
+                    ->where('view_buys.slug', $slug)
+                    ->join('view_sales', 'view_buys.slug', '=', 'view_sales.slug')
+                    ->select(
+                        'view_buys.id',
+                        'view_buys.slug',
+                        'view_buys.first_name',
+                        'view_buys.last_name',
+                        'view_sales.quantity',
+                        'view_sales.seller_package',
+                        'view_sales.seller_modifications',
+                        'view_sales.observations_finances',
+                        'view_sales.shipping_cost',
+                        'view_sales.proof_of_payment',
+                        'view_buys.delivery_date',
+                        'view_buys.delivery_schedule',
+                        'view_sales.preferential_schedule'
+                    )
+                    ->first();
+
+        return view('admin.crud.show', compact($this->compact));
+    }
 }
 

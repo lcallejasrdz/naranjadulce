@@ -33,10 +33,24 @@ class DataTablesController extends Controller
             $rows = $full_model::where('status_id', 'En producción, pendiente de pago')
                                     ->orWhere('status_id', 'Pendiente de pago')
                                     ->data();
+        }else if($view == 'financefinished'){
+            $full_model = 'App\\View'.$request->model;
+            $rows = $full_model::where('status_id', 'En producción')
+                                    ->orWhere('status_id', 'Pendiente de envío')
+                                    ->orWhere('status_id', 'En ruta')
+                                    ->orWhere('status_id', 'Entregado')
+                                    ->data();
         }else if($view == 'buildings'){
             $full_model = 'App\\View'.$request->model;
             $rows = $full_model::where('status_id', 'En producción, pendiente de pago')
                                     ->orWhere('status_id', 'En producción')
+                                    ->data();
+        }else if($view == 'buildingfinished'){
+            $full_model = 'App\\View'.$request->model;
+            $rows = $full_model::where('status_id', 'Pendiente de pago')
+                                    ->orWhere('status_id', 'Pendiente de envío')
+                                    ->orWhere('status_id', 'En ruta')
+                                    ->orWhere('status_id', 'Entregado')
                                     ->data();
         }else if($view == 'shippings'){
             $full_model = 'App\\View'.$request->model;
@@ -45,9 +59,18 @@ class DataTablesController extends Controller
                                     ->orWhere('status_id', 'Pendiente de pago')
                                     ->orWhere('status_id', 'En producción, pendiente de pago')
                                     ->data();
+        }else if($view == 'shippingfinished'){
+            $full_model = 'App\\View'.$request->model;
+            $rows = $full_model::where('status_id', 'En ruta')
+                                    ->orWhere('status_id', 'Entregado')
+                                    ->data();
         }else if($view == 'deliveries'){
             $full_model = 'App\\View'.$request->model;
             $rows = $full_model::where('status_id', 'En ruta')
+                                    ->data();
+        }else if($view == 'deliveryfinished'){
+            $full_model = 'App\\View'.$request->model;
+            $rows = $full_model::where('status_id', 'Entregado')
                                     ->data();
         }else if($view == 'finished'){
             $full_model = 'App\\View'.$request->model;
@@ -84,7 +107,7 @@ class DataTablesController extends Controller
                     if($actions_value == 1 || $actions_value == 2){
                         $actions .= ' <a href="'. route($active.'.create', $row->slug) .'" class="btn btn-success btn-circle btn-sm"><i class="fas fa-edit"></i></a>';
                     }
-                }else if($view == 'finished'){
+                }else if($view == 'finished' || $view == 'financefinished' || $view == 'buildingfinished' || $view == 'shippingfinished' || $view == 'deliveryfinished'){
                     $actions = '';
                     if($actions_value == 1 || $actions_value == 2){
                         $actions .= ' <a href="'. route($active.'.show', $row->slug) .'" class="btn btn-success btn-circle btn-sm"><i class="fas fa-edit"></i></a>';

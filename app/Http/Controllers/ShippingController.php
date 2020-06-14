@@ -142,5 +142,81 @@ class ShippingController extends Controller
             return Redirect::back()->with('error', trans('crud.shipping.message.error'));
         }
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function finished()
+    {
+        $view = 'shippingfinished';
+
+        $active = $this->active;
+        $word = $this->word;
+        $model = trans('module_buys.controller.model');
+        $select = $this->select;
+        $columns = $this->columns;
+        $actions = $this->actions;
+        $item = null;
+
+        return view('admin.crud.list', compact($this->compact));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($slug)
+    {
+        $view = 'show';
+
+        $active = $this->active;
+        $word = $this->word;
+        $model = null;
+        $select = null;
+        $columns = null;
+        $actions = null;
+
+        $item = DB::table('view_buys')
+                    ->where('view_buys.slug', $slug)
+                    ->join('view_sales', 'view_buys.slug', '=', 'view_sales.slug')
+                    ->select(
+                        'view_buys.id',
+                        'view_buys.slug',
+                        'view_buys.first_name',
+                        'view_buys.last_name',
+                        'view_buys.phone',
+                        'view_sales.quantity',
+                        'view_sales.seller_package',
+                        'view_buys.thematic',
+                        'view_sales.seller_modifications',
+                        'view_buys.buy_message',
+                        'view_buys.who_sends',
+                        'view_buys.who_receives',
+                        'view_sales.delivery_type',
+                        'view_buys.delivery_schedule',
+                        'view_buys.delivery_schedule',
+                        'view_sales.preferential_schedule',
+                        'view_buys.postal_code',
+                        'view_buys.state',
+                        'view_buys.municipality',
+                        'view_buys.colony',
+                        'view_buys.street',
+                        'view_buys.no_ext',
+                        'view_buys.no_int',
+                        'view_buys.address_references',
+                        'view_buys.address_type',
+                        'view_buys.parking',
+                        'view_sales.observations_shippings',
+                        'view_sales.shipping_cost',
+                        'view_buys.status_id'
+                    )
+                    ->first();
+
+        return view('admin.crud.show', compact($this->compact));
+    }
 }
 

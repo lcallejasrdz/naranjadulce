@@ -59,6 +59,8 @@ Route::group(array('middleware' => 'sentinelAuth'), function () {
 	$route = 'finances';
 	$controller = 'FinanceController';
 	Route::group(array('prefix' => $route), function () use ($route, $controller) {
+		Route::get('finished/{slug}', array('as' => $route.'.show', 'uses' => $controller.'@show'));
+	    Route::get('finished', array('as' => $route.'.finished', 'uses' => $controller.'@finished'));
 	    Route::get('/', array('as' => $route, 'uses' => $controller.'@index'));
 		Route::get('{slug_buy}', array('as' => $route.'.create', 'uses' => $controller.'@create'));
 		Route::post('create', array('as' => $route.'.store', 'uses' => $controller.'@store'));
@@ -69,6 +71,8 @@ Route::group(array('middleware' => 'sentinelAuth'), function () {
 	$route = 'buildings';
 	$controller = 'BuildingController';
 	Route::group(array('prefix' => $route), function () use ($route, $controller) {
+		Route::get('finished/{slug}', array('as' => $route.'.show', 'uses' => $controller.'@show'));
+	    Route::get('finished', array('as' => $route.'.finished', 'uses' => $controller.'@finished'));
 	    Route::get('/', array('as' => $route, 'uses' => $controller.'@index'));
 		Route::get('{slug_buy}', array('as' => $route.'.create', 'uses' => $controller.'@create'));
 		Route::post('create', array('as' => $route.'.store', 'uses' => $controller.'@store'));
@@ -80,6 +84,8 @@ Route::group(array('middleware' => 'sentinelAuth'), function () {
 	$route = 'shippings';
 	$controller = 'ShippingController';
 	Route::group(array('prefix' => $route), function () use ($route, $controller) {
+		Route::get('finished/{slug}', array('as' => $route.'.show', 'uses' => $controller.'@show'));
+	    Route::get('finished', array('as' => $route.'.finished', 'uses' => $controller.'@finished'));
 	    Route::get('/', array('as' => $route, 'uses' => $controller.'@index'));
 		Route::get('{slug_buy}', array('as' => $route.'.create', 'uses' => $controller.'@create'));
 		Route::post('create', array('as' => $route.'.store', 'uses' => $controller.'@store'));
@@ -90,6 +96,8 @@ Route::group(array('middleware' => 'sentinelAuth'), function () {
 	$route = 'deliveries';
 	$controller = 'DeliveryController';
 	Route::group(array('prefix' => $route), function () use ($route, $controller) {
+		Route::get('finished/{slug}', array('as' => $route.'.show', 'uses' => $controller.'@show'));
+	    Route::get('finished', array('as' => $route.'.finished', 'uses' => $controller.'@finished'));
 	    Route::get('/', array('as' => $route, 'uses' => $controller.'@index'));
 		Route::get('{slug_buy}', array('as' => $route.'.create', 'uses' => $controller.'@create'));
 		Route::post('create', array('as' => $route.'.store', 'uses' => $controller.'@store'));

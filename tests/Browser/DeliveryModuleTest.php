@@ -176,4 +176,115 @@ class DeliveryModuleTest extends DuskTestCase
 
         $shipping->forceDelete();
     }
+
+    /**
+     * @test
+     */
+    public function itLoadsTheDeliveryFinishedsListPage()
+    {
+        Sentinel::logout();
+
+        $authuser = ObjectsDusk::authenticated();
+
+        $this->browse(function (Browser $browser) use ($authuser) {
+            $browser->visit('/')
+                    ->type('email', $authuser['email'])
+                    ->type('password', $authuser['password'])
+                    ->press(trans('auth.submit'))
+                    ->waitForText(ucfirst(trans('module_users.controller.word')))
+                    ->assertSee(ucfirst(trans('module_users.controller.word')))
+                    ->assertSee(ucfirst(trans('validation.attributes.id')))
+                    ->assertSee(ucfirst(trans('validation.attributes.first_name')))
+                    ->assertSee(ucfirst(trans('validation.attributes.last_name')))
+                    ->assertSee(ucfirst(trans('validation.attributes.email')))
+                    ->assertSee(ucfirst(trans('validation.attributes.created_at')))
+                    ->assertSee(ucfirst(trans('validation.attributes.actions')))
+
+                    ->visit('/deliveries/finished')
+                    ->waitForText(ucfirst(trans('module_deliveries.controller.word')))
+                    ->assertSee(ucfirst(trans('module_deliveries.controller.word')))
+
+                    ->assertSee(ucfirst(trans('validation.attributes.id')))
+                    ->assertSee(ucfirst(trans('validation.attributes.first_name')))
+                    ->assertSee(ucfirst(trans('validation.attributes.last_name')))
+                    ->assertSee(ucfirst(trans('validation.attributes.delivery_date')))
+                    ->assertSee(ucfirst(trans('validation.attributes.created_at')))
+                    ->assertSee(ucfirst(trans('validation.attributes.actions')))
+
+                    ->visit('/logout')
+                    ->waitForText(trans('auth.title'))
+                    ->assertSee(trans('auth.title'));
+        });
+
+        ObjectsDusk::deleteUser($authuser['email']);
+    }
+
+    /**
+     * @test
+     */
+    function itLoadsTheDeliveryFinishedShowPage()
+    {
+        Sentinel::logout();
+        
+        $buy = ObjectsDusk::createBuy();
+        
+        $sale = ObjectsDusk::createSale();
+        
+        $finance = ObjectsDusk::createFinance();
+        
+        $building = ObjectsDusk::createBuilding();
+        
+        $shipping = ObjectsDusk::createShipping();
+        
+        $delivery = ObjectsDusk::createDelivery();
+
+        $authuser = ObjectsDusk::authenticated();
+
+        $this->browse(function (Browser $browser) use ($authuser, $buy) {
+            $browser->visit('/')
+                    ->type('email', $authuser['email'])
+                    ->type('password', $authuser['password'])
+                    ->press(trans('auth.submit'))
+                    ->waitForText(ucfirst(trans('module_users.controller.word')))
+                    ->assertSee(ucfirst(trans('module_users.controller.word')))
+                    ->assertSee(ucfirst(trans('validation.attributes.id')))
+                    ->assertSee(ucfirst(trans('validation.attributes.first_name')))
+                    ->assertSee(ucfirst(trans('validation.attributes.last_name')))
+                    ->assertSee(ucfirst(trans('validation.attributes.email')))
+                    ->assertSee(ucfirst(trans('validation.attributes.created_at')))
+                    ->assertSee(ucfirst(trans('validation.attributes.actions')))
+
+                    ->visit('/deliveries/finished/'.$buy->slug)
+                    ->waitForText(ucfirst(trans('module_deliveries.controller.word')))
+                    ->assertSee(ucfirst(trans('module_deliveries.controller.word')))
+
+                    ->assertSee(ucfirst(trans('validation.attributes.id')))
+                    ->assertSee(ucfirst(trans('validation.attributes.slug')))
+                    ->assertSee(ucfirst(trans('validation.attributes.first_name')))
+                    ->assertSee(ucfirst(trans('validation.attributes.last_name')))
+                    ->assertSee(ucfirst(trans('validation.attributes.phone')))
+                    ->assertSee(ucfirst(trans('validation.attributes.delivery_type')))
+                    ->assertSee(ucfirst(trans('validation.attributes.delivery_date')))
+                    ->assertSee(ucfirst(trans('validation.attributes.delivery_schedule')))
+                    ->assertSee(ucfirst(trans('validation.attributes.preferential_schedule')))
+
+                    ->visit('/logout')
+                    ->waitForText(trans('auth.title'))
+                    ->assertSee(trans('auth.title'));
+        });
+
+        ObjectsDusk::deleteUser($authuser['email']);
+
+        $buy->forceDelete();
+
+        $sale->forceDelete();
+
+        $finance->forceDelete();
+
+        $building->forceDelete();
+
+        $shipping->forceDelete();
+
+        $delivery->forceDelete();
+    }
 }

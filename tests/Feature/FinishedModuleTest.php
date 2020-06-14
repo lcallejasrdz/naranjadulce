@@ -208,4 +208,160 @@ class FinishedModuleTest extends TestCase
             ->get('/'.$route.'/finished/kaljdshfkjadsht6t676thagvjdsfASDF')
             ->assertStatus(200);
     }
+
+    /**
+     * @test
+     */
+    public function itLoadsTheFinanceFinishedListPage()
+    {
+        $route = 'finances';
+
+        $this->authenticated()
+            ->get('/'.$route.'/finished')
+            ->assertStatus(200)
+            ->assertSee(trans('module_'.$route.'.controller.word'));
+    }
+    
+    /**
+     * @test
+     */
+    function itLoadsTheFinanceFinishedShowPage()
+    {
+        $this->createStatus();
+
+        $this->newBuy();
+
+        $this->newSale();
+
+        $this->newFinance();
+
+        $this->newBuilding();
+
+        $this->newShipping();
+
+        $this->newDelivery();
+        
+        $route = 'finances';
+        
+        $this->authenticated()
+            ->get('/'.$route.'/finished/kaljdshfkjadsht6t676thagvjdsfASDF')
+            ->assertStatus(200);
+    }
+
+    /**
+     * @test
+     */
+    public function itLoadsTheBuildingFinishedListPage()
+    {
+        $route = 'buildings';
+
+        $this->authenticated()
+            ->get('/'.$route.'/finished')
+            ->assertStatus(200)
+            ->assertSee(trans('module_'.$route.'.controller.word'));
+    }
+    
+    /**
+     * @test
+     */
+    function itLoadsTheBuildingFinishedShowPage()
+    {
+        $this->createStatus();
+
+        $this->newBuy();
+
+        $this->newSale();
+
+        $this->newFinance();
+
+        $this->newBuilding();
+
+        $this->newShipping();
+
+        $this->newDelivery();
+        
+        $route = 'buildings';
+        
+        $this->authenticated()
+            ->get('/'.$route.'/finished/kaljdshfkjadsht6t676thagvjdsfASDF')
+            ->assertStatus(200);
+    }
+
+    /**
+     * @test
+     */
+    public function itLoadsTheShippingFinishedListPage()
+    {
+        $route = 'shippings';
+
+        $this->authenticated()
+            ->get('/'.$route.'/finished')
+            ->assertStatus(200)
+            ->assertSee(trans('module_'.$route.'.controller.word'));
+    }
+    
+    /**
+     * @test
+     */
+    function itLoadsTheShippingFinishedShowPage()
+    {
+        $this->createStatus();
+
+        $this->newBuy();
+
+        $this->newSale();
+
+        $this->newFinance();
+
+        $this->newBuilding();
+
+        $this->newShipping();
+
+        $this->newDelivery();
+        
+        $route = 'shippings';
+        
+        $this->authenticated()
+            ->get('/'.$route.'/finished/kaljdshfkjadsht6t676thagvjdsfASDF')
+            ->assertStatus(200);
+    }
+
+    /**
+     * @test
+     */
+    public function itLoadsTheDeliveryFinishedListPage()
+    {
+        $route = 'deliveries';
+
+        $this->authenticated()
+            ->get('/'.$route.'/finished')
+            ->assertStatus(200)
+            ->assertSee(trans('module_'.$route.'.controller.word'));
+    }
+    
+    /**
+     * @test
+     */
+    function itLoadsTheDeliveryFinishedShowPage()
+    {
+        $this->createStatus();
+
+        $this->newBuy();
+
+        $this->newSale();
+
+        $this->newFinance();
+
+        $this->newBuilding();
+
+        $this->newShipping();
+
+        $this->newDelivery();
+        
+        $route = 'deliveries';
+        
+        $this->authenticated()
+            ->get('/'.$route.'/finished/kaljdshfkjadsht6t676thagvjdsfASDF')
+            ->assertStatus(200);
+    }
 }
