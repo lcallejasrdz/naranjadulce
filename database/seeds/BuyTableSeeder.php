@@ -26,6 +26,7 @@ class BuyTableSeeder extends Seeder
 	        'street' => 'Dominicos',
 	        'no_ext' => '11',
 	        'package' => 'Paquete Friendzone',
+	        'thematic' => 'Amor',
 	        'buy_message' => 'Ahorita no joven',
 	        'delivery_date' => '10 de Mayo',
 	        'delivery_schedule' => '09:00 - 13:00',
