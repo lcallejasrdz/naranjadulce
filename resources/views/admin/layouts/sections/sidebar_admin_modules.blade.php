@@ -21,7 +21,7 @@
 			<div class="bg-white py-2 collapse-inner rounded">
 				<h6 class="collapse-header">{{ trans('crud.manage') }} {{ trans('module_'.$route_module.'.sidebar.route_title_plural') }}:</h6>
 				<a class="collapse-item {!! (Request::is($route_module) ? 'active' : '') !!}" href="{!! URL::route($route_module) !!}">{{ trans('module_'.$route_module.'.sidebar.title') }}</a>
-				<a class="collapse-item {!! (Request::is($route_module) ? 'active' : '') !!}" href="{!! URL::route($route_module.'.finished') !!}">{{ trans('module_'.$route_module.'.sidebar.finished') }}</a>
+				<a class="collapse-item {!! (Request::is($route_module.'/finished') ? 'active' : '') !!}" href="{!! URL::route($route_module.'.finished') !!}">{{ trans('module_'.$route_module.'.sidebar.finished') }}</a>
 			</div>
 		</div>
 	</li>
@@ -41,7 +41,7 @@
 			<div class="bg-white py-2 collapse-inner rounded">
 				<h6 class="collapse-header">{{ trans('crud.manage') }} {{ trans('module_'.$route_module.'.sidebar.route_title_plural') }}:</h6>
 				<a class="collapse-item {!! (Request::is($route_module) ? 'active' : '') !!}" href="{!! URL::route($route_module) !!}">{{ trans('crud.sidebar.list') }}</a>
-				<a class="collapse-item {!! (Request::is($route_module) ? 'active' : '') !!}" href="{!! URL::route($route_module.'.finished') !!}">{{ trans('module_'.$route_module.'.sidebar.finished') }}</a>
+				<a class="collapse-item {!! (Request::is($route_module.'/finished') ? 'active' : '') !!}" href="{!! URL::route($route_module.'.finished') !!}">{{ trans('module_'.$route_module.'.sidebar.finished') }}</a>
 			</div>
 		</div>
 	</li>
@@ -61,7 +61,7 @@
 			<div class="bg-white py-2 collapse-inner rounded">
 				<h6 class="collapse-header">{{ trans('crud.manage') }} {{ trans('module_'.$route_module.'.sidebar.route_title_plural') }}:</h6>
 				<a class="collapse-item {!! (Request::is($route_module) ? 'active' : '') !!}" href="{!! URL::route($route_module) !!}">{{ trans('crud.sidebar.list') }}</a>
-				<a class="collapse-item {!! (Request::is($route_module) ? 'active' : '') !!}" href="{!! URL::route($route_module.'.finished') !!}">{{ trans('module_'.$route_module.'.sidebar.finished') }}</a>
+				<a class="collapse-item {!! (Request::is($route_module.'/finished') ? 'active' : '') !!}" href="{!! URL::route($route_module.'.finished') !!}">{{ trans('module_'.$route_module.'.sidebar.finished') }}</a>
 			</div>
 		</div>
 	</li>
@@ -81,7 +81,7 @@
 			<div class="bg-white py-2 collapse-inner rounded">
 				<h6 class="collapse-header">{{ trans('crud.manage') }} {{ trans('module_'.$route_module.'.sidebar.route_title_plural') }}:</h6>
 				<a class="collapse-item {!! (Request::is($route_module) ? 'active' : '') !!}" href="{!! URL::route($route_module) !!}">{{ trans('crud.sidebar.list') }}</a>
-				<a class="collapse-item {!! (Request::is($route_module) ? 'active' : '') !!}" href="{!! URL::route($route_module.'.finished') !!}">{{ trans('module_'.$route_module.'.sidebar.finished') }}</a>
+				<a class="collapse-item {!! (Request::is($route_module.'/finished') ? 'active' : '') !!}" href="{!! URL::route($route_module.'.finished') !!}">{{ trans('module_'.$route_module.'.sidebar.finished') }}</a>
 			</div>
 		</div>
 	</li>
@@ -99,7 +99,7 @@
 			<div class="bg-white py-2 collapse-inner rounded">
 				<h6 class="collapse-header">{{ trans('crud.manage') }} {{ trans('module_'.$route_module.'.sidebar.route_title_plural') }}:</h6>
 				<a class="collapse-item {!! (Request::is($route_module) ? 'active' : '') !!}" href="{!! URL::route($route_module) !!}">{{ trans('crud.sidebar.list') }}</a>
-				<a class="collapse-item {!! (Request::is($route_module) ? 'active' : '') !!}" href="{!! URL::route($route_module.'.finished') !!}">{{ trans('module_'.$route_module.'.sidebar.finished') }}</a>
+				<a class="collapse-item {!! (Request::is($route_module.'/finished') ? 'active' : '') !!}" href="{!! URL::route($route_module.'.finished') !!}">{{ trans('module_'.$route_module.'.sidebar.finished') }}</a>
 			</div>
 		</div>
 	</li>
