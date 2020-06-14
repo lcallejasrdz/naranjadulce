@@ -117,7 +117,7 @@ class ObjectsDusk extends DuskTestCase
             'quantity' => 3,
             'seller_package' => 'Paquete vendedor',
             'seller_modifications' => 'Modificaciones vendedor',
-            'delivery_type' => 'Especial',
+            'delivery_type' => 'Preferencial',
             'preferential_schedule' => '14:00',
             'observations_finances' => 'Observaciones finanzas',
             'observations_buildings' => 'Observaciones producción',

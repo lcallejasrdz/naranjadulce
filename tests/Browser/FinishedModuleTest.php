@@ -90,7 +90,6 @@ class FinishedModuleTest extends DuskTestCase
                     ->waitForText(ucfirst(trans('module_sales.controller.word')))
                     ->assertSee(ucfirst(trans('module_sales.controller.word')))
 
-                    ->assertSee(ucfirst(trans('validation.attributes.user_id')))
                     ->assertSee(ucfirst(trans('validation.attributes.quantity')))
                     ->assertSee(ucfirst(trans('validation.attributes.seller_package')))
                     ->assertSee(ucfirst(trans('validation.attributes.seller_modifications')))

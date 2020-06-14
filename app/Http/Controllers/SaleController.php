@@ -228,9 +228,8 @@ class SaleController extends Controller
                 ->first();
         $item = $item ? $item->toArray() : array();
         
-        $sale = ViewSale::where('slug', $slug)
+        $sale = Sale::where('slug', $slug)
                 ->select(
-                    'user_id',
                     'quantity',
                     'seller_package',
                     'seller_modifications',
