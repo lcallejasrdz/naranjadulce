@@ -50,7 +50,7 @@
 		</a>
 		<!-- Logout Modal-->
 		@include('admin.layouts.modals.logout_modal')
-		@if($active == 'buildings' && isset($item))
+		@if($active == 'buildings' && isset($item) && $view != 'show')
 			@include('admin.layouts.modals.return_modal')
 		@endif
 		<!-- Other Modals-->

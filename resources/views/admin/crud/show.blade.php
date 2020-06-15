@@ -53,6 +53,8 @@
                                     <td>
                                         @if(($column == 'last_login' && $value != "") || ($column == 'created_at' && $value != "") || ($column == 'updated_at' && $value != "") || ($column == 'deleted_at' && $value != ""))
                                             {{ \Carbon\Carbon::parse($value)->diffForHumans() }}
+                                        @elseif($column == 'proof_of_payment')
+                                            <i class="fa fa-download"></i>{!! link_to($value, ' Download File', ['target' => '_blank']) !!}
                                         @else
                                             {{ $value }}
                                         @endif

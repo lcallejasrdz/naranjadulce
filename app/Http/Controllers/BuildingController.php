@@ -209,7 +209,6 @@ class BuildingController extends Controller
                     ->join('view_sales', 'view_buys.slug', '=', 'view_sales.slug')
                     ->select(
                         'view_buys.id',
-                        'view_buys.slug',
                         'view_buys.first_name',
                         'view_buys.last_name',
                         'view_sales.quantity',
