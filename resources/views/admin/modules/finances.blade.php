@@ -1,7 +1,34 @@
 <table class="table table-striped">
 	<tbody>
+		@if($item->preferential_schedule != '')
+			@php $schedule = 1; @endphp
+		@else
+			@php $schedule = 0; @endphp
+		@endif
 		@foreach($item as $column => $value)
-			@if($column != 'last_login' && $column != 'created_at' && $column != 'updated_at' && $column != 'deleted_at' && $column != 'slug' && $column != 'proof_of_payment' && $value != '')
+			@if($column == 'schedule_id')
+				@if($schedule == 0)
+		            <tr>
+		                <th>
+		                    {{ ucfirst(trans('validation.attributes.'.$column)) }}
+		                </th>
+		                <td>
+		                    {{ $value }}
+		                </td>
+		            </tr>
+		        @endif
+			@elseif($column == 'preferential_schedule')
+				@if($schedule == 1)
+		            <tr>
+		                <th>
+		                    {{ ucfirst(trans('validation.attributes.'.$column)) }}
+		                </th>
+		                <td>
+		                    {{ $value }}
+		                </td>
+		            </tr>
+		        @endif
+			@elseif($column != 'last_login' && $column != 'created_at' && $column != 'updated_at' && $column != 'deleted_at' && $column != 'slug' && $column != 'proof_of_payment' && $value != '')
 	            <tr>
 	                <th>
 	                    {{ ucfirst(trans('validation.attributes.'.$column)) }}

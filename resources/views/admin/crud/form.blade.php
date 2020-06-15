@@ -51,4 +51,23 @@
 @endsection
 
 @section('scripts')
+    @if($active == 'sales')
+        <script>
+            $(document).ready(function() {
+                changeFieldSchedule($( "#delivery_type" ).val());
+            });
+            $( "#delivery_type" ).change(function(event){
+                changeFieldSchedule(event.target.value)
+            });
+            function changeFieldSchedule(value){
+                if(value == 'Normal'){
+                    $("#preferential_schedule").attr("readonly", true);
+                    $("#preferential_schedule").val("");
+                }else if(value == 'Preferencial'){
+                    $("#preferential_schedule").attr("readonly", false);
+                }else{
+                }
+            }
+        </script>
+    @endif
 @endsection

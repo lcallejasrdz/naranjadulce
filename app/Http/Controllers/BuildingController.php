@@ -154,7 +154,7 @@ class BuildingController extends Controller
             // Aquí eliminaría el registro de venta, incluído el archivo.
             $sale = Sale::where('slug', $request->slug)->first();
             if(Storage::delete($sale->proof_of_payment)){
-                Sale::destroy($sale->id);
+                Sale::where('id', $sale->id)->forceDelete();
                 return Redirect::route($this->active)->with('success', trans('crud.building.message.returned'));
             }else{
                 $buy->return_reason = '';

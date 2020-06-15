@@ -44,8 +44,35 @@
             <div class="table-responsive">
                 <table class="table table-bordered table-striped">
                     <tbody>
+                        @if(isset($item->preferential_schedule) && $item->preferential_schedule != '')
+                            @php $schedule = 1; @endphp
+                        @else
+                            @php $schedule = 0; @endphp
+                        @endif
                         @foreach($item as $column => $value)
-                            @if($value != '')
+                            @if($column == 'schedule_id')
+                                @if($schedule == 0)
+                                    <tr>
+                                        <th>
+                                            {{ ucfirst(trans('validation.attributes.'.$column)) }}
+                                        </th>
+                                        <td>
+                                            {{ $value }}
+                                        </td>
+                                    </tr>
+                                @endif
+                            @elseif($column == 'preferential_schedule')
+                                @if($schedule == 1)
+                                    <tr>
+                                        <th>
+                                            {{ ucfirst(trans('validation.attributes.'.$column)) }}
+                                        </th>
+                                        <td>
+                                            {{ $value }}
+                                        </td>
+                                    </tr>
+                                @endif
+                            @elseif($value != '')
                                 <tr>
                                     <th>
                                         {{ ucfirst(trans('validation.attributes.'.$column)) }}
