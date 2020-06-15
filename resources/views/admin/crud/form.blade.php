@@ -37,7 +37,7 @@
                 @elseif($active == 'buildings')
                     <input type="submit" class="btn btn-primary" value="{{ trans('crud.building.submit') }}">
                     <a class="btn btn-warning" href="#" data-toggle="modal" data-target="#returnModal">{{ trans('crud.building.return') }}</a>
-                @elseif($active == 'shippings' && $item->status_id == 5)
+                @elseif($active == 'shippings' && $item->status_id == 'Pendiente de envío')
                     <input type="submit" class="btn btn-primary" value="{{ trans('crud.shipping.submit') }}">
                 @elseif($active == 'deliveries')
                     <input type="submit" class="btn btn-primary" value="{{ trans('crud.delivery.submit') }}">

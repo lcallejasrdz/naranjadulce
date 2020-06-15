@@ -201,13 +201,13 @@
                 @enderror
             </div>
             <div class="col-sm-6">
-                <select class="form-control @error('delivery_schedule') is-invalid @enderror" id="delivery_schedule" name="delivery_schedule">
-                    <option selected disabled>{{ ucfirst(trans('validation.attributes.delivery_schedule')) }} *</option>
-                    <option value="{{ ucfirst(trans('module_buys.delivery_schedule.early')) }}" {{ old('delivery_schedule') == ucfirst(trans('module_buys.delivery_schedule.early')) ? 'selected' : '' }}>{{ ucfirst(trans('module_buys.delivery_schedule.early')) }}</option>
-                    <option value="{{ ucfirst(trans('module_buys.delivery_schedule.late')) }}" {{ old('delivery_schedule') == ucfirst(trans('module_buys.delivery_schedule.late')) ? 'selected' : '' }}>{{ ucfirst(trans('module_buys.delivery_schedule.late')) }}</option>
-                    <option value="{{ ucfirst(trans('module_buys.delivery_schedule.preferential')) }}" {{ old('delivery_schedule') == ucfirst(trans('module_buys.delivery_schedule.preferential')) ? 'selected' : '' }}>{{ ucfirst(trans('module_buys.delivery_schedule.preferential')) }}</option>
+                <select class="form-control @error('schedule_id') is-invalid @enderror" id="schedule_id" name="schedule_id">
+                    <option selected disabled>{{ ucfirst(trans('validation.attributes.schedule_id')) }} *</option>
+                    @foreach($schedules as $name => $value)
+                        <option value="{{ $value }}" {{ old('schedule_id') == $value ? 'selected' : '' }}>{{ $name }}</option>
+                    @endforeach
                 </select>
-                @error('delivery_schedule')
+                @error('schedule_id')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
             </div>
@@ -274,13 +274,54 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
+        var currentDate = "{{ $current_date }}";
+        var currentDay = "{{ $current_day }}";
+        var currentTime = "{{ $current_time }}";
+
+        console.log("Current date:" + currentDate + "; current day:" + currentDay + "; current time:" + currentTime);
+
         $(function(){
-            $("#datepicker").datepicker({
-                showOtherMonths: true,
-                selectOtherMonths: true,
-                dateFormat: "dd/mm/yy",
-                minDate: 0
-            });
+            if(currentTime >= '19:00:00' || currentDay == 'Saturday' || currentDay == 'Sunday'){
+                $("#datepicker").datepicker({
+                    showOtherMonths: true,
+                    selectOtherMonths: true,
+                    dateFormat: "dd/mm/yy",
+                    minDate: 1,
+                    onSelect: function(dateText) {
+                        getSchedules(dateText);
+                    }
+                });
+            }else{
+                $("#datepicker").datepicker({
+                    showOtherMonths: true,
+                    selectOtherMonths: true,
+                    dateFormat: "dd/mm/yy",
+                    minDate: 0,
+                    onSelect: function(dateText) {
+                        getSchedules(dateText);
+                    }
+                });
+            }
+        });
+
+        function getSchedules(value){
+            if(value == '' || value == null)
+            {
+                $( "#schedule_id" ).find("option:gt(0)").remove();
+            }
+            else
+            {
+                $.get(direction+"/buys/datepicker/"+value, function(response, value){
+                    $( "#schedule_id" ).find("option:gt(0)").remove();
+                    for(i=0; i<response.length; i++){
+                        $( "#schedule_id" ).append("<option value='"+ response[i].id +"'>"+ response[i].name +"</option>");
+                    }
+                });
+            }
+        }
+
+        $(document).ready(function() {
+            getSchedules($( "#datepicker" ).val());
         });
     </script>
 @endsection

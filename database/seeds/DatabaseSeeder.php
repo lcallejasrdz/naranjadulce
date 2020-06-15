@@ -23,12 +23,15 @@ class DatabaseSeeder extends Seeder
             $this->call(DeliveryTableSeeder::class);
             $this->call(StatusTableSeeder::class);
             $this->call(AddVerificarStatusSeeder::class);
+            $this->call(ScheduleTableSeeder::class);
         }
         else if(env('APP_ENV') == 'testing')
         {
+            $this->call(ScheduleTableSeeder::class);
         }
         else
         {
+            $this->call(ScheduleTableSeeder::class);
         }
     }
 }

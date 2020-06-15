@@ -82,19 +82,19 @@ class DeliveryController extends Controller
         $select = null;
         $columns = null;
         $actions = null;
-        $item = DB::table('buys')
-                    ->where('buys.slug', $slug)
-                    ->join('sales', 'buys.slug', '=', 'sales.slug')
+        $item = DB::table('view_buys')
+                    ->where('view_buys.slug', $slug)
+                    ->join('view_sales', 'view_buys.slug', '=', 'view_sales.slug')
                     ->select(
-                        'buys.id',
-                        'buys.slug',
-                        'buys.first_name',
-                        'buys.last_name',
-                        'buys.phone',
-                        'sales.delivery_type',
-                        'buys.delivery_date',
-                        'buys.delivery_schedule',
-                        'sales.preferential_schedule'
+                        'view_buys.id',
+                        'view_buys.slug',
+                        'view_buys.first_name',
+                        'view_buys.last_name',
+                        'view_buys.phone',
+                        'view_sales.delivery_type',
+                        'view_buys.delivery_date',
+                        'view_buys.schedule_id',
+                        'view_sales.preferential_schedule'
                     )
                     ->first();
 
@@ -172,7 +172,7 @@ class DeliveryController extends Controller
                         'view_buys.phone',
                         'view_sales.delivery_type',
                         'view_buys.delivery_date',
-                        'view_buys.delivery_schedule',
+                        'view_buys.schedule_id',
                         'view_sales.preferential_schedule'
                     )
                     ->first();

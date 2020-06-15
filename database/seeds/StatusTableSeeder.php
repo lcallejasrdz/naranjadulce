@@ -15,47 +15,47 @@ class StatusTableSeeder extends Seeder
      */
     public function run()
     {
-		DB::table('status')->truncate();
+		    DB::table('status')->truncate();
 
-		DB::table('status')->insert([
-			'slug' => Str::slug('Por confirmar'),
-	        'name' => 'Por confirmar',
-		]);
+		    DB::table('status')->insert([
+            'slug' => Str::slug('Por confirmar'),
+            'name' => 'Por confirmar',
+		    ]);
 
-		DB::table('status')->insert([
-			'slug' => Str::slug('En produccion pendiente de pago'),
-	        'name' => 'En producción, pendiente de pago',
-		]);
+		    DB::table('status')->insert([
+            'slug' => Str::slug('En produccion pendiente de pago'),
+            'name' => 'En producción, pendiente de pago',
+		    ]);
 
-		DB::table('status')->insert([
-			'slug' => Str::slug('En produccion'),
-	        'name' => 'En producción',
-		]);
+		    DB::table('status')->insert([
+            'slug' => Str::slug('En produccion'),
+            'name' => 'En producción',
+		    ]);
 
-		DB::table('status')->insert([
-			'slug' => Str::slug('Pendiente de pago'),
-	        'name' => 'Pendiente de pago',
-		]);
+		    DB::table('status')->insert([
+            'slug' => Str::slug('Pendiente de pago'),
+            'name' => 'Pendiente de pago',
+        ]);
 
-		DB::table('status')->insert([
-			'slug' => Str::slug('Pendiente de envio'),
-	        'name' => 'Pendiente de envío',
-		]);
+		    DB::table('status')->insert([
+            'slug' => Str::slug('Pendiente de envio'),
+            'name' => 'Pendiente de envío',
+		    ]);
 
-		DB::table('status')->insert([
-			'slug' => Str::slug('En ruta'),
-	        'name' => 'En ruta',
-		]);
+        DB::table('status')->insert([
+            'slug' => Str::slug('En ruta'),
+            'name' => 'En ruta',
+		    ]);
 
-		DB::table('status')->insert([
-			'slug' => Str::slug('Entregado'),
-	        'name' => 'Entregado',
-		]);
+		    DB::table('status')->insert([
+            'slug' => Str::slug('Entregado'),
+            'name' => 'Entregado',
+		    ]);
 
-		// Update Current Status
+		    // Update Current Status
 
-		$buy = Buy::where('status_id', '!=', 2)
-					->whereExists(function($query)
+		    $buy = Buy::where('status_id', '!=', 2)
+                    ->whereExists(function($query)
                     {
                         $query->select(DB::raw(1))
                               ->from('sales')
@@ -67,8 +67,8 @@ class StatusTableSeeder extends Seeder
             $item->save();
         }
 
-		$buy = Buy::where('status_id', '!=', 3)
-					->whereExists(function($query)
+		    $buy = Buy::where('status_id', '!=', 3)
+                    ->whereExists(function($query)
                     {
                         $query->select(DB::raw(1))
                               ->from('finances')
@@ -86,14 +86,14 @@ class StatusTableSeeder extends Seeder
             $item->save();
         }
 
-		$buy = Buy::where('status_id', '!=', 4)
-					->whereExists(function($query)
+		    $buy = Buy::where('status_id', '!=', 4)
+                    ->whereExists(function($query)
                     {
                         $query->select(DB::raw(1))
                               ->from('buildings')
                               ->whereRaw('buildings.slug = buys.slug');
                     })
-					->whereNotExists(function($query)
+                    ->whereNotExists(function($query)
                     {
                         $query->select(DB::raw(1))
                               ->from('finances')
@@ -105,14 +105,14 @@ class StatusTableSeeder extends Seeder
             $item->save();
         }
 
-		$buy = Buy::where('status_id', '!=', 5)
-					->whereExists(function($query)
+        $buy = Buy::where('status_id', '!=', 5)
+                    ->whereExists(function($query)
                     {
                         $query->select(DB::raw(1))
                               ->from('buildings')
                               ->whereRaw('buildings.slug = buys.slug');
                     })
-					->whereExists(function($query)
+                    ->whereExists(function($query)
                     {
                         $query->select(DB::raw(1))
                               ->from('finances')
@@ -124,8 +124,8 @@ class StatusTableSeeder extends Seeder
             $item->save();
         }
 
-		$buy = Buy::where('status_id', '!=', 6)
-					->whereExists(function($query)
+		    $buy = Buy::where('status_id', '!=', 6)
+                    ->whereExists(function($query)
                     {
                         $query->select(DB::raw(1))
                               ->from('shippings')
@@ -137,8 +137,8 @@ class StatusTableSeeder extends Seeder
             $item->save();
         }
 
-		$buy = Buy::where('status_id', '!=', 7)
-					->whereExists(function($query)
+        $buy = Buy::where('status_id', '!=', 7)
+                    ->whereExists(function($query)
                     {
                         $query->select(DB::raw(1))
                               ->from('deliveries')

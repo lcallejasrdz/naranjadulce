@@ -80,23 +80,23 @@ class FinanceController extends Controller
         $select = null;
         $columns = null;
         $actions = null;
-        $item = DB::table('buys')
-                    ->where('buys.slug', $slug)
-                    ->join('sales', 'buys.slug', '=', 'sales.slug')
+        $item = DB::table('view_buys')
+                    ->where('view_buys.slug', $slug)
+                    ->join('view_sales', 'view_buys.slug', '=', 'view_sales.slug')
                     ->select(
-                        'buys.id',
-                        'buys.slug',
-                        'buys.first_name',
-                        'buys.last_name',
-                        'sales.quantity',
-                        'sales.seller_package',
-                        'sales.seller_modifications',
-                        'sales.observations_finances',
-                        'sales.shipping_cost',
-                        'sales.proof_of_payment',
-                        'buys.delivery_date',
-                        'buys.delivery_schedule',
-                        'sales.preferential_schedule'
+                        'view_buys.id',
+                        'view_buys.slug',
+                        'view_buys.first_name',
+                        'view_buys.last_name',
+                        'view_sales.quantity',
+                        'view_sales.seller_package',
+                        'view_sales.seller_modifications',
+                        'view_sales.observations_finances',
+                        'view_sales.shipping_cost',
+                        'view_sales.proof_of_payment',
+                        'view_buys.delivery_date',
+                        'view_buys.schedule_id',
+                        'view_sales.preferential_schedule'
                     )
                     ->first();
         $proof_of_payment = $item->proof_of_payment;
@@ -184,7 +184,7 @@ class FinanceController extends Controller
                         'view_sales.shipping_cost',
                         'view_sales.proof_of_payment',
                         'view_buys.delivery_date',
-                        'view_buys.delivery_schedule',
+                        'view_buys.schedule_id',
                         'view_sales.preferential_schedule'
                     )
                     ->first();

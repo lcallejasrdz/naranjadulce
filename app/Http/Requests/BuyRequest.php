@@ -53,7 +53,7 @@ class BuyRequest extends FormRequest
                     'modifications' => 'nullable|min:3|max:255',
                     'buy_message' => 'nullable|min:3|max:255',
                     'delivery_date' => 'required|min:3|max:255',
-                    'delivery_schedule' => 'required',
+                    'schedule_id' => 'required',
                     'observations' => 'nullable|max:255',
                     'how_know_us' => 'required',
                     'how_know_us_other' => 'required_if:how_know_us,Otro|max:255',

@@ -80,26 +80,26 @@ class BuildingController extends Controller
         $select = null;
         $columns = null;
         $actions = null;
-        $item = DB::table('buys')
-                    ->where('buys.slug', $slug)
-                    ->join('sales', 'buys.slug', '=', 'sales.slug')
+        $item = DB::table('view_buys')
+                    ->where('view_buys.slug', $slug)
+                    ->join('view_sales', 'view_buys.slug', '=', 'view_sales.slug')
                     ->select(
-                        'buys.id',
-                        'buys.slug',
-                        'buys.first_name',
-                        'buys.last_name',
-                        'sales.quantity',
-                        'sales.seller_package',
-                        'buys.thematic',
-                        'sales.seller_modifications',
-                        'sales.observations_buildings',
-                        'buys.buy_message',
-                        'buys.who_sends',
-                        'buys.who_receives',
-                        'buys.delivery_date',
-                        'sales.delivery_type',
-                        'buys.delivery_schedule',
-                        'sales.preferential_schedule'
+                        'view_buys.id',
+                        'view_buys.slug',
+                        'view_buys.first_name',
+                        'view_buys.last_name',
+                        'view_sales.quantity',
+                        'view_sales.seller_package',
+                        'view_buys.thematic',
+                        'view_sales.seller_modifications',
+                        'view_sales.observations_buildings',
+                        'view_buys.buy_message',
+                        'view_buys.who_sends',
+                        'view_buys.who_receives',
+                        'view_buys.delivery_date',
+                        'view_buys.schedule_id',
+                        'view_sales.preferential_schedule',
+                        'view_sales.delivery_type'
                     )
                     ->first();
 
@@ -222,7 +222,7 @@ class BuildingController extends Controller
                         'view_buys.who_receives',
                         'view_buys.delivery_date',
                         'view_sales.delivery_type',
-                        'view_buys.delivery_schedule',
+                        'view_buys.schedule_id',
                         'view_sales.preferential_schedule'
                     )
                     ->first();

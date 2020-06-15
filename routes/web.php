@@ -109,6 +109,7 @@ Route::group(array('middleware' => 'sentinelAuth'), function () {
 $route = 'buys';
 $controller = 'BuyController';
 Route::group(array('prefix' => $route), function () use ($route, $controller) {
+	Route::get('datepicker/{day}/{month}/{year}', $controller.'@getSchedules');
 	Route::get('create', array('as' => $route.'.create', 'uses' => $controller.'@create'));
 	Route::post('create', array('as' => $route.'.store', 'uses' => $controller.'@store'));
 });

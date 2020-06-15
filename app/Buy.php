@@ -32,7 +32,7 @@ class Buy extends Model
         'modifications',
         'buy_message',
         'delivery_date',
-        'delivery_schedule',
+        'schedule_id',
         'observations',
         'how_know_us',
         'how_know_us_other',

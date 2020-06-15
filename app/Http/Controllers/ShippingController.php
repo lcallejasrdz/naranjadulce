@@ -81,39 +81,39 @@ class ShippingController extends Controller
         $select = null;
         $columns = null;
         $actions = null;
-        $item = DB::table('buys')
-                    ->where('buys.slug', $slug)
-                    ->join('sales', 'buys.slug', '=', 'sales.slug')
+        $item = DB::table('view_buys')
+                    ->where('view_buys.slug', $slug)
+                    ->join('view_sales', 'view_buys.slug', '=', 'view_sales.slug')
                     ->select(
-                        'buys.id',
-                        'buys.slug',
-                        'buys.first_name',
-                        'buys.last_name',
-                        'buys.phone',
-                        'sales.quantity',
-                        'sales.seller_package',
-                        'buys.thematic',
-                        'sales.seller_modifications',
-                        'buys.buy_message',
-                        'buys.who_sends',
-                        'buys.who_receives',
-                        'sales.delivery_type',
-                        'buys.delivery_schedule',
-                        'buys.delivery_schedule',
-                        'sales.preferential_schedule',
-                        'buys.postal_code',
-                        'buys.state',
-                        'buys.municipality',
-                        'buys.colony',
-                        'buys.street',
-                        'buys.no_ext',
-                        'buys.no_int',
-                        'buys.address_references',
-                        'buys.address_type',
-                        'buys.parking',
-                        'sales.observations_shippings',
-                        'sales.shipping_cost',
-                        'buys.status_id'
+                        'view_buys.id',
+                        'view_buys.slug',
+                        'view_buys.first_name',
+                        'view_buys.last_name',
+                        'view_buys.phone',
+                        'view_sales.quantity',
+                        'view_sales.seller_package',
+                        'view_buys.thematic',
+                        'view_sales.seller_modifications',
+                        'view_buys.buy_message',
+                        'view_buys.who_sends',
+                        'view_buys.who_receives',
+                        'view_sales.delivery_type',
+                        'view_buys.delivery_date',
+                        'view_buys.schedule_id',
+                        'view_sales.preferential_schedule',
+                        'view_buys.postal_code',
+                        'view_buys.state',
+                        'view_buys.municipality',
+                        'view_buys.colony',
+                        'view_buys.street',
+                        'view_buys.no_ext',
+                        'view_buys.no_int',
+                        'view_buys.address_references',
+                        'view_buys.address_type',
+                        'view_buys.parking',
+                        'view_sales.observations_shippings',
+                        'view_sales.shipping_cost',
+                        'view_buys.status_id'
                     )
                     ->first();
 
@@ -197,8 +197,8 @@ class ShippingController extends Controller
                         'view_buys.who_sends',
                         'view_buys.who_receives',
                         'view_sales.delivery_type',
-                        'view_buys.delivery_schedule',
-                        'view_buys.delivery_schedule',
+                        'view_buys.delivery_date',
+                        'view_buys.schedule_id',
                         'view_sales.preferential_schedule',
                         'view_buys.postal_code',
                         'view_buys.state',
