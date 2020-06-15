@@ -27,7 +27,6 @@ class DatabaseSeeder extends Seeder
         }
         else if(env('APP_ENV') == 'testing')
         {
-            $this->call(ScheduleTableSeeder::class);
         }
         else
         {
