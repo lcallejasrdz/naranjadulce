@@ -51,7 +51,6 @@
 @endsection
 
 @section('scripts')
-    {{ $active }}
     @if($active == 'sales')
         <script>
             $(document).ready(function() {
