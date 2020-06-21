@@ -38,6 +38,8 @@ class BuyTableSeeder extends Seeder
             'parking' => 'No',
             'who_sends' => 'Eduardo Callejas',
             'who_receives' => 'Fernanda Martinez',
+        	'return_reason' => 'No hay razón de retorno',
+            'delivery_man' => 'Jorge Ríos',
             'status_id' => 3,
 		]);
     }

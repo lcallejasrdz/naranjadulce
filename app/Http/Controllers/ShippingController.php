@@ -131,6 +131,7 @@ class ShippingController extends Controller
         $item = $this->full_model::create($request->only($this->create_fields));
 
         $buy = Buy::where('slug', $item->slug)->first();
+        $buy->delivery_man = $request->delivery_man;
         $buy->status_id = 6;
 
         if($item->save() && $buy->save()){
@@ -211,6 +212,7 @@ class ShippingController extends Controller
                         'view_buys.parking',
                         'view_sales.observations_shippings',
                         'view_sales.shipping_cost',
+                        'view_buys.delivery_man',
                         'view_buys.status_id'
                     )
                     ->first();

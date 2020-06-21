@@ -15,6 +15,7 @@ return [
             'first_name',
             'last_name',
             'delivery_date',
+            'delivery_man',
             'created_at',
         ],
         'create_fields'         => [

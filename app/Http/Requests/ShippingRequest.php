@@ -31,7 +31,9 @@ class ShippingRequest extends FormRequest
                 return [];
             }
             case 'POST': {
-                return [];
+                return [
+                    'delivery_man' => 'required|min:3|max:255',
+                ];
             }
             case 'PUT': {
                 return [];

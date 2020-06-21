@@ -51,3 +51,11 @@
 <input type="hidden" value="{{ $item->slug }}" id="slug" name="slug">
 <input type="hidden" value="{{ Sentinel::getUser()->id }}" id="user_id" name="user_id">
 <input type="hidden" value="1" id="verified_sent" name="verified_sent">
+
+<div class="form-group">
+	<label for="delivery_man">{{ ucfirst(trans('validation.attributes.delivery_man')) }} *</label>
+	<input type="text" class="form-control @error('delivery_man') is-invalid @enderror" id="delivery_man" name="delivery_man" value="{{ old('delivery_man') }}">
+	@error('delivery_man')
+	    <div class="alert alert-danger">{{ $message }}</div>
+	@enderror
+</div>

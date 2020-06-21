@@ -184,7 +184,8 @@ class FinanceController extends Controller
                         'view_sales.proof_of_payment',
                         'view_buys.delivery_date',
                         'view_buys.schedule_id',
-                        'view_sales.preferential_schedule'
+                        'view_sales.preferential_schedule',
+                        'view_buys.delivery_man'
                     )
                     ->first();
 

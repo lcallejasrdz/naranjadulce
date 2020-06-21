@@ -223,6 +223,7 @@ class SaleController extends Controller
                     'how_know_us',
                     'how_know_us_other',
                     'return_reason',
+                    'delivery_man',
                     'status_id',
                     'created_at'
                 )

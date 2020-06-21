@@ -248,6 +248,7 @@ return [
 
         // Shippings
         'verified_sent'         => 'verificación de envío',
+        'delivery_man'          => 'repartidor',
 
         // Deliveries
         'verified_delivered'    => 'verificación de entrega',

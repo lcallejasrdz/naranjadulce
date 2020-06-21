@@ -42,6 +42,7 @@ class Buy extends Model
         'who_sends',
         'who_receives',
         'return_reason',
+        'delivery_man',
         'status_id',
     ];
 

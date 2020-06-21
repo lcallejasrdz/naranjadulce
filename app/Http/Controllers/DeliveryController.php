@@ -94,7 +94,8 @@ class DeliveryController extends Controller
                         'view_sales.delivery_type',
                         'view_buys.delivery_date',
                         'view_buys.schedule_id',
-                        'view_sales.preferential_schedule'
+                        'view_sales.preferential_schedule',
+                        'view_buys.delivery_man'
                     )
                     ->first();
 
@@ -172,7 +173,8 @@ class DeliveryController extends Controller
                         'view_sales.delivery_type',
                         'view_buys.delivery_date',
                         'view_buys.schedule_id',
-                        'view_sales.preferential_schedule'
+                        'view_sales.preferential_schedule',
+                        'view_buys.delivery_man'
                     )
                     ->first();
 
