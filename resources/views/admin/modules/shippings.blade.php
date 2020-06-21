@@ -1,6 +1,6 @@
 <table class="table table-striped">
 	<tbody>
-		@if($item->preferential_schedule != '')
+		@if(isset($item->preferential_schedule) && $item->preferential_schedule != '')
 			@php $schedule = 1; @endphp
 		@else
 			@php $schedule = 0; @endphp
