@@ -52,7 +52,7 @@ Route::group(array('middleware' => 'sentinelAuth'), function () {
 	    Route::get('/', array('as' => $route, 'uses' => $controller.'@index'));
 		Route::get('{slug_buy}', array('as' => $route.'.create', 'uses' => $controller.'@create'));
 		Route::post('create', array('as' => $route.'.store', 'uses' => $controller.'@store'));
-		Route::delete('delete', array('as' => $route.'.delete', 'uses' => 'CRUDController@destroy'));
+		Route::delete('delete', array('as' => $route.'.delete', 'uses' => $controller.'@destroy'));
 	});
 
 	// Finance

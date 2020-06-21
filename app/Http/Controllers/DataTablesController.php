@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Yajra\Datatables\Datatables;
 use DB;
+use Sentinel;
 
 class DataTablesController extends Controller
 {
@@ -102,7 +103,15 @@ class DataTablesController extends Controller
                     if($actions_value == 1){
                         $actions .= ' <a href="#" class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#deleteModal" onClick="deleteModal('.$row->id.')"><i class="fas fa-trash"></i></a>';
                     }
-                }else if($view == 'sales' || $view == 'finances' || $view == 'buildings' || $view == 'shippings' || $view == 'deliveries'){
+                }else if($view == 'sales'){
+                    $actions = '';
+                    if($actions_value == 1 || $actions_value == 2){
+                        $actions .= ' <a href="'. route($active.'.create', $row->slug) .'" class="btn btn-success btn-circle btn-sm"><i class="fas fa-edit"></i></a>';
+                        if(Sentinel::getUser()->role_id == 1 && $row->status_id == 'Por confirmar'){
+                            $actions .= ' <a href="#" class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#deleteModal" onClick="deleteModal('.$row->id.')"><i class="fas fa-minus-circle"></i></a>';
+                        }
+                    }
+                }else if($view == 'finances' || $view == 'buildings' || $view == 'shippings' || $view == 'deliveries'){
                     $actions = '';
                     if($actions_value == 1 || $actions_value == 2){
                         $actions .= ' <a href="'. route($active.'.create', $row->slug) .'" class="btn btn-success btn-circle btn-sm"><i class="fas fa-edit"></i></a>';

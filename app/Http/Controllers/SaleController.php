@@ -249,5 +249,20 @@ class SaleController extends Controller
 
         return view('admin.crud.show', compact($this->compact, 'sale'));
     }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Request $request)
+    {
+        if(Buy::destroy($request->id)){
+            return Redirect::route($this->active)->with('success', trans('crud.delete.message.success'));
+        }else{
+            return Redirect::back()->with('danger', trans('crud.delete.message.error'));
+        }
+    }
 }
 
