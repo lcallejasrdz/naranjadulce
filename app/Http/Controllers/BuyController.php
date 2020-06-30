@@ -102,14 +102,17 @@ class BuyController extends Controller
             $request_date = new DateTime($year.'-'.$month.'-'.$day);
             $selected_date = $request_date->format('d/m/Y');
             $selected_day = $request_date->format('l');
+            $selected_date = strtotime($selected_date);
 
             $now = new DateTime();
             $current_date = $now->format('d/m/Y');
             $current_time = $now->format('H:i:s');
             $current_day = $now->format('l');
+            $current_date = strtotime($current_date);
 
             $now->add(new DateInterval('P1D'));
             $tomorrow_date = $now->format('d/m/Y');
+            $tomorrow_date = strtotime($tomorrow_date);
 
             // Si estoy pidiendo en lunes, marte, miercoles, jueves
             if($current_day != 'Friday' && $current_day != 'Saturday' && $current_day != 'Sunday'){
