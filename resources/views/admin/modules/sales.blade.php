@@ -107,4 +107,27 @@
 		    <div class="alert alert-danger">{{ $message }}</div>
 		@enderror
 	</div>
+@else
+	<hr>
+	
+	<table class="table table-striped">
+		<tbody>
+			@foreach($sale as $column => $value)
+				@if($column != 'last_login' && $column != 'created_at' && $column != 'updated_at' && $column != 'deleted_at' && $column != 'slug' && $value != '')
+		            <tr>
+		                <th>
+		                    {{ ucfirst(trans('validation.attributes.'.$column)) }}
+		                </th>
+		                <td>
+		                    @if(($column == 'last_login' && $value != "") || ($column == 'created_at' && $value != "") || ($column == 'updated_at' && $value != "") || ($column == 'deleted_at' && $value != ""))
+		                        {{ \Carbon\Carbon::parse($value)->diffForHumans() }}
+		                    @else
+		                        {{ $value }}
+		                    @endif
+		                </td>
+		            </tr>
+		        @endif
+	        @endforeach
+		</tbody>
+	</table>
 @endif

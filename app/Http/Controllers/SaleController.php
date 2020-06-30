@@ -88,6 +88,7 @@ class SaleController extends Controller
                     'slug',
                     'first_name',
                     'last_name',
+                    'phone',
                     'package',
                     'thematic',
                     'modifications',
@@ -113,8 +114,15 @@ class SaleController extends Controller
                 ->first();
         $buy = $item ? $item->toArray() : array();
         $item = null;
+        
+        $sale = Sale::where('slug', $slug)
+                ->select(
+                    'quantity'
+                )
+                ->first();
+        $sale = $sale ? $sale->toArray() : array();
 
-        return view('admin.crud.form', compact($this->compact, 'buy'));
+        return view('admin.crud.form', compact($this->compact, 'buy', 'sale'));
     }
 
     /**
