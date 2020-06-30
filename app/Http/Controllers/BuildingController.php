@@ -99,7 +99,8 @@ class BuildingController extends Controller
                         'view_buys.delivery_date',
                         'view_buys.schedule_id',
                         'view_sales.preferential_schedule',
-                        'view_sales.delivery_type'
+                        'view_sales.delivery_type',
+                        'view_buys.status_id',
                     )
                     ->first();
 
@@ -118,11 +119,7 @@ class BuildingController extends Controller
 
         $buy = Buy::where('slug', $item->slug)->first();
         $status_back = $buy->status_id;
-        if($status_back == 2){
-            $buy->status_id = 4;
-        }else{
-            $buy->status_id = 5;
-        }
+        $buy->status_id = 5;
 
         if($item->save() && $buy->save()){
             return Redirect::route($this->active)->with('success', trans('crud.building.message.success'));

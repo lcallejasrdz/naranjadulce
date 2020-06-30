@@ -96,7 +96,8 @@ class FinanceController extends Controller
                         'view_sales.proof_of_payment',
                         'view_buys.delivery_date',
                         'view_buys.schedule_id',
-                        'view_sales.preferential_schedule'
+                        'view_sales.preferential_schedule',
+                        'view_buys.status_id'
                     )
                     ->first();
         $proof_of_payment = $item->proof_of_payment;
@@ -116,11 +117,7 @@ class FinanceController extends Controller
 
         $buy = Buy::where('slug', $item->slug)->first();
         $status_back = $buy->status_id;
-        if($status_back == 2){
-            $buy->status_id = 3;
-        }else{
-            $buy->status_id = 5;
-        }
+        $buy->status_id = 3;
 
         if($item->save() && $buy->save()){
             return Redirect::route($this->active)->with('success', trans('crud.finance.message.success'));

@@ -44,6 +44,7 @@ class DataTablesController extends Controller
         }else if($view == 'buildings'){
             $full_model = 'App\\View'.$request->model;
             $rows = $full_model::where('status_id', 'En producción, pendiente de pago')
+                                    ->orWhere('status_id', 'Pendiente de pago')
                                     ->orWhere('status_id', 'En producción')
                                     ->data();
         }else if($view == 'buildingfinished'){

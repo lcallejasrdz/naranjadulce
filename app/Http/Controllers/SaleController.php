@@ -147,7 +147,7 @@ class SaleController extends Controller
 
         $count = Finance::where('slug', $request->slug)->count();
         if($count == 0){
-            $buy->status_id = 2;
+            $buy->status_id = 4;
         }else{
             $buy->status_id = 3;
         }

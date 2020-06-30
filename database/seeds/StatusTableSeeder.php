@@ -17,36 +17,43 @@ class StatusTableSeeder extends Seeder
     {
 		    DB::table('status')->truncate();
 
+        // 1
 		    DB::table('status')->insert([
             'slug' => Str::slug('Por confirmar'),
             'name' => 'Por confirmar',
 		    ]);
 
+        // 2
 		    DB::table('status')->insert([
             'slug' => Str::slug('En produccion pendiente de pago'),
             'name' => 'En producción, pendiente de pago',
 		    ]);
 
+        // 3
 		    DB::table('status')->insert([
             'slug' => Str::slug('En produccion'),
             'name' => 'En producción',
 		    ]);
 
+        // 4
 		    DB::table('status')->insert([
             'slug' => Str::slug('Pendiente de pago'),
             'name' => 'Pendiente de pago',
         ]);
 
+        // 5
 		    DB::table('status')->insert([
             'slug' => Str::slug('Pendiente de envio'),
             'name' => 'Pendiente de envío',
 		    ]);
 
+        // 6
         DB::table('status')->insert([
             'slug' => Str::slug('En ruta'),
             'name' => 'En ruta',
 		    ]);
 
+        // 7
 		    DB::table('status')->insert([
             'slug' => Str::slug('Entregado'),
             'name' => 'Entregado',

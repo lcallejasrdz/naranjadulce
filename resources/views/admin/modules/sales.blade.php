@@ -52,7 +52,7 @@
 	</div>
 
 	<div class="form-group">
-	    <label for="delivery_type">{{ ucfirst(trans('validation.attributes.delivery_type')) }}</label>
+	    <label for="delivery_type">{{ ucfirst(trans('validation.attributes.delivery_type')) }} *</label>
 	    <select class="form-control @error('delivery_type') is-invalid @enderror" id="delivery_type" name="delivery_type">
 	      	<option selected disabled>{{ ucfirst(trans('validation.attributes.choose')) }}:</option>
 	      	<option value="{{ ucfirst(trans('module_sales.delivery_type.normal')) }}" @if(isset($item)){!! ($item->delivery_type == ucfirst(trans('module_sales.delivery_type.normal'))) ? 'selected' : '' !!}@else{{ old('delivery_type') == ucfirst(trans('module_sales.delivery_type.normal')) ? 'selected' : '' }}@endif>{{ ucfirst(trans('module_sales.delivery_type.normal')) }}</option>
