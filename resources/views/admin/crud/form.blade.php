@@ -34,11 +34,13 @@
                     <input type="submit" class="btn btn-primary" value="{{ trans('crud.sale.submit') }}">
                 @elseif($active == 'finances' && $item->status_id == 'Pendiente de pago')
                     <input type="submit" class="btn btn-primary" value="{{ trans('crud.finance.submit') }}">
+                    <a class="btn btn-warning" href="#" data-toggle="modal" data-target="#returnModal">{{ trans('crud.building.return') }}</a>
                 @elseif($active == 'buildings' && $item->status_id == 'En producción')
                     <input type="submit" class="btn btn-primary" value="{{ trans('crud.building.submit') }}">
                     <a class="btn btn-warning" href="#" data-toggle="modal" data-target="#returnModal">{{ trans('crud.building.return') }}</a>
                 @elseif($active == 'shippings' && $item->status_id == 'Pendiente de envío')
                     <input type="submit" class="btn btn-primary" value="{{ trans('crud.shipping.submit') }}">
+                    <a class="btn btn-warning" href="#" data-toggle="modal" data-target="#returnModal">{{ trans('crud.building.return') }}</a>
                 @elseif($active == 'deliveries')
                     <input type="submit" class="btn btn-primary" value="{{ trans('crud.delivery.submit') }}">
                 @endif

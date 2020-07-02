@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ShippingRequest as MasterRequest;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str as Str;
 use Illuminate\Support\Arr;
@@ -141,6 +142,43 @@ class ShippingController extends Controller
             $buy->status_id = 5;
             $buy->save();
             return Redirect::back()->with('error', trans('crud.shipping.message.error'));
+        }
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function return(MasterRequest $request)
+    {
+        $buy = Buy::where('slug', $request->slug)->first();
+        $status_back = $buy->status_id;
+
+        // Aquí guardaría la información en el campo nuevo.
+        $buy->return_reason = $request->return_reason;
+        // también agregaría el nuevo estatus. 8 Verificar.
+        $buy->status_id = 8;
+
+        if($buy->save()){
+            // Aquí eliminaría el registro de venta, incluído el archivo.
+            $sale = Sale::where('slug', $request->slug)->first();
+            
+            $sale->observations_shippings = null;
+            $sale->delivery_type = null;
+            $sale->preferential_schedule = null;
+            
+            if($sale->save()){
+                return Redirect::route($this->active)->with('success', trans('crud.building.message.returned'));
+            }else{
+                $buy->return_reason = '';
+                $buy->status_id = $status_back;
+                $buy->save();
+                return Redirect::back()->with('error', trans('crud.building.message.error_returned'));
+            }
+        }else{
+            return Redirect::back()->with('error', trans('crud.building.message.error_returned'));
         }
     }
 

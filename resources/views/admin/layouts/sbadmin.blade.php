@@ -53,7 +53,7 @@
 		@if($view == 'sales')
 			@include('admin.layouts.modals.delete_modal')
 		@endif
-		@if($active == 'buildings' && isset($item) && $view != 'show')
+		@if(($active == 'finances' || $active == 'buildings' || $active == 'shippings') && isset($item) && $view != 'show')
 			@include('admin.layouts.modals.return_modal')
 		@endif
 		<!-- Other Modals-->

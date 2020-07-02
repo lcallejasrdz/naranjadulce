@@ -9,6 +9,7 @@ use Illuminate\Support\Str as Str;
 use Illuminate\Support\Arr;
 use App\ViewBuy;
 use App\ViewSale;
+use App\Building;
 use App\Finance;
 use App\Sale;
 use App\Buy;
@@ -115,11 +116,16 @@ class SaleController extends Controller
         $buy = $item ? $item->toArray() : array();
         $item = null;
         
-        $sale = Sale::where('slug', $slug)
-                ->select(
-                    'quantity'
-                )
-                ->first();
+        if($buy['status_id'] == 'Verificar'){
+            $sale = Sale::where('slug', $slug)
+                    ->first(); 
+        }else{
+            $sale = Sale::where('slug', $slug)
+                    ->select(
+                        'quantity'
+                    )
+                    ->first();
+        }
         $sale = $sale ? $sale->toArray() : array();
 
         return view('admin.crud.form', compact($this->compact, 'buy', 'sale'));
@@ -133,23 +139,49 @@ class SaleController extends Controller
      */
     public function store(MasterRequest $request)
     {
-        $path = Storage::putFileAs(
-            'receipts',
-            $request->file('proof_of_payment'),
-            $request->slug.'.'.$request->file('proof_of_payment')->extension()
-        );
+        if(Sale::where('slug', $request->slug)->count() == 0){
+            $path = Storage::putFileAs(
+                'receipts',
+                $request->file('proof_of_payment'),
+                $request->slug.'.'.$request->file('proof_of_payment')->extension()
+            );
 
-        $item = $this->full_model::create($request->only($this->create_fields));
+            $item = $this->full_model::create($request->only($this->create_fields));
 
-        $item->proof_of_payment = $path;
+            $item->proof_of_payment = $path;
+        }else{
+            $item = Sale::where('slug', $request->slug)->first();
+
+            if($item->proof_of_payment == '' || $item->proof_of_payment == null){
+                $path = Storage::putFileAs(
+                    'receipts',
+                    $request->file('proof_of_payment'),
+                    $request->slug.'.'.$request->file('proof_of_payment')->extension()
+                );
+
+                $item->proof_of_payment = $path;
+            }
+
+            $item->user_id = $request->user_id;
+            $item->quantity = $request->quantity;
+            $item->seller_package = $request->seller_package;
+            $item->seller_modifications = $request->seller_modifications;
+            $item->delivery_type = $request->delivery_type;
+            $item->preferential_schedule = $request->preferential_schedule;
+            $item->observations_finances = $request->observations_finances;
+            $item->observations_buildings = $request->observations_buildings;
+            $item->observations_shippings = $request->observations_shippings;
+            $item->shipping_cost = $request->shipping_cost;
+        }
 
         $buy = Buy::where('slug', $item->slug)->first();
 
-        $count = Finance::where('slug', $request->slug)->count();
-        if($count == 0){
+        if(Finance::where('slug', $request->slug)->count() == 0){
             $buy->status_id = 4;
-        }else{
+        }else if(Building::where('slug', $request->slug)->count() == 0){
             $buy->status_id = 3;
+        }else{
+            $buy->status_id = 5;
         }
 
         if($item->save() && $buy->save()){

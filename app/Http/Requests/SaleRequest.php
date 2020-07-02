@@ -32,7 +32,7 @@ class SaleRequest extends FormRequest
             }
             case 'POST': {
                 return [
-                    'proof_of_payment' => 'required|mimes:pdf,jpg,jpeg',
+                    'proof_of_payment' => 'required_if:proof_verified,0|nullable|mimes:pdf,jpg,jpeg',
                     'quantity' => 'required|numeric',
                     'seller_package' => 'required|min:3|max:255',
                     'seller_modifications' => 'required|min:3|max:255',
