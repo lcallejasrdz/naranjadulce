@@ -100,18 +100,18 @@ class BuyController extends Controller
     {
         if($request->ajax()){
             $request_date = new DateTime($year.'-'.$month.'-'.$day);
-            $selected_date = $request_date->format('d/m/Y');
+            $selected_date = $request_date->format('Y-m-d H:i:s');
             $selected_day = $request_date->format('l');
             $selected_date = strtotime($selected_date);
 
             $now = new DateTime();
-            $current_date = $now->format('d/m/Y');
+            $current_date = $now->format('Y-m-d H:i:s');
             $current_time = $now->format('H:i:s');
             $current_day = $now->format('l');
             $current_date = strtotime($current_date);
 
             $now->add(new DateInterval('P1D'));
-            $tomorrow_date = $now->format('d/m/Y');
+            $tomorrow_date = $now->format('Y-m-d H:i:s');
             $tomorrow_date = strtotime($tomorrow_date);
 
             // Si estoy pidiendo en lunes, marte, miercoles, jueves
