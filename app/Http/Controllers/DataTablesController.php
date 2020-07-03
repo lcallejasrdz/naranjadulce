@@ -108,7 +108,7 @@ class DataTablesController extends Controller
                     $actions = '';
                     if($actions_value == 1 || $actions_value == 2){
                         $actions .= ' <a href="'. route($active.'.create', $row->slug) .'" class="btn btn-success btn-circle btn-sm"><i class="fas fa-edit"></i></a>';
-                        if(Sentinel::getUser()->role_id == 1 && $row->status_id == 'Por confirmar'){
+                        if(Sentinel::getUser()->role_id == 1 && ($row->status_id == 'Por confirmar' || $row->status_id == 'Verificar')){
                             $actions .= ' <a href="#" class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#deleteModal" onClick="deleteModal('.$row->id.')"><i class="fas fa-minus-circle"></i></a>';
                         }
                     }

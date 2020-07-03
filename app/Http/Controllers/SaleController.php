@@ -303,7 +303,19 @@ class SaleController extends Controller
      */
     public function destroy(Request $request)
     {
+        $slug = Buy::find($request->id)->slug;
+
         if(Buy::destroy($request->id)){
+            if(Finance::where('slug', $slug)->count() > 0){
+                $item = Finance::where('slug', $slug)->first();
+                Finance::destroy($item->id);
+            }
+
+            if(Building::where('slug', $slug)->count() > 0){
+                $item = Building::where('slug', $slug)->first();
+                Building::destroy($item->id);
+            }
+
             return Redirect::route($this->active)->with('success', trans('crud.delete.message.success'));
         }else{
             return Redirect::back()->with('danger', trans('crud.delete.message.error'));
