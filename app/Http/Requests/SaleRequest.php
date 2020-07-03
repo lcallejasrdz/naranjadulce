@@ -38,9 +38,9 @@ class SaleRequest extends FormRequest
                     'seller_modifications' => 'required|min:3|max:255',
                     'delivery_type' => 'required',
                     'preferential_schedule' => 'required_if:delivery_schedule,Horario preferencial (costo extra)|required_if:delivery_type,Preferencial|nullable|min:3|max:255',
-                    'observations_finances' => 'nullable|min:3|max:1000',
-                    'observations_buildings' => 'nullable|min:3|max:1000',
-                    'observations_shippings' => 'nullable|min:3|max:1000',
+                    'observations_finances' => 'required|min:3|max:1000',
+                    'observations_buildings' => 'required|min:3|max:1000',
+                    'observations_shippings' => 'required|min:3|max:1000',
                     'shipping_cost' => 'required|numeric',
                 ];
             }
