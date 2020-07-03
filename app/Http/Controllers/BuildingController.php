@@ -80,29 +80,49 @@ class BuildingController extends Controller
         $select = null;
         $columns = null;
         $actions = null;
-        $item = DB::table('view_buys')
-                    ->where('view_buys.slug', $slug)
-                    ->join('view_sales', 'view_buys.slug', '=', 'view_sales.slug')
-                    ->select(
-                        'view_buys.id',
-                        'view_buys.slug',
-                        'view_buys.first_name',
-                        'view_buys.last_name',
-                        'view_sales.quantity',
-                        'view_sales.seller_package',
-                        'view_buys.thematic',
-                        'view_sales.seller_modifications',
-                        'view_sales.observations_buildings',
-                        'view_buys.buy_message',
-                        'view_buys.who_sends',
-                        'view_buys.who_receives',
-                        'view_buys.delivery_date',
-                        'view_buys.schedule_id',
-                        'view_sales.preferential_schedule',
-                        'view_sales.delivery_type',
-                        'view_buys.status_id',
-                    )
-                    ->first();
+
+        $buy = Buy::where('slug', $slug)->first();
+
+        if($buy->status_id == 3){
+            $item = DB::table('view_buys')
+                        ->where('view_buys.slug', $slug)
+                        ->join('view_sales', 'view_buys.slug', '=', 'view_sales.slug')
+                        ->select(
+                            'view_buys.id',
+                            'view_buys.slug',
+                            'view_buys.first_name',
+                            'view_buys.last_name',
+                            'view_sales.quantity',
+                            'view_sales.seller_package',
+                            'view_buys.thematic',
+                            'view_sales.seller_modifications',
+                            'view_sales.observations_buildings',
+                            'view_buys.buy_message',
+                            'view_buys.who_sends',
+                            'view_buys.who_receives',
+                            'view_buys.delivery_date',
+                            'view_buys.schedule_id',
+                            'view_sales.preferential_schedule',
+                            'view_sales.delivery_type',
+                            'view_buys.status_id',
+                        )
+                        ->first();
+        }else{
+            $item = DB::table('view_buys')
+                        ->where('view_buys.slug', $slug)
+                        ->join('view_sales', 'view_buys.slug', '=', 'view_sales.slug')
+                        ->select(
+                            'view_buys.id',
+                            'view_buys.slug',
+                            'view_buys.first_name',
+                            'view_buys.last_name',
+                            'view_sales.seller_package',
+                            'view_sales.seller_modifications',
+                            'view_buys.delivery_date',
+                            'view_buys.status_id',
+                        )
+                        ->first();
+        }
 
         return view('admin.crud.form', compact($this->compact));
     }

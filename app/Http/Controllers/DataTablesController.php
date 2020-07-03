@@ -120,9 +120,7 @@ class DataTablesController extends Controller
                 }else if($view == 'buildings'){
                     $actions = '';
                     if($actions_value == 1 || $actions_value == 2){
-                        if($row->status_id == 'En producción'){
-                            $actions .= ' <a href="'. route($active.'.create', $row->slug) .'" class="btn btn-success btn-circle btn-sm"><i class="fas fa-edit"></i></a>';
-                        }
+                        $actions .= ' <a href="'. route($active.'.create', $row->slug) .'" class="btn btn-success btn-circle btn-sm"><i class="fas fa-edit"></i></a>';
                     }
                 }else if($view == 'shippings'){
                     $actions = '';
