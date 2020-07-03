@@ -128,7 +128,11 @@ class SaleController extends Controller
         }
         $sale = $sale ? $sale->toArray() : array();
 
-        return view('admin.crud.form', compact($this->compact, 'buy', 'sale'));
+        if($buy['status_id'] == 'Por confirmar'){
+            return view('admin.crud.form', compact($this->compact, 'buy'));
+        }else{
+            return view('admin.crud.form', compact($this->compact, 'buy', 'sale'));
+        }
     }
 
     /**
