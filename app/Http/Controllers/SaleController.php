@@ -75,7 +75,6 @@ class SaleController extends Controller
      */
     public function create($slug)
     {
-        dd('Ok');
         $view = 'create';
 
         $active = $this->active;
@@ -116,6 +115,7 @@ class SaleController extends Controller
                 ->first();
         $buy = $item ? $item->toArray() : array();
         $item = null;
+        dd('Ok');
         
         if($buy['status_id'] == 'Verificar'){
             $count = Sale::where('slug', $slug)->count();
