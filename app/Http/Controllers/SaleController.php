@@ -115,9 +115,9 @@ class SaleController extends Controller
                 ->first();
         $buy = $item ? $item->toArray() : array();
         $item = null;
-        dd('Ok');
         
         if($buy['status_id'] == 'Verificar'){
+        dd('Ok1');
             $count = Sale::where('slug', $slug)->count();
             if($count > 0){
                 $sale = Sale::where('slug', $slug)
@@ -126,12 +126,14 @@ class SaleController extends Controller
                 $sale = [];
             }
         }else{
+        dd('Ok2');
             $sale = Sale::where('slug', $slug)
                     ->select(
                         'quantity'
                     )
                     ->first();
         }
+        dd('Ok3');
         $sale = $sale ? $sale->toArray() : array();
 
         if($buy['status_id'] == 'Por confirmar'){
