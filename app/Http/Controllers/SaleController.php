@@ -75,7 +75,6 @@ class SaleController extends Controller
      */
     public function create($slug)
     {
-        dd('Ok');
         $view = 'create';
 
         $active = $this->active;
