@@ -31,7 +31,6 @@ class DatabaseSeeder extends Seeder
         }
         else
         {
-            $this->call(UpdateStatusSeeder::class);
         }
     }
 }

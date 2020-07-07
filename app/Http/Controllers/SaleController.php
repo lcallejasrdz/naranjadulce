@@ -117,8 +117,13 @@ class SaleController extends Controller
         $item = null;
         
         if($buy['status_id'] == 'Verificar'){
-            $sale = Sale::where('slug', $slug)
-                    ->first(); 
+            $count = Sale::where('slug', $slug)->count();
+            if($count > 0){
+                $sale = Sale::where('slug', $slug)
+                        ->first();
+            }else{
+                $sale = [];
+            }
         }else{
             $sale = Sale::where('slug', $slug)
                     ->select(
