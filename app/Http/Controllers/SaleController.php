@@ -116,18 +116,20 @@ class SaleController extends Controller
         $buy = $item ? $item->toArray() : array();
         $item = null;
         
-        if($buy['status_id'] == 'Verificar'){
-            $saleCount = Sale::where('slug', $slug)->count();
-            $sale = Sale::where('slug', $slug)
-                    ->first();
-        }else{
-            $sale = Sale::where('slug', $slug)
-                    ->select(
-                        'quantity'
-                    )
-                    ->first();
+        $saleCount = Sale::where('slug', $slug)->count();
+        if($saleCount > 0){
+            if($buy['status_id'] == 'Verificar'){
+                $sale = Sale::where('slug', $slug)
+                        ->first();
+            }else{
+                $sale = Sale::where('slug', $slug)
+                        ->select(
+                            'quantity'
+                        )
+                        ->first();
+            }
+            $sale = $sale ? $sale->toArray() : array();
         }
-        $sale = $sale ? $sale->toArray() : array();
 
         if($buy['status_id'] == 'Por confirmar' || $saleCount == 0){
             return view('admin.crud.form', compact($this->compact, 'buy'));
