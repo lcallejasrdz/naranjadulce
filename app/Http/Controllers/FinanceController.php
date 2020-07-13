@@ -91,6 +91,7 @@ class FinanceController extends Controller
                         'view_buys.last_name',
                         'view_sales.quantity',
                         'view_sales.seller_package',
+                        'view_buys.thematic',
                         'view_sales.seller_modifications',
                         'view_sales.observations_finances',
                         'view_sales.shipping_cost',

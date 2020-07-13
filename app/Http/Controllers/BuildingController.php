@@ -116,9 +116,16 @@ class BuildingController extends Controller
                             'view_buys.slug',
                             'view_buys.first_name',
                             'view_buys.last_name',
+                            'view_sales.quantity',
                             'view_sales.seller_package',
+                            'view_buys.thematic',
                             'view_sales.seller_modifications',
+                            'view_sales.observations_buildings',
+                            'view_buys.who_receives',
                             'view_buys.delivery_date',
+                            'view_buys.schedule_id',
+                            'view_sales.preferential_schedule',
+                            'view_sales.delivery_type',
                             'view_buys.status_id',
                         )
                         ->first();
