@@ -13,6 +13,7 @@ use App\Building;
 use App\Finance;
 use App\Sale;
 use App\Buy;
+use App\NDBuy;
 
 use Redirect;
 

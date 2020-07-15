@@ -118,31 +118,31 @@
                 @enderror
             </div>
             <div class="col-sm-6">
-                <select class="form-control @error('address_type') is-invalid @enderror" id="address_type" name="address_type">
-                    <option selected disabled>{{ ucfirst(trans('validation.attributes.address_type')) }} *</option>
-                    <option value="{{ ucfirst(trans('module_buys.address_type.private')) }}" {{ old('address_type') == ucfirst(trans('module_buys.address_type.private')) ? 'selected' : '' }}>{{ ucfirst(trans('module_buys.address_type.private')) }}</option>
-                    <option value="{{ ucfirst(trans('module_buys.address_type.business')) }}" {{ old('address_type') == ucfirst(trans('module_buys.address_type.business')) ? 'selected' : '' }}>{{ ucfirst(trans('module_buys.address_type.business')) }}</option>
-                    <option value="{{ ucfirst(trans('module_buys.address_type.company')) }}" {{ old('address_type') == ucfirst(trans('module_buys.address_type.company')) ? 'selected' : '' }}>{{ ucfirst(trans('module_buys.address_type.company')) }}</option>
+                <select class="form-control @error('nd_address_types_id') is-invalid @enderror" id="nd_address_types_id" name="nd_address_types_id">
+                    <option selected disabled>{{ ucfirst(trans('validation.attributes.nd_address_types_id')) }} *</option>
+                    @foreach($nd_address_types_id as $key => $value)
+                        <option value="{{ $key }}" {{ old('nd_address_types_id') == $key ? 'selected' : '' }}>{{ $value }}</option>
+                    @endforeach
                 </select>
-                @error('address_type')
+                @error('nd_address_types_id')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
             </div>
         </div>
         <div class="form-group">
-            <textarea class="form-control form-control-user @error('address_references') is-invalid @enderror" id="address_references" name="address_references" placeholder="{{ ucfirst(trans('validation.attributes.address_references')) }} *">{{ old('address_references') }}</textarea>
-            @error('address_references')
+            <textarea class="form-control form-control-user @error('references') is-invalid @enderror" id="references" name="references" placeholder="{{ ucfirst(trans('validation.attributes.references')) }} *">{{ old('references') }}</textarea>
+            @error('references')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
         </div>
         <div class="form-group">
-            <select class="form-control @error('parking') is-invalid @enderror" id="parking" name="parking">
-                <option selected disabled>{{ ucfirst(trans('validation.attributes.parking')) }} *</option>
-                <option value="{{ ucfirst(trans('module_buys.parking.yes')) }}" {{ old('parking') == ucfirst(trans('module_buys.parking.yes')) ? 'selected' : '' }}>{{ ucfirst(trans('module_buys.parking.yes')) }}</option>
-                <option value="{{ ucfirst(trans('module_buys.parking.no')) }}" {{ old('parking') == ucfirst(trans('module_buys.parking.no')) ? 'selected' : '' }}>{{ ucfirst(trans('module_buys.parking.no')) }}</option>
-                <option value="{{ ucfirst(trans('module_buys.parking.unknow')) }}" {{ old('parking') == ucfirst(trans('module_buys.parking.unknow')) ? 'selected' : '' }}>{{ ucfirst(trans('module_buys.parking.unknow')) }}</option>
+            <select class="form-control @error('nd_parkings_id') is-invalid @enderror" id="nd_parkings_id" name="nd_parkings_id">
+                <option selected disabled>{{ ucfirst(trans('validation.attributes.nd_parkings_id')) }} *</option>
+                @foreach($nd_parkings_id as $key => $value)
+                    <option value="{{ $key }}" {{ old('nd_parkings_id') == $key ? 'selected' : '' }}>{{ $value }}</option>
+                @endforeach
             </select>
-            @error('parking')
+            @error('nd_parkings_id')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
         </div>
@@ -169,15 +169,13 @@
             @enderror
         </div>
         <div class="form-group">
-            <select class="form-control @error('thematic') is-invalid @enderror" id="thematic" name="thematic">
-                <option selected disabled>{{ ucfirst(trans('validation.attributes.thematic')) }} *</option>
-                <option value="{{ ucfirst(trans('module_buys.thematic.birthdate')) }}" {{ old('thematic') == ucfirst(trans('module_buys.thematic.birthdate')) ? 'selected' : '' }}>{{ ucfirst(trans('module_buys.thematic.birthdate')) }}</option>
-                <option value="{{ ucfirst(trans('module_buys.thematic.anniversary')) }}" {{ old('thematic') == ucfirst(trans('module_buys.thematic.anniversary')) ? 'selected' : '' }}>{{ ucfirst(trans('module_buys.thematic.anniversary')) }}</option>
-                <option value="{{ ucfirst(trans('module_buys.thematic.love')) }}" {{ old('thematic') == ucfirst(trans('module_buys.thematic.love')) ? 'selected' : '' }}>{{ ucfirst(trans('module_buys.thematic.love')) }}</option>
-                <option value="{{ ucfirst(trans('module_buys.thematic.friendship')) }}" {{ old('thematic') == ucfirst(trans('module_buys.thematic.friendship')) ? 'selected' : '' }}>{{ ucfirst(trans('module_buys.thematic.friendship')) }}</option>
-                <option value="{{ ucfirst(trans('module_buys.thematic.other')) }}" {{ old('thematic') == ucfirst(trans('module_buys.thematic.other')) ? 'selected' : '' }}>{{ ucfirst(trans('module_buys.thematic.other')) }}</option>
+            <select class="form-control @error('nd_themathics_id') is-invalid @enderror" id="nd_themathics_id" name="nd_themathics_id">
+                <option selected disabled>{{ ucfirst(trans('validation.attributes.nd_themathics_id')) }} *</option>
+                @foreach($nd_themathics_id as $key => $value)
+                    <option value="{{ $key }}" {{ old('nd_themathics_id') == $key ? 'selected' : '' }}>{{ $value }}</option>
+                @endforeach
             </select>
-            @error('thematic')
+            @error('nd_themathics_id')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
         </div>
@@ -188,8 +186,8 @@
             @enderror
         </div>
         <div class="form-group">
-            <textarea class="form-control form-control-user @error('buy_message') is-invalid @enderror" id="buy_message" name="buy_message" placeholder="{{ ucfirst(trans('validation.attributes.buy_message')) }}">{{ old('buy_message') }}</textarea>
-            @error('buy_message')
+            <textarea class="form-control form-control-user @error('dedication') is-invalid @enderror" id="dedication" name="dedication" placeholder="{{ ucfirst(trans('validation.attributes.dedication')) }}">{{ old('dedication') }}</textarea>
+            @error('dedication')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
         </div>
@@ -201,13 +199,13 @@
                 @enderror
             </div>
             <div class="col-sm-6">
-                <select class="form-control @error('schedule_id') is-invalid @enderror" id="schedule_id" name="schedule_id">
-                    <option selected disabled>{{ ucfirst(trans('validation.attributes.schedule_id')) }} *</option>
-                    @foreach($schedules as $name => $value)
-                        <option value="{{ $value }}" {{ old('schedule_id') == $value ? 'selected' : '' }}>{{ $name }}</option>
+                <select class="form-control @error('nd_delivery_schedules_id') is-invalid @enderror" id="nd_delivery_schedules_id" name="nd_delivery_schedules_id">
+                    <option selected disabled>{{ ucfirst(trans('validation.attributes.nd_delivery_schedules_id')) }} *</option>
+                    @foreach($nd_delivery_schedules_id as $key => $value)
+                        <option value="{{ $key }}" {{ old('nd_delivery_schedules_id') == $key ? 'selected' : '' }}>{{ $value }}</option>
                     @endforeach
                 </select>
-                @error('schedule_id')
+                @error('nd_delivery_schedules_id')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
             </div>
@@ -220,52 +218,28 @@
         </div>
         <hr>
         <div class="form-group">
-            <legend class="col-form-label">{{ ucfirst(trans('validation.attributes.how_know_us')) }} *</legend>
+            <legend class="col-form-label">{{ ucfirst(trans('validation.attributes.nd_contact_means_id')) }} *</legend>
             <div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="how_know_us" id="gridRadios1" value="{{ ucfirst(trans('module_buys.how_know_us.facebook')) }}" checked>
-                    <label class="form-check-label" for="gridRadios1">
-                        {{ ucfirst(trans('module_buys.how_know_us.facebook')) }}
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="how_know_us" id="gridRadios2" value="{{ ucfirst(trans('module_buys.how_know_us.instagram')) }}" {{ old('how_know_us') == ucfirst(trans('module_buys.how_know_us.instagram')) ? 'checked' : '' }}>
-                    <label class="form-check-label" for="gridRadios2">
-                        {{ ucfirst(trans('module_buys.how_know_us.instagram')) }}
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="how_know_us" id="gridRadios3" value="{{ ucfirst(trans('module_buys.how_know_us.recommendation')) }}" {{ old('how_know_us') == ucfirst(trans('module_buys.how_know_us.recommendation')) ? 'checked' : '' }}>
-                    <label class="form-check-label" for="gridRadios3">
-                        {{ ucfirst(trans('module_buys.how_know_us.recommendation')) }}
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="how_know_us" id="gridRadios4" value="{{ ucfirst(trans('module_buys.how_know_us.site_web')) }}" {{ old('how_know_us') == ucfirst(trans('module_buys.how_know_us.site_web')) ? 'checked' : '' }}>
-                    <label class="form-check-label" for="gridRadios4">
-                        {{ ucfirst(trans('module_buys.how_know_us.site_web')) }}
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="how_know_us" id="gridRadios5" value="{{ ucfirst(trans('module_buys.how_know_us.other')) }}" {{ old('how_know_us') == ucfirst(trans('module_buys.how_know_us.other')) ? 'checked' : '' }}>
-                    <label class="form-check-label" for="gridRadios5">
-                        {{ ucfirst(trans('module_buys.how_know_us.other')) }}
-                    </label>
-                </div>
+                @foreach($nd_contact_means_id as $key => $value)
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="nd_contact_means_id" id="gridRadios2" value="{{ $key }}" {{ old('nd_contact_means_id') == $key ? 'checked' : '' }}>
+                        <label class="form-check-label" for="gridRadios2">
+                            {{ $value }}
+                        </label>
+                    </div>
+                @endforeach
             </div>
             @error('how_know_us')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
         </div>
         <div class="form-group">
-            <input type="text" class="form-control form-control-user @error('how_know_us_other') is-invalid @enderror" id="how_know_us_other" name="how_know_us_other" placeholder="{{ ucfirst(trans('validation.attributes.how_know_us_other')) }}" value="{{ old('how_know_us_other') }}">
-            @error('how_know_us_other')
+            <input type="text" class="form-control form-control-user @error('contact_mean_other') is-invalid @enderror" id="contact_mean_other" name="contact_mean_other" placeholder="{{ ucfirst(trans('validation.attributes.contact_mean_other')) }}" value="{{ old('contact_mean_other') }}">
+            @error('contact_mean_other')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
         </div>
         <hr>
-        <input type="hidden" value="slug" id="slug" name="slug">
-        <input type="hidden" value="1" id="status_id" name="status_id">
         <input type="submit" class="btn btn-primary btn-user btn-block" value="{{ ucfirst(trans('crud.buy.submit')) }}">
     </form>
 @endsection
@@ -307,14 +281,14 @@
         function getSchedules(value){
             if(value == '' || value == null)
             {
-                $( "#schedule_id" ).find("option:gt(0)").remove();
+                $( "#nd_delivery_schedules_id" ).find("option:gt(0)").remove();
             }
             else
             {
                 $.get(direction+"/buys/datepicker/"+value, function(response, value){
-                    $( "#schedule_id" ).find("option:gt(0)").remove();
+                    $( "#nd_delivery_schedules_id" ).find("option:gt(0)").remove();
                     for(i=0; i<response.length; i++){
-                        $( "#schedule_id" ).append("<option value='"+ response[i].id +"'>"+ response[i].name +"</option>");
+                        $( "#nd_delivery_schedules_id" ).append("<option value='"+ response[i].id +"'>"+ response[i].name +"</option>");
                     }
                 });
             }

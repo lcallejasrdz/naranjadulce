@@ -26,9 +26,8 @@ class DataTablesController extends Controller
             $full_model = 'App\\View'.$request->model;
             $rows = $full_model::data();
         }else if($view == 'sales'){
-            $full_model = 'App\\View'.$request->model;
-            $rows = $full_model::where('status_id', '!=', 'Entregado')
-                                    ->data();
+            $full_model = 'App\\NDSaleListView';
+            $rows = $full_model::get();
         }else if($view == 'finances'){
             $full_model = 'App\\View'.$request->model;
             $rows = $full_model::where('status_id', 'En producción, pendiente de pago')
@@ -106,11 +105,9 @@ class DataTablesController extends Controller
                     }
                 }else if($view == 'sales'){
                     $actions = '';
-                    if($actions_value == 1 || $actions_value == 2){
-                        $actions .= ' <meta name="csrf-token" content="{{ csrf_token() }}"><a href="'. route($active.'.create', $row->slug) .'" class="btn btn-success btn-circle btn-sm"><i class="fas fa-edit"></i></a>';
-                        if(Sentinel::getUser()->role_id == 1 && ($row->status_id == 'Por confirmar' || $row->status_id == 'Verificar')){
-                            $actions .= ' <a href="#" class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#deleteModal" onClick="deleteModal('.$row->id.')"><i class="fas fa-minus-circle"></i></a>';
-                        }
+                    $actions .= ' <meta name="csrf-token" content="{{ csrf_token() }}"><a href="'. route($active.'.create', $row->slug) .'" class="btn btn-success btn-circle btn-sm"><i class="fas fa-edit"></i></a>';
+                    if(Sentinel::getUser()->role_id == 1 && ($row->status_id == 1 || $row->status_id == 8)){
+                        $actions .= ' <a href="#" class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#deleteModal" onClick="deleteModal('.$row->id.')"><i class="fas fa-minus-circle"></i></a>';
                     }
                 }else if($view == 'finances'){
                     $actions = '';

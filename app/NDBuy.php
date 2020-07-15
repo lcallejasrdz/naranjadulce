@@ -31,7 +31,7 @@ class NDBuy extends Model
      */
     public function status()
     {
-        return $this->hasOne('App\NDStatus', 'foreign_key');
+        return $this->hasOne('App\NDStatus', 'id', 'nd_status_id');
     }
 
     /**
