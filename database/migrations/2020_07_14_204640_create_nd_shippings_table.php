@@ -16,7 +16,7 @@ class CreateNdShippingsTable extends Migration
         Schema::create('nd_shippings', function (Blueprint $table) {
             $table->id();
             $table->foreignId('nd_buys_id');
-            $table->string('delivery_man');
+            $table->string('delivery_man')->default('');
             $table->timestamps();
             $table->softDeletes();
 

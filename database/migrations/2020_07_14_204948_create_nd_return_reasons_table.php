@@ -16,8 +16,8 @@ class CreateNdReturnReasonsTable extends Migration
         Schema::create('nd_return_reasons', function (Blueprint $table) {
             $table->id();
             $table->foreignId('nd_buys_id');
-            $table->string('module');
-            $table->string('reason', 1000);
+            $table->string('module')->default('');
+            $table->string('reason', 1000)->default('');
             $table->timestamps();
             $table->softDeletes();
 

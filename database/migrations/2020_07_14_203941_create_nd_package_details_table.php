@@ -18,8 +18,8 @@ class CreateNdPackageDetailsTable extends Migration
             $table->foreignId('nd_buys_id');
             $table->integer('quantity');
             $table->string('package');
-            $table->string('modifications', 1000);
-            $table->double('delivery_price');
+            $table->string('modifications', 1000)->default('');
+            $table->double('delivery_price')->default(0);
             $table->timestamps();
             $table->softDeletes();
 

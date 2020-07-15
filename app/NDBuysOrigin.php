@@ -14,7 +14,7 @@ class NDBuysOrigin extends Model
      *
      * @var string
      */
-    protected $table = 'nd_buys_origin';
+    protected $table = 'nd_buy_origins';
 
     /**
      * The attributes that are mass assignable.

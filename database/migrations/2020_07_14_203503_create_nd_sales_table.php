@@ -18,10 +18,10 @@ class CreateNdSalesTable extends Migration
             $table->foreignId('nd_buys_id');
             $table->foreignId('nd_delivery_types_id');
             $table->string('preferential_schedule')->nullable();
-            $table->string('observations_finances', 1000);
-            $table->string('observations_buildings', 1000);
-            $table->string('observations_shippings', 1000);
-            $table->string('proof_of_payment');
+            $table->string('observations_finances', 1000)->default('');
+            $table->string('observations_buildings', 1000)->default('');
+            $table->string('observations_shippings', 1000)->default('');
+            $table->string('proof_of_payment')->default('');
             $table->timestamps();
             $table->softDeletes();
 
