@@ -16,8 +16,8 @@ class CreateNdDetailBuysTable extends Migration
         Schema::create('nd_detail_buys', function (Blueprint $table) {
             $table->id();
             $table->foreignId('nd_buys_id');
-            $table->string('who_sends');
-            $table->string('who_receives');
+            $table->string('who_sends')->default('');
+            $table->string('who_receives')->default('');
             $table->string('dedication', 1000)->nullable();
             $table->date('delivery_date');
             $table->foreignId('nd_delivery_schedules_id');

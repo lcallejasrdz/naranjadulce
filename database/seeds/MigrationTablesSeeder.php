@@ -130,8 +130,8 @@ class MigrationTablesSeeder extends Seeder
 
 			NDDetailBuy::create([
 				'nd_buys_id' => $item->id,
-				'who_sends' => $buy->who_sends,
-				'who_receives' => $buy->who_receives,
+				'who_sends' => $buy->who_sends != null ? $buy->who_sends : '',
+				'who_receives' => $buy->who_receives != null ? $buy->who_receives : '',
 				'dedication' => $buy->buy_message,
 				'delivery_date' => $delivery_date,
 				'nd_delivery_schedules_id' => $buy->schedule_id,
@@ -144,10 +144,10 @@ class MigrationTablesSeeder extends Seeder
 				'nd_buys_id' => $item->id,
 				'nd_delivery_types_id' => NDDeliveryType::where('name', $sale->delivery_type)->first()->id,
 				'preferential_schedule' => $sale->preferential_schedule,
-				'observations_finances' => $sale->observations_finances,
-				'observations_buildings' => $sale->observations_buildings,
-				'observations_shippings' => $sale->observations_shippings,
-				'proof_of_payment' => $sale->proof_of_payment,
+				'observations_finances' => $sale->observations_finances != null ? $sale->observations_finances : '',
+				'observations_buildings' => $sale->observations_buildings != null ? $sale->observations_buildings : '',
+				'observations_shippings' => $sale->observations_shippings != null ? $sale->observations_shippings : '',
+				'proof_of_payment' => $sale->proof_of_payment != null ? $sale->proof_of_payment : '',
 				'created_at' => $sale->created_at,
 				'updated_at' => $sale->updated_at,
 				'deleted_at' => $item->deleted_at,
@@ -158,7 +158,7 @@ class MigrationTablesSeeder extends Seeder
 				'quantity' => $sale->quantity,
 				'package' => $sale->seller_package,
 				'modifications' => $sale->seller_modifications,
-				'delivery_price' => $sale->shipping_cost,
+				'delivery_price' => $sale->shipping_cost != null ? $sale->shipping_cost : 0,
 				'created_at' => $sale->created_at,
 				'updated_at' => $sale->updated_at,
 				'deleted_at' => $item->deleted_at,
@@ -185,7 +185,7 @@ class MigrationTablesSeeder extends Seeder
 			if($countShippings > 0){
 				NDShipping::create([
 					'nd_buys_id' => $item->id,
-					'delivery_man' => $buy->delivery_man,
+					'delivery_man' => $buy->delivery_man != null ? $buy->delivery_man : '',
 					'created_at' => $shipping->created_at,
 					'updated_at' => $shipping->updated_at,
 					'deleted_at' => $item->deleted_at,
