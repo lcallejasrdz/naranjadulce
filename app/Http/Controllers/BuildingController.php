@@ -3,19 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\BuildingRequest as MasterRequest;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str as Str;
 use Illuminate\Support\Arr;
-use App\Buy;
-use App\Sale;
 use App\NDBuy;
-use App\NDBuildingConfirmView;
 use App\NDBuilding;
+use App\NDBuildingConfirmView;
 use App\NDBuildingDetailView;
 use App\NDReturnReason;
-use App\NDSale;
-use DB;
 
 use Redirect;
 

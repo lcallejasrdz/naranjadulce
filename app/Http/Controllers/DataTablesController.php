@@ -19,7 +19,6 @@ class DataTablesController extends Controller
         }
         Carbon::setLocale($language);
         $active = $request->active;
-        $model = $request->model;
         $view = $request->view;
         $actions_value = $request->actions;
         if($view == 'index'){
@@ -32,41 +31,29 @@ class DataTablesController extends Controller
             $full_model = 'App\\NDFinanceListView';
             $rows = $full_model::get();
         }else if($view == 'financefinished'){
-            $full_model = 'App\\View'.$request->model;
-            $rows = $full_model::where('status_id', 'En producción')
-                                    ->orWhere('status_id', 'Pendiente de envío')
-                                    ->orWhere('status_id', 'En ruta')
-                                    ->orWhere('status_id', 'Entregado')
-                                    ->data();
+            $full_model = 'App\\NDFinanceFinishedListView';
+            $rows = $full_model::get();
         }else if($view == 'buildings'){
             $full_model = 'App\\NDBuildingListView';
             $rows = $full_model::get();
         }else if($view == 'buildingfinished'){
-            $full_model = 'App\\View'.$request->model;
-            $rows = $full_model::where('status_id', 'Pendiente de pago')
-                                    ->orWhere('status_id', 'Pendiente de envío')
-                                    ->orWhere('status_id', 'En ruta')
-                                    ->orWhere('status_id', 'Entregado')
-                                    ->data();
+            $full_model = 'App\\NDBuildingFinishedListView';
+            $rows = $full_model::get();
         }else if($view == 'shippings'){
             $full_model = 'App\\NDShippingListView';
             $rows = $full_model::get();
         }else if($view == 'shippingfinished'){
-            $full_model = 'App\\View'.$request->model;
-            $rows = $full_model::where('status_id', 'En ruta')
-                                    ->orWhere('status_id', 'Entregado')
-                                    ->data();
+            $full_model = 'App\\NDShippingFinishedListView';
+            $rows = $full_model::get();
         }else if($view == 'deliveries'){
             $full_model = 'App\\NDDeliveryListView';
             $rows = $full_model::get();
         }else if($view == 'deliveryfinished'){
-            $full_model = 'App\\View'.$request->model;
-            $rows = $full_model::where('status_id', 'Entregado')
-                                    ->data();
+            $full_model = 'App\\NDDeliveryFinishedListView';
+            $rows = $full_model::get();
         }else if($view == 'finished'){
-            $full_model = 'App\\View'.$request->model;
-            $rows = $full_model::where('status_id', 'Entregado')
-                                    ->data();
+            $full_model = 'App\\NDSaleFinishedListView';
+            $rows = $full_model::get();
         }else{
             $full_model = 'App\\ViewDeleted'.$request->model;
             $rows = $full_model::data();
@@ -123,9 +110,7 @@ class DataTablesController extends Controller
                     $actions .= ' <a href="'. route($active.'.create', $row->slug) .'" class="btn btn-success btn-circle btn-sm"><i class="fas fa-edit"></i></a>';
                 }else if($view == 'finished' || $view == 'financefinished' || $view == 'buildingfinished' || $view == 'shippingfinished' || $view == 'deliveryfinished'){
                     $actions = '';
-                    if($actions_value == 1 || $actions_value == 2){
-                        $actions .= ' <a href="'. route($active.'.show', $row->slug) .'" class="btn btn-success btn-circle btn-sm"><i class="fas fa-edit"></i></a>';
-                    }
+                    $actions .= ' <a href="'. route($active.'.show', $row->slug) .'" class="btn btn-success btn-circle btn-sm"><i class="fas fa-edit"></i></a>';
                 }else{
                 	$actions = '';
                     $actions .= ' <a href="#" class="btn btn-warning btn-circle btn-sm" data-toggle="modal" data-target="#restoreModal" onClick="restoreModal('.$row->id.')"><i class="fas fa-exclamation-triangle"></i></a>';

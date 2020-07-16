@@ -4,17 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\DeliveryRequest as MasterRequest;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str as Str;
 use Illuminate\Support\Arr;
-use App\Buy;
-use App\Sale;
-use App\Finance;
-use App\Building;
-use App\Delivery;
 use App\NDBuy;
-use App\NDDeliveryConfirmView;
 use App\NDDelivery;
-use DB;
+use App\NDDeliveryConfirmView;
+use App\NDDeliveryDetailView;
 
 use Redirect;
 
@@ -174,22 +168,26 @@ class DeliveryController extends Controller
         $select = null;
         $columns = null;
         $actions = null;
-
-        $item = DB::table('view_buys')
-                    ->where('view_buys.slug', $slug)
-                    ->join('view_sales', 'view_buys.slug', '=', 'view_sales.slug')
-                    ->select(
-                        'view_buys.id',
-                        'view_buys.first_name',
-                        'view_buys.last_name',
-                        'view_buys.phone',
-                        'view_sales.delivery_type',
-                        'view_buys.delivery_date',
-                        'view_buys.schedule_id',
-                        'view_sales.preferential_schedule',
-                        'view_buys.delivery_man'
-                    )
-                    ->first();
+        $item = NDDeliveryDetailView::where('slug', $slug)
+                ->select(
+                    'id',
+                    'slug',
+                    'first_name',
+                    'last_name',
+                    'phone',
+                    'nd_delivery_types_id',
+                    'delivery_date',
+                    'nd_delivery_schedules_id',
+                    'preferential_schedule',
+                    'delivery_man',
+                    'status_id',
+                    'nd_status_id',
+                )
+                ->first();
+        if($item->preferential_schedule != '' && $item->preferential_schedule != null){
+            $item->nd_delivery_schedules_id = '';
+        }
+        $item = $item ? $item->toArray() : array();
 
         return view('admin.crud.show', compact($this->compact));
     }

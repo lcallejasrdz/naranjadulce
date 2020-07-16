@@ -5,17 +5,13 @@ namespace App\Http\Controllers;
 use App\Http\Requests\FinanceRequest as MasterRequest;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str as Str;
 use Illuminate\Support\Arr;
-use App\Buy;
-use App\ViewBuy;
-use App\Sale;
 use App\NDBuy;
-use App\NDFinanceConfirmView;
-use App\NDFinance;
-use App\NDReturnReason;
 use App\NDSale;
-use DB;
+use App\NDFinance;
+use App\NDFinanceConfirmView;
+use App\NDFinanceDetailView;
+use App\NDReturnReason;
 
 use Redirect;
 
@@ -216,26 +212,30 @@ class FinanceController extends Controller
         $select = null;
         $columns = null;
         $actions = null;
-
-        $item = DB::table('view_buys')
-                    ->where('view_buys.slug', $slug)
-                    ->join('view_sales', 'view_buys.slug', '=', 'view_sales.slug')
-                    ->select(
-                        'view_buys.id',
-                        'view_buys.first_name',
-                        'view_buys.last_name',
-                        'view_sales.quantity',
-                        'view_sales.seller_package',
-                        'view_sales.seller_modifications',
-                        'view_sales.observations_finances',
-                        'view_sales.shipping_cost',
-                        'view_sales.proof_of_payment',
-                        'view_buys.delivery_date',
-                        'view_buys.schedule_id',
-                        'view_sales.preferential_schedule',
-                        'view_buys.delivery_man'
-                    )
-                    ->first();
+        
+        $item = NDFinanceDetailView::where('slug', $slug)
+                ->select(
+                    'id',
+                    'slug',
+                    'first_name',
+                    'last_name',
+                    'quantity',
+                    'package',
+                    'nd_themathics_id',
+                    'modifications',
+                    'observations_finances',
+                    'delivery_price',
+                    'delivery_date',
+                    'nd_delivery_schedules_id',
+                    'preferential_schedule',
+                    'proof_of_payment',
+                    'delivery_man',
+                )
+                ->first();
+        if($item->preferential_schedule != '' && $item->preferential_schedule != null){
+            $item->nd_delivery_schedules_id = '';
+        }
+        $item = $item ? $item->toArray() : array();
 
         return view('admin.crud.show', compact($this->compact));
     }

@@ -5,23 +5,28 @@ namespace App\Http\Controllers;
 use App\Http\Requests\SaleRequest as MasterRequest;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str as Str;
 use Illuminate\Support\Arr;
-use App\ViewBuy;
-use App\ViewSale;
-use App\Building;
-use App\Finance;
-use App\Sale;
-use App\Buy;
 use App\NDBuy;
-use App\NDSaleConfirmView;
-use App\NDDeliveryType;
+use App\NDBuysOrigin;
+use App\NDCustomerForm;
+use App\NDPinkBasket;
+use App\NDDetailBuy;
 use App\NDSale;
 use App\NDPackageDetail;
+use App\NDFinance;
+use App\NDBuilding;
+use App\NDShipping;
+use App\NDDelivery;
+use App\NDSaleConfirmView;
 use App\NDSaleDetailView;
+use App\NDDeliveryType;
 use App\NDReturnReason;
 
 use Redirect;
+
+use App\Building;
+use App\Finance;
+use App\Buy;
 
 class SaleController extends Controller
 {
@@ -310,6 +315,7 @@ class SaleController extends Controller
                     'observations_shippings',
                     'delivery_price',
                     'proof_of_payment',
+                    'delivery_man',
                     'nd_status_id',
                 )
                 ->first();
@@ -326,17 +332,39 @@ class SaleController extends Controller
      */
     public function destroy(Request $request)
     {
-        $slug = Buy::find($request->id)->slug;
-
-        if(Buy::destroy($request->id)){
-            if(Finance::where('slug', $slug)->count() > 0){
-                $item = Finance::where('slug', $slug)->first();
-                Finance::destroy($item->id);
+        if(NDBuy::destroy($request->nd_buys_id)){
+            if(NDBuysOrigin::where('nd_buys_id', $request->nd_buys_id)->count() > 0){
+                NDBuysOrigin::destroy(NDBuysOrigin::where('nd_buys_id', $request->nd_buys_id)->first()->id);
             }
-
-            if(Building::where('slug', $slug)->count() > 0){
-                $item = Building::where('slug', $slug)->first();
-                Building::destroy($item->id);
+            if(NDCustomerForm::where('nd_buys_id', $request->nd_buys_id)->count() > 0){
+                NDCustomerForm::destroy(NDCustomerForm::where('nd_buys_id', $request->nd_buys_id)->first()->id);
+            }
+            if(NDPinkBasket::where('nd_buys_id', $request->nd_buys_id)->count() > 0){
+                NDPinkBasket::destroy(NDPinkBasket::where('nd_buys_id', $request->nd_buys_id)->first()->id);
+            }
+            if(NDDetailBuy::where('nd_buys_id', $request->nd_buys_id)->count() > 0){
+                NDDetailBuy::destroy(NDDetailBuy::where('nd_buys_id', $request->nd_buys_id)->first()->id);
+            }
+            if(NDSale::where('nd_buys_id', $request->nd_buys_id)->count() > 0){
+                NDSale::destroy(NDSale::where('nd_buys_id', $request->nd_buys_id)->first()->id);
+            }
+            if(NDPackageDetail::where('nd_buys_id', $request->nd_buys_id)->count() > 0){
+                NDPackageDetail::destroy(NDPackageDetail::where('nd_buys_id', $request->nd_buys_id)->first()->id);
+            }
+            if(NDFinance::where('nd_buys_id', $request->nd_buys_id)->count() > 0){
+                NDFinance::destroy(NDFinance::where('nd_buys_id', $request->nd_buys_id)->first()->id);
+            }
+            if(NDBuilding::where('nd_buys_id', $request->nd_buys_id)->count() > 0){
+                NDBuilding::destroy(NDBuilding::where('nd_buys_id', $request->nd_buys_id)->first()->id);
+            }
+            if(NDShipping::where('nd_buys_id', $request->nd_buys_id)->count() > 0){
+                NDShipping::destroy(NDShipping::where('nd_buys_id', $request->nd_buys_id)->first()->id);
+            }
+            if(NDDelivery::where('nd_buys_id', $request->nd_buys_id)->count() > 0){
+                NDDelivery::destroy(NDDelivery::where('nd_buys_id', $request->nd_buys_id)->first()->id);
+            }
+            if(NDReturnReason::where('nd_buys_id', $request->nd_buys_id)->count() > 0){
+                NDReturnReason::destroy(NDReturnReason::where('nd_buys_id', $request->nd_buys_id)->first()->id);
             }
 
             return Redirect::route($this->active)->with('success', trans('crud.delete.message.success'));

@@ -3,20 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ShippingRequest as MasterRequest;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str as Str;
 use Illuminate\Support\Arr;
-use App\Buy;
-use App\Sale;
-use App\Finance;
-use App\Building;
 use App\NDBuy;
-use App\NDShippingConfirmView;
 use App\NDShipping;
+use App\NDShippingConfirmView;
+use App\NDShippingDetailView;
 use App\NDReturnReason;
-use App\NDSale;
-use DB;
 
 use Redirect;
 
@@ -221,42 +214,45 @@ class ShippingController extends Controller
         $select = null;
         $columns = null;
         $actions = null;
-
-        $item = DB::table('view_buys')
-                    ->where('view_buys.slug', $slug)
-                    ->join('view_sales', 'view_buys.slug', '=', 'view_sales.slug')
-                    ->select(
-                        'view_buys.id',
-                        'view_buys.first_name',
-                        'view_buys.last_name',
-                        'view_buys.phone',
-                        'view_sales.quantity',
-                        'view_sales.seller_package',
-                        'view_buys.thematic',
-                        'view_sales.seller_modifications',
-                        'view_buys.buy_message',
-                        'view_buys.who_sends',
-                        'view_buys.who_receives',
-                        'view_sales.delivery_type',
-                        'view_buys.delivery_date',
-                        'view_buys.schedule_id',
-                        'view_sales.preferential_schedule',
-                        'view_buys.postal_code',
-                        'view_buys.state',
-                        'view_buys.municipality',
-                        'view_buys.colony',
-                        'view_buys.street',
-                        'view_buys.no_ext',
-                        'view_buys.no_int',
-                        'view_buys.address_references',
-                        'view_buys.address_type',
-                        'view_buys.parking',
-                        'view_sales.observations_shippings',
-                        'view_sales.shipping_cost',
-                        'view_buys.delivery_man',
-                        'view_buys.status_id'
-                    )
-                    ->first();
+        $item = NDShippingDetailView::where('slug', $slug)
+                ->select(
+                    'id',
+                    'slug',
+                    'first_name',
+                    'last_name',
+                    'phone',
+                    'quantity',
+                    'package',
+                    'nd_themathics_id',
+                    'modifications',
+                    'dedication',
+                    'who_sends',
+                    'who_receives',
+                    'nd_delivery_types_id',
+                    'delivery_date',
+                    'nd_delivery_schedules_id',
+                    'preferential_schedule',
+                    'postal_code',
+                    'state',
+                    'municipality',
+                    'colony',
+                    'street',
+                    'no_ext',
+                    'no_int',
+                    'references',
+                    'nd_address_types_id',
+                    'nd_parkings_id',
+                    'observations_shippings',
+                    'delivery_price',
+                    'delivery_man',
+                    'status_id',
+                    'nd_status_id',
+                )
+                ->first();
+        if($item->preferential_schedule != '' && $item->preferential_schedule != null){
+            $item->nd_delivery_schedules_id = '';
+        }
+        $item = $item ? $item->toArray() : array();
 
         return view('admin.crud.show', compact($this->compact));
     }
