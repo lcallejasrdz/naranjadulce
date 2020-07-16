@@ -203,11 +203,11 @@ class MigrationTablesSeeder extends Seeder
 
 			if($buy->status_id == 8){
 				if($countFinance == 0){
-					$module = 'Finanzas';
+					$module = 'finances';
 				}else if($countBuilding == 0){
-					$module = 'Producción';
+					$module = 'buildings';
 				}else{
-					$module = 'Logística';
+					$module = 'shippings';
 				}
 				NDReturnReason::create([
 					'nd_buys_id' => $item->id,

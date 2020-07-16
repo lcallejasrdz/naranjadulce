@@ -14,73 +14,26 @@
 @section('content')
     <div class="card shadow mb-4">
         <div class="card-body">
-            @isset($sale)
-                <div class="table-responsive">
-                    <table class="table table-bordered table-striped">
-                        <tbody>
-                            @foreach($sale as $column => $value)
-                                @if($value != '')
-                                    <tr>
-                                        <th>
-                                            {{ ucfirst(trans('validation.attributes.'.$column)) }}
-                                        </th>
-                                        <td>
-                                            @if(($column == 'last_login' && $value != "") || ($column == 'created_at' && $value != "") || ($column == 'updated_at' && $value != "") || ($column == 'deleted_at' && $value != ""))
-                                                {{ \Carbon\Carbon::parse($value)->diffForHumans() }}
-                                            @elseif($column == 'proof_of_payment')
-                                                <i class="fa fa-download"></i>{!! link_to($value, ' Download File', ['target' => '_blank']) !!}
-                                            @else
-                                                {{ $value }}
-                                            @endif
-                                        </td>
-                                    </tr>
-                                @endif
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-                <hr>
-            @endisset
             <div class="table-responsive">
                 <table class="table table-bordered table-striped">
                     <tbody>
-                        @if(isset($item->preferential_schedule) && $item->preferential_schedule != '')
-                            @php $schedule = 1; @endphp
-                        @else
-                            @php $schedule = 0; @endphp
-                        @endif
                         @foreach($item as $column => $value)
-                            @if($column == 'schedule_id')
-                                @if($schedule == 0)
+                            @if($column != 'status_id' && $column != 'slug' && $value != '')
+                                @if($column == 'id')
                                     <tr>
-                                        <th>
-                                            {{ ucfirst(trans('validation.attributes.'.$column)) }}
-                                        </th>
-                                        <td>
-                                            {{ $value }}
-                                        </td>
+                                        <th colspan="2" class="text-center">{{ ucfirst(trans('module_buys.sidebar.route_title_singular')) }}</th>
+                                    </tr>
+                                @elseif($active == 'sales' && $column == 'quantity')
+                                    <tr>
+                                        <th colspan="2" class="text-center">{{ ucfirst(trans('module_sales.controller.word')) }}</th>
                                     </tr>
                                 @endif
-                            @elseif($column == 'preferential_schedule')
-                                @if($schedule == 1)
-                                    <tr>
-                                        <th>
-                                            {{ ucfirst(trans('validation.attributes.'.$column)) }}
-                                        </th>
-                                        <td>
-                                            {{ $value }}
-                                        </td>
-                                    </tr>
-                                @endif
-                            @elseif($value != '')
                                 <tr>
                                     <th>
                                         {{ ucfirst(trans('validation.attributes.'.$column)) }}
                                     </th>
                                     <td>
-                                        @if(($column == 'last_login' && $value != "") || ($column == 'created_at' && $value != "") || ($column == 'updated_at' && $value != "") || ($column == 'deleted_at' && $value != ""))
-                                            {{ \Carbon\Carbon::parse($value)->diffForHumans() }}
-                                        @elseif($column == 'proof_of_payment')
+                                        @if($column == 'proof_of_payment')
                                             <i class="fa fa-download"></i>{!! link_to($value, ' Download File', ['target' => '_blank']) !!}
                                         @else
                                             {{ $value }}

@@ -30,15 +30,15 @@
                 
                 @if($active == 'users')
                     <input type="submit" class="btn {{ (isset($item) ? 'btn-success' : 'btn-primary') }}" value="{{ (isset($item) ? trans('crud.update.update') : trans('crud.create.add'))  }}">
-                @elseif($active == 'sales' && ($buy['status_id'] == 'Por confirmar' || $buy['status_id'] == 'Verificar'))
+                @elseif($active == 'sales' && ($item->status_id == 1 || $item->status_id == 8))
                     <input type="submit" class="btn btn-primary" value="{{ trans('crud.sale.submit') }}">
-                @elseif($active == 'finances' && $item->status_id == 'Pendiente de pago')
+                @elseif($active == 'finances' && $item->status_id == 4)
                     <input type="submit" class="btn btn-primary" value="{{ trans('crud.finance.submit') }}">
                     <a class="btn btn-warning" href="#" data-toggle="modal" data-target="#returnModal">{{ trans('crud.building.return') }}</a>
-                @elseif($active == 'buildings' && $item->status_id == 'En producción')
+                @elseif($active == 'buildings' && $item->status_id == 3)
                     <input type="submit" class="btn btn-primary" value="{{ trans('crud.building.submit') }}">
                     <a class="btn btn-warning" href="#" data-toggle="modal" data-target="#returnModal">{{ trans('crud.building.return') }}</a>
-                @elseif($active == 'shippings' && $item->status_id == 'Pendiente de envío')
+                @elseif($active == 'shippings' && $item->status_id == 5)
                     <input type="submit" class="btn btn-primary" value="{{ trans('crud.shipping.submit') }}">
                     <a class="btn btn-warning" href="#" data-toggle="modal" data-target="#returnModal">{{ trans('crud.building.return') }}</a>
                 @elseif($active == 'deliveries')
@@ -56,16 +56,16 @@
     @if($active == 'sales')
         <script>
             $(document).ready(function() {
-                changeFieldSchedule($( "#delivery_type" ).val());
+                changeFieldSchedule($( "#nd_delivery_types_id" ).val());
             });
-            $( "#delivery_type" ).change(function(event){
+            $( "#nd_delivery_types_id" ).change(function(event){
                 changeFieldSchedule(event.target.value)
             });
             function changeFieldSchedule(value){
-                if(value == 'Normal'){
+                if(value == 1){
                     $("#preferential_schedule").attr("readonly", true);
                     $("#preferential_schedule").val("");
-                }else if(value == 'Preferencial'){
+                }else if(value == 2){
                     $("#preferential_schedule").attr("readonly", false);
                 }else{
                 }

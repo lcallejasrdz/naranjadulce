@@ -11,6 +11,9 @@ use App\Sale;
 use App\Finance;
 use App\Building;
 use App\Delivery;
+use App\NDBuy;
+use App\NDDeliveryConfirmView;
+use App\NDDelivery;
 use DB;
 
 use Redirect;
@@ -82,24 +85,28 @@ class DeliveryController extends Controller
         $select = null;
         $columns = null;
         $actions = null;
-        $item = DB::table('view_buys')
-                    ->where('view_buys.slug', $slug)
-                    ->join('view_sales', 'view_buys.slug', '=', 'view_sales.slug')
-                    ->select(
-                        'view_buys.id',
-                        'view_buys.slug',
-                        'view_buys.first_name',
-                        'view_buys.last_name',
-                        'view_buys.phone',
-                        'view_sales.delivery_type',
-                        'view_buys.delivery_date',
-                        'view_buys.schedule_id',
-                        'view_sales.preferential_schedule',
-                        'view_buys.delivery_man'
-                    )
-                    ->first();
+        $item = NDDeliveryConfirmView::where('slug', $slug)
+                ->select(
+                    'id',
+                    'slug',
+                    'first_name',
+                    'last_name',
+                    'phone',
+                    'nd_delivery_types_id',
+                    'delivery_date',
+                    'nd_delivery_schedules_id',
+                    'preferential_schedule',
+                    'delivery_man',
+                    'status_id',
+                    'nd_status_id',
+                )
+                ->first();
+        if($item->preferential_schedule != '' && $item->preferential_schedule != null){
+            $item->nd_delivery_schedules_id = '';
+        }
+        $buy = $item ? $item->toArray() : array();
 
-        return view('admin.crud.form', compact($this->compact));
+        return view('admin.crud.form', compact($this->compact, 'buy'));
     }
 
     /**
@@ -110,17 +117,23 @@ class DeliveryController extends Controller
      */
     public function store(MasterRequest $request)
     {
-        $item = $this->full_model::create($request->only($this->create_fields));
+        $buy = NDBuy::find($request->nd_buys_id);
+        $status_back = $buy->nd_status_id;
 
-        $buy = Buy::where('slug', $item->slug)->first();
-        $buy->status_id = 7;
+        NDDelivery::create([
+            'nd_buys_id' => $request->nd_buys_id,
+        ]);
 
-        if($item->save() && $buy->save()){
+        $buy->nd_status_id = 7;
+
+        if(NDDelivery::where('nd_buys_id', $request->nd_buys_id)->count() > 0 && $buy->save()){
             return Redirect::route($this->active)->with('success', trans('crud.delivery.message.success'));
         }else{
-            $item->forceDelete();
-            $buy->status_id = 6;
+            NDDelivery::destroy(NDDelivery::where('nd_buys_id', $request->nd_buys_id)->first()->id);
+
+            $buy->status_id = $status_back;
             $buy->save();
+
             return Redirect::back()->with('error', trans('crud.delivery.message.error'));
         }
     }

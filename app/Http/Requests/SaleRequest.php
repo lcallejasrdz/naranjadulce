@@ -32,16 +32,16 @@ class SaleRequest extends FormRequest
             }
             case 'POST': {
                 return [
-                    'proof_of_payment' => 'required_if:proof_verified,0|nullable|mimes:pdf,jpg,jpeg',
                     'quantity' => 'required|numeric',
-                    'seller_package' => 'required|min:3|max:255',
-                    'seller_modifications' => 'required|min:3|max:255',
-                    'delivery_type' => 'required',
-                    'preferential_schedule' => 'required_if:delivery_schedule,Horario preferencial (costo extra)|required_if:delivery_type,Preferencial|nullable|min:3|max:255',
+                    'package' => 'required|min:3|max:255',
+                    'modifications' => 'required|min:3|max:1000',
+                    'nd_delivery_types_id' => 'required',
+                    'preferential_schedule' => 'required_if:delivery_schedules_id,3|required_if:nd_delivery_types_id,2|nullable|min:3|max:255',
                     'observations_finances' => 'required|min:3|max:1000',
                     'observations_buildings' => 'required|min:3|max:1000',
                     'observations_shippings' => 'required|min:3|max:1000',
-                    'shipping_cost' => 'required|numeric',
+                    'delivery_price' => 'required|numeric',
+                    'proof_of_payment' => 'required_if:proof_verified,0|nullable|mimes:pdf,jpg,jpeg',
                 ];
             }
             case 'PUT': {

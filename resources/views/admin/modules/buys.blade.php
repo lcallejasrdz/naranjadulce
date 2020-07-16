@@ -180,7 +180,7 @@
             @enderror
         </div>
         <div class="form-group">
-            <textarea class="form-control form-control-user @error('modifications') is-invalid @enderror" id="modifications" name="modifications" placeholder="{{ ucfirst(trans('validation.attributes.modifications')) }}">{{ old('modifications') }}</textarea>
+            <textarea class="form-control form-control-user @error('modifications') is-invalid @enderror" id="modifications" name="modifications" placeholder="{{ ucfirst(trans('validation.attributes.modifications')) }} {{ ucfirst(trans('module_buys.modifications_message')) }}">{{ old('modifications') }}</textarea>
             @error('modifications')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror

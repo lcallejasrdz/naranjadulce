@@ -135,6 +135,12 @@ return [
         'email' => [
             'unique' => 'El :attribute ya ha sido registrado.',
         ],
+        'proof_of_payment' => [
+            'required_if' => 'El campo :attribute es obligatorio.',
+        ],
+        'preferential_schedule' => [
+            'required_if' => 'El campo :attribute es obligatorio.',
+        ],
     ],
 
     /*
@@ -212,7 +218,7 @@ return [
         'package'               => 'paquete deseado',
         'thematic'              => 'temática',
         'nd_themathics_id'      => 'temática',
-        'modifications'         => 'modificaciones a la sorpresa (aquí escribes todos los cambios que se harán  a la sorpresa o si quieres agregar algo adicional)',
+        'modifications'         => 'modificaciones a la sorpresa',
         'buy_message'           => 'dedicatoria',
         'dedication'            => 'dedicatoria',
         'delivery_date'         => 'fecha de entrega',
@@ -241,12 +247,14 @@ return [
         'seller_package'        => 'paquete deseado',
         'seller_modifications'  => 'modificaciones a la sorpresa',
         'delivery_type'         => 'tipo de envío',
+        'nd_delivery_types_id'  => 'tipo de envío',
         'preferential_schedule' => 'horario preferencial',
         'seller_observations'   => 'observaciones',
         'observations_finances' => 'observaciones para finanzas',
         'observations_buildings'=> 'observaciones para producción',
         'observations_shippings'=> 'observaciones para logística',
         'shipping_cost'         => 'costo de envío',
+        'delivery_price'        => 'costo de envío',
 
         // Finances
         'verified_payment'      => 'verificación de pago',

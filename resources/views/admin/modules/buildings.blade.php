@@ -1,44 +1,13 @@
 <table class="table table-striped">
 	<tbody>
-		@if(isset($item->preferential_schedule) && $item->preferential_schedule != '')
-			@php $schedule = 1; @endphp
-		@else
-			@php $schedule = 0; @endphp
-		@endif
-		@foreach($item as $column => $value)
-			@if($column == 'schedule_id')
-				@if($schedule == 0)
-		            <tr>
-		                <th>
-		                    {{ ucfirst(trans('validation.attributes.'.$column)) }}
-		                </th>
-		                <td>
-		                    {{ $value }}
-		                </td>
-		            </tr>
-		        @endif
-			@elseif($column == 'preferential_schedule')
-				@if($schedule == 1)
-		            <tr>
-		                <th>
-		                    {{ ucfirst(trans('validation.attributes.'.$column)) }}
-		                </th>
-		                <td>
-		                    {{ $value }}
-		                </td>
-		            </tr>
-		        @endif
-			@elseif($column != 'last_login' && $column != 'created_at' && $column != 'updated_at' && $column != 'deleted_at' && $column != 'slug' && $value != '')
+		@foreach($buy as $column => $value)
+			@if($column != 'last_login' && $column != 'created_at' && $column != 'updated_at' && $column != 'deleted_at' && $column != 'slug' && $column != 'status_id' && $value != '')
 	            <tr>
 	                <th>
 	                    {{ ucfirst(trans('validation.attributes.'.$column)) }}
 	                </th>
 	                <td>
-	                    @if(($column == 'last_login' && $value != "") || ($column == 'created_at' && $value != "") || ($column == 'updated_at' && $value != "") || ($column == 'deleted_at' && $value != ""))
-	                        {{ \Carbon\Carbon::parse($value)->diffForHumans() }}
-	                    @else
-	                        {{ $value }}
-	                    @endif
+                        {{ $value }}
 	                </td>
 	            </tr>
 	        @endif
@@ -48,6 +17,4 @@
 
 <hr>
 
-<input type="hidden" value="{{ $item->slug }}" id="slug" name="slug">
-<input type="hidden" value="{{ Sentinel::getUser()->id }}" id="user_id" name="user_id">
-<input type="hidden" value="1" id="verified_building" name="verified_building">
+<input type="hidden" value="{{ $item->id }}" id="nd_buys_id" name="nd_buys_id">

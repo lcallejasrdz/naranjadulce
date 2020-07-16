@@ -11,6 +11,11 @@ use App\Buy;
 use App\Sale;
 use App\Finance;
 use App\Building;
+use App\NDBuy;
+use App\NDShippingConfirmView;
+use App\NDShipping;
+use App\NDReturnReason;
+use App\NDSale;
 use DB;
 
 use Redirect;
@@ -82,43 +87,46 @@ class ShippingController extends Controller
         $select = null;
         $columns = null;
         $actions = null;
-        $item = DB::table('view_buys')
-                    ->where('view_buys.slug', $slug)
-                    ->join('view_sales', 'view_buys.slug', '=', 'view_sales.slug')
-                    ->select(
-                        'view_buys.id',
-                        'view_buys.slug',
-                        'view_buys.first_name',
-                        'view_buys.last_name',
-                        'view_buys.phone',
-                        'view_sales.quantity',
-                        'view_sales.seller_package',
-                        'view_buys.thematic',
-                        'view_sales.seller_modifications',
-                        'view_buys.buy_message',
-                        'view_buys.who_sends',
-                        'view_buys.who_receives',
-                        'view_sales.delivery_type',
-                        'view_buys.delivery_date',
-                        'view_buys.schedule_id',
-                        'view_sales.preferential_schedule',
-                        'view_buys.postal_code',
-                        'view_buys.state',
-                        'view_buys.municipality',
-                        'view_buys.colony',
-                        'view_buys.street',
-                        'view_buys.no_ext',
-                        'view_buys.no_int',
-                        'view_buys.address_references',
-                        'view_buys.address_type',
-                        'view_buys.parking',
-                        'view_sales.observations_shippings',
-                        'view_sales.shipping_cost',
-                        'view_buys.status_id'
-                    )
-                    ->first();
+        $item = NDShippingConfirmView::where('slug', $slug)
+                ->select(
+                    'id',
+                    'slug',
+                    'first_name',
+                    'last_name',
+                    'phone',
+                    'quantity',
+                    'package',
+                    'nd_themathics_id',
+                    'modifications',
+                    'dedication',
+                    'who_sends',
+                    'who_receives',
+                    'nd_delivery_types_id',
+                    'delivery_date',
+                    'nd_delivery_schedules_id',
+                    'preferential_schedule',
+                    'postal_code',
+                    'state',
+                    'municipality',
+                    'colony',
+                    'street',
+                    'no_ext',
+                    'no_int',
+                    'references',
+                    'nd_address_types_id',
+                    'nd_parkings_id',
+                    'observations_shippings',
+                    'delivery_price',
+                    'status_id',
+                    'nd_status_id',
+                )
+                ->first();
+        if($item->preferential_schedule != '' && $item->preferential_schedule != null){
+            $item->nd_delivery_schedules_id = '';
+        }
+        $buy = $item ? $item->toArray() : array();
 
-        return view('admin.crud.form', compact($this->compact));
+        return view('admin.crud.form', compact($this->compact, 'buy'));
     }
 
     /**
@@ -129,18 +137,24 @@ class ShippingController extends Controller
      */
     public function store(MasterRequest $request)
     {
-        $item = $this->full_model::create($request->only($this->create_fields));
+        $buy = NDBuy::find($request->nd_buys_id);
+        $status_back = $buy->nd_status_id;
 
-        $buy = Buy::where('slug', $item->slug)->first();
-        $buy->delivery_man = $request->delivery_man;
-        $buy->status_id = 6;
+        NDShipping::create([
+            'nd_buys_id' => $request->nd_buys_id,
+            'delivery_man' => $request->delivery_man,
+        ]);
 
-        if($item->save() && $buy->save()){
+        $buy->nd_status_id = 6;
+
+        if(NDShipping::where('nd_buys_id', $request->nd_buys_id)->count() > 0 && $buy->save()){
             return Redirect::route($this->active)->with('success', trans('crud.shipping.message.success'));
         }else{
-            $item->forceDelete();
-            $buy->status_id = 5;
+            NDShipping::destroy(NDShipping::where('nd_buys_id', $request->nd_buys_id)->first()->id);
+
+            $buy->status_id = $status_back;
             $buy->save();
+
             return Redirect::back()->with('error', trans('crud.shipping.message.error'));
         }
     }
@@ -153,28 +167,28 @@ class ShippingController extends Controller
      */
     public function return(MasterRequest $request)
     {
-        $buy = Buy::where('slug', $request->slug)->first();
-        $status_back = $buy->status_id;
+        $buy = NDBuy::find($request->nd_buys_id);
+        $status_back = $buy->nd_status_id;
 
-        // Aquí guardaría la información en el campo nuevo.
-        $buy->return_reason = $request->return_reason;
-        // también agregaría el nuevo estatus. 8 Verificar.
-        $buy->status_id = 8;
+        NDReturnReason::create([
+            'nd_buys_id' => $request->nd_buys_id,
+            'module' => 'finances',
+            'reason' => $request->return_reason,
+        ]);
 
-        if($buy->save()){
-            // Aquí eliminaría el registro de venta, incluído el archivo.
-            $sale = Sale::where('slug', $request->slug)->first();
+        $buy->nd_status_id = 8;
+
+        if(NDReturnReason::where('nd_buys_id', $request->nd_buys_id)->count() > 0 && $buy->save()){
+            $sale = NDSale::where('nd_buys_id', $request->nd_buys_id)->first();
             
-            $sale->observations_shippings = null;
-            $sale->delivery_type = null;
-            $sale->preferential_schedule = null;
-            
-            if($sale->save()){
+            if(Storage::delete($sale->proof_of_payment)){
                 return Redirect::route($this->active)->with('success', trans('crud.building.message.returned'));
             }else{
-                $buy->return_reason = '';
-                $buy->status_id = $status_back;
+                NDReturnReason::destroy(NDReturnReason::where('nd_buys_id', $request->nd_buys_id)->first()->id);
+
+                $buy->nd_status_id = $status_back;
                 $buy->save();
+
                 return Redirect::back()->with('error', trans('crud.building.message.error_returned'));
             }
         }else{

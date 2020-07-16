@@ -29,10 +29,8 @@ class DataTablesController extends Controller
             $full_model = 'App\\NDSaleListView';
             $rows = $full_model::get();
         }else if($view == 'finances'){
-            $full_model = 'App\\View'.$request->model;
-            $rows = $full_model::where('status_id', 'En producción, pendiente de pago')
-                                    ->orWhere('status_id', 'Pendiente de pago')
-                                    ->data();
+            $full_model = 'App\\NDFinanceListView';
+            $rows = $full_model::get();
         }else if($view == 'financefinished'){
             $full_model = 'App\\View'.$request->model;
             $rows = $full_model::where('status_id', 'En producción')
@@ -41,11 +39,8 @@ class DataTablesController extends Controller
                                     ->orWhere('status_id', 'Entregado')
                                     ->data();
         }else if($view == 'buildings'){
-            $full_model = 'App\\View'.$request->model;
-            $rows = $full_model::where('status_id', 'En producción, pendiente de pago')
-                                    ->orWhere('status_id', 'Pendiente de pago')
-                                    ->orWhere('status_id', 'En producción')
-                                    ->data();
+            $full_model = 'App\\NDBuildingListView';
+            $rows = $full_model::get();
         }else if($view == 'buildingfinished'){
             $full_model = 'App\\View'.$request->model;
             $rows = $full_model::where('status_id', 'Pendiente de pago')
@@ -54,21 +49,16 @@ class DataTablesController extends Controller
                                     ->orWhere('status_id', 'Entregado')
                                     ->data();
         }else if($view == 'shippings'){
-            $full_model = 'App\\View'.$request->model;
-            $rows = $full_model::where('status_id', 'Pendiente de envío')
-                                    ->orWhere('status_id', 'En producción')
-                                    ->orWhere('status_id', 'Pendiente de pago')
-                                    ->orWhere('status_id', 'En producción, pendiente de pago')
-                                    ->data();
+            $full_model = 'App\\NDShippingListView';
+            $rows = $full_model::get();
         }else if($view == 'shippingfinished'){
             $full_model = 'App\\View'.$request->model;
             $rows = $full_model::where('status_id', 'En ruta')
                                     ->orWhere('status_id', 'Entregado')
                                     ->data();
         }else if($view == 'deliveries'){
-            $full_model = 'App\\View'.$request->model;
-            $rows = $full_model::where('status_id', 'En ruta')
-                                    ->data();
+            $full_model = 'App\\NDDeliveryListView';
+            $rows = $full_model::get();
         }else if($view == 'deliveryfinished'){
             $full_model = 'App\\View'.$request->model;
             $rows = $full_model::where('status_id', 'Entregado')
@@ -105,32 +95,32 @@ class DataTablesController extends Controller
                     }
                 }else if($view == 'sales'){
                     $actions = '';
-                    $actions .= ' <meta name="csrf-token" content="{{ csrf_token() }}"><a href="'. route($active.'.create', $row->slug) .'" class="btn btn-success btn-circle btn-sm"><i class="fas fa-edit"></i></a>';
+                    if($row->status_id != 1){
+                        $actions .= ' <a href="'. route($active.'.show', $row->slug) .'" class="btn btn-success btn-circle btn-sm"><i class="fas fa-edit"></i></a>';
+                    }else{
+                        $actions .= ' <a href="'. route($active.'.create', $row->slug) .'" class="btn btn-success btn-circle btn-sm"><i class="fas fa-edit"></i></a>';
+                    }
                     if(Sentinel::getUser()->role_id == 1 && ($row->status_id == 1 || $row->status_id == 8)){
                         $actions .= ' <a href="#" class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#deleteModal" onClick="deleteModal('.$row->id.')"><i class="fas fa-minus-circle"></i></a>';
                     }
                 }else if($view == 'finances'){
                     $actions = '';
-                    if($actions_value == 1 || $actions_value == 2){
-                        $actions .= ' <a href="'. route($active.'.create', $row->slug) .'" class="btn btn-success btn-circle btn-sm"><i class="fas fa-edit"></i></a>';
-                    }
+                    $actions .= ' <a href="'. route($active.'.create', $row->slug) .'" class="btn btn-success btn-circle btn-sm"><i class="fas fa-edit"></i></a>';
                 }else if($view == 'buildings'){
                     $actions = '';
-                    if($actions_value == 1 || $actions_value == 2){
+                    if($row->status_id != 3){
+                        $actions .= ' <a href="'. route($active.'.show', $row->slug) .'" class="btn btn-success btn-circle btn-sm"><i class="fas fa-edit"></i></a>';
+                    }else{
                         $actions .= ' <a href="'. route($active.'.create', $row->slug) .'" class="btn btn-success btn-circle btn-sm"><i class="fas fa-edit"></i></a>';
                     }
                 }else if($view == 'shippings'){
                     $actions = '';
-                    if($actions_value == 1 || $actions_value == 2){
-                        if($row->status_id == 'Pendiente de envío'){
-                            $actions .= ' <a href="'. route($active.'.create', $row->slug) .'" class="btn btn-success btn-circle btn-sm"><i class="fas fa-edit"></i></a>';
-                        }
+                    if($row->status_id == 5){
+                        $actions .= ' <a href="'. route($active.'.create', $row->slug) .'" class="btn btn-success btn-circle btn-sm"><i class="fas fa-edit"></i></a>';
                     }
                 }else if($view == 'deliveries'){
                     $actions = '';
-                    if($actions_value == 1 || $actions_value == 2){
-                        $actions .= ' <a href="'. route($active.'.create', $row->slug) .'" class="btn btn-success btn-circle btn-sm"><i class="fas fa-edit"></i></a>';
-                    }
+                    $actions .= ' <a href="'. route($active.'.create', $row->slug) .'" class="btn btn-success btn-circle btn-sm"><i class="fas fa-edit"></i></a>';
                 }else if($view == 'finished' || $view == 'financefinished' || $view == 'buildingfinished' || $view == 'shippingfinished' || $view == 'deliveryfinished'){
                     $actions = '';
                     if($actions_value == 1 || $actions_value == 2){

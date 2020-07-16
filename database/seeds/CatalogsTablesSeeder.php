@@ -54,6 +54,11 @@ class CatalogsTablesSeeder extends Seeder
 			'slug' => Str::slug('Entregado'),
 			'name' => 'Entregado',
 		]);
+        // 8
+		DB::table('nd_status')->insert([
+			'slug' => Str::slug('Verificar'),
+			'name' => 'Verificar',
+		]);
 
     	/**
     	* Origin

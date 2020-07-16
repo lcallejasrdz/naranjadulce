@@ -10,6 +10,11 @@ use Illuminate\Support\Arr;
 use App\Buy;
 use App\ViewBuy;
 use App\Sale;
+use App\NDBuy;
+use App\NDFinanceConfirmView;
+use App\NDFinance;
+use App\NDReturnReason;
+use App\NDSale;
 use DB;
 
 use Redirect;
@@ -81,30 +86,32 @@ class FinanceController extends Controller
         $select = null;
         $columns = null;
         $actions = null;
-        $item = DB::table('view_buys')
-                    ->where('view_buys.slug', $slug)
-                    ->join('view_sales', 'view_buys.slug', '=', 'view_sales.slug')
-                    ->select(
-                        'view_buys.id',
-                        'view_buys.slug',
-                        'view_buys.first_name',
-                        'view_buys.last_name',
-                        'view_sales.quantity',
-                        'view_sales.seller_package',
-                        'view_buys.thematic',
-                        'view_sales.seller_modifications',
-                        'view_sales.observations_finances',
-                        'view_sales.shipping_cost',
-                        'view_sales.proof_of_payment',
-                        'view_buys.delivery_date',
-                        'view_buys.schedule_id',
-                        'view_sales.preferential_schedule',
-                        'view_buys.status_id'
-                    )
-                    ->first();
-        $proof_of_payment = $item->proof_of_payment;
+        $item = NDFinanceConfirmView::where('slug', $slug)
+                ->select(
+                    'id',
+                    'slug',
+                    'first_name',
+                    'last_name',
+                    'quantity',
+                    'package',
+                    'nd_themathics_id',
+                    'modifications',
+                    'observations_finances',
+                    'delivery_price',
+                    'delivery_date',
+                    'nd_delivery_schedules_id',
+                    'preferential_schedule',
+                    'proof_of_payment',
+                    'status_id',
+                    'nd_status_id',
+                )
+                ->first();
+        if($item->preferential_schedule != '' && $item->preferential_schedule != null){
+            $item->nd_delivery_schedules_id = '';
+        }
+        $buy = $item ? $item->toArray() : array();
 
-        return view('admin.crud.form', compact($this->compact, 'proof_of_payment'));
+        return view('admin.crud.form', compact($this->compact, 'buy'));
     }
 
     /**
@@ -115,18 +122,23 @@ class FinanceController extends Controller
      */
     public function store(MasterRequest $request)
     {
-        $item = $this->full_model::create($request->only($this->create_fields));
+        $buy = NDBuy::find($request->nd_buys_id);
+        $status_back = $buy->nd_status_id;
 
-        $buy = Buy::where('slug', $item->slug)->first();
-        $status_back = $buy->status_id;
-        $buy->status_id = 3;
+        NDFinance::create([
+            'nd_buys_id' => $request->nd_buys_id,
+        ]);
 
-        if($item->save() && $buy->save()){
+        $buy->nd_status_id = 3;
+
+        if(NDFinance::where('nd_buys_id', $request->nd_buys_id)->count() > 0 && $buy->save()){
             return Redirect::route($this->active)->with('success', trans('crud.finance.message.success'));
         }else{
-            $item->forceDelete();
-            $buy->status_id = $status_back;
+            NDFinance::destroy(NDFinance::where('nd_buys_id', $request->nd_buys_id)->first()->id);
+
+            $buy->nd_status_id = $status_back;
             $buy->save();
+
             return Redirect::back()->with('error', trans('crud.finance.message.error'));
         }
     }
@@ -139,29 +151,28 @@ class FinanceController extends Controller
      */
     public function return(MasterRequest $request)
     {
-        $buy = Buy::where('slug', $request->slug)->first();
-        $status_back = $buy->status_id;
+        $buy = NDBuy::find($request->nd_buys_id);
+        $status_back = $buy->nd_status_id;
 
-        // Aquí guardaría la información en el campo nuevo.
-        $buy->return_reason = $request->return_reason;
-        // también agregaría el nuevo estatus. 8 Verificar.
-        $buy->status_id = 8;
+        NDReturnReason::create([
+            'nd_buys_id' => $request->nd_buys_id,
+            'module' => 'finances',
+            'reason' => $request->return_reason,
+        ]);
 
-        if($buy->save()){
-            // Aquí eliminaría el registro de venta, incluído el archivo.
-            $sale = Sale::where('slug', $request->slug)->first();
+        $buy->nd_status_id = 8;
+
+        if(NDReturnReason::where('nd_buys_id', $request->nd_buys_id)->count() > 0 && $buy->save()){
+            $sale = NDSale::where('nd_buys_id', $request->nd_buys_id)->first();
             
             if(Storage::delete($sale->proof_of_payment)){
-                $sale->observations_finances = null;
-                $sale->proof_of_payment = null;
-                $sale->shipping_cost = null;
-                $sale->save();
-                // Sale::where('id', $sale->id)->forceDelete();
                 return Redirect::route($this->active)->with('success', trans('crud.building.message.returned'));
             }else{
-                $buy->return_reason = '';
-                $buy->status_id = $status_back;
+                NDReturnReason::destroy(NDReturnReason::where('nd_buys_id', $request->nd_buys_id)->first()->id);
+
+                $buy->nd_status_id = $status_back;
                 $buy->save();
+
                 return Redirect::back()->with('error', trans('crud.building.message.error_returned'));
             }
         }else{

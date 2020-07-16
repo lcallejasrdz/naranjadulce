@@ -14,6 +14,11 @@ use App\Finance;
 use App\Sale;
 use App\Buy;
 use App\NDBuy;
+use App\NDSaleConfirmView;
+use App\NDDeliveryType;
+use App\NDSale;
+use App\NDPackageDetail;
+use App\NDSaleDetailView;
 
 use Redirect;
 
@@ -84,7 +89,7 @@ class SaleController extends Controller
         $select = null;
         $columns = null;
         $actions = null;
-        $item = ViewBuy::where('slug', $slug)
+        $item = NDSaleConfirmView::where('slug', $slug)
                 ->select(
                     'id',
                     'slug',
@@ -92,12 +97,12 @@ class SaleController extends Controller
                     'last_name',
                     'phone',
                     'package',
-                    'thematic',
+                    'nd_themathics_id',
                     'modifications',
-                    'buy_message',
+                    'dedication',
                     'delivery_date',
-                    'delivery_schedule',
-                    'schedule_id',
+                    'delivery_schedules_id',
+                    'nd_delivery_schedules_id',
                     'observations',
                     'who_sends',
                     'who_receives',
@@ -108,35 +113,17 @@ class SaleController extends Controller
                     'street',
                     'no_ext',
                     'no_int',
-                    'how_know_us',
-                    'how_know_us_other',
-                    'return_reason',
-                    'status_id'
+                    'nd_contact_means_id',
+                    'contact_mean_other',
+                    'status_id',
+                    'nd_status_id'
                 )
                 ->first();
         $buy = $item ? $item->toArray() : array();
-        $item = null;
-        
-        $saleCount = Sale::where('slug', $slug)->count();
-        if($saleCount > 0){
-            if($buy['status_id'] == 'Verificar'){
-                $sale = Sale::where('slug', $slug)
-                        ->first();
-            }else{
-                $sale = Sale::where('slug', $slug)
-                        ->select(
-                            'quantity'
-                        )
-                        ->first();
-            }
-            $sale = $sale ? $sale->toArray() : array();
-        }
 
-        if($buy['status_id'] == 'Por confirmar' || $saleCount == 0){
-            return view('admin.crud.form', compact($this->compact, 'buy'));
-        }else{
-            return view('admin.crud.form', compact($this->compact, 'buy', 'sale'));
-        }
+        $nd_delivery_types_id = NDDeliveryType::get()->pluck('name', 'id');
+        
+        return view('admin.crud.form', compact($this->compact, 'buy', 'nd_delivery_types_id'));
     }
 
     /**
@@ -147,58 +134,44 @@ class SaleController extends Controller
      */
     public function store(MasterRequest $request)
     {
-        if(Sale::where('slug', $request->slug)->count() == 0){
-            $path = Storage::putFileAs(
+        $buy = NDBuy::find($request->nd_buys_id);
+
+        // Save File
+        $path = Storage::putFileAs(
                 'receipts',
                 $request->file('proof_of_payment'),
-                $request->slug.'.'.$request->file('proof_of_payment')->extension()
+                $buy->slug.'.'.$request->file('proof_of_payment')->extension()
             );
 
-            $item = $this->full_model::create($request->only($this->create_fields));
+        NDSale::create([
+            'nd_buys_id' => $request->nd_buys_id,
+            'nd_delivery_types_id' => $request->nd_delivery_types_id,
+            'preferential_schedule' => $request->preferential_schedule,
+            'observations_finances' => $request->observations_finances,
+            'observations_buildings' => $request->observations_buildings,
+            'observations_shippings' => $request->observations_shippings,
+            'proof_of_payment' => $path,
+        ]);
 
-            $item->proof_of_payment = $path;
-        }else{
-            $item = Sale::where('slug', $request->slug)->first();
+        NDPackageDetail::create([
+            'nd_buys_id' => $request->nd_buys_id,
+            'quantity' => $request->quantity,
+            'package' => $request->package,
+            'modifications' => $request->modifications,
+            'delivery_price' => $request->delivery_price,
+        ]);
 
-            if($item->proof_of_payment == '' || $item->proof_of_payment == null){
-                $path = Storage::putFileAs(
-                    'receipts',
-                    $request->file('proof_of_payment'),
-                    $request->slug.'.'.$request->file('proof_of_payment')->extension()
-                );
+        $buy->nd_status_id = 4;
 
-                $item->proof_of_payment = $path;
-            }
-
-            $item->user_id = $request->user_id;
-            $item->quantity = $request->quantity;
-            $item->seller_package = $request->seller_package;
-            $item->seller_modifications = $request->seller_modifications;
-            $item->delivery_type = $request->delivery_type;
-            $item->preferential_schedule = $request->preferential_schedule;
-            $item->observations_finances = $request->observations_finances;
-            $item->observations_buildings = $request->observations_buildings;
-            $item->observations_shippings = $request->observations_shippings;
-            $item->shipping_cost = $request->shipping_cost;
-        }
-
-        $buy = Buy::where('slug', $item->slug)->first();
-
-        if(Finance::where('slug', $request->slug)->count() == 0){
-            $buy->status_id = 4;
-        }else if(Building::where('slug', $request->slug)->count() == 0){
-            $buy->status_id = 3;
-        }else{
-            $buy->status_id = 5;
-        }
-
-        if($item->save() && $buy->save()){
+        if(NDSale::where('nd_buys_id', $request->nd_buys_id)->count() > 0 && NDPackageDetail::where('nd_buys_id', $request->nd_buys_id)->count() > 0 && $buy->save()){
             return Redirect::route($this->active)->with('success', trans('crud.sale.message.success'));
         }else{
-            $item->forceDelete();
+            NDSale::destroy(NDSale::where('nd_buys_id', $request->nd_buys_id)->first()->id);
             Storage::delete($path);
 
-            $buy->status_id = 1;
+            NDPackageDetail::destroy(NDPackageDetail::where('nd_buys_id', $request->nd_buys_id)->first()->id);
+
+            $buy->nd_status_id = 1;
             $buy->save();
 
             return Redirect::back()->with('error', trans('crud.sale.message.error'));
@@ -242,13 +215,22 @@ class SaleController extends Controller
         $columns = null;
         $actions = null;
         
-        $item = ViewBuy::where('slug', $slug)
+        $item = NDSaleDetailView::where('slug', $slug)
                 ->select(
                     'id',
+                    'slug',
                     'first_name',
                     'last_name',
-                    'email',
                     'phone',
+                    'package',
+                    'nd_themathics_id',
+                    'modifications',
+                    'dedication',
+                    'delivery_date',
+                    'nd_delivery_schedules_id',
+                    'observations',
+                    'who_sends',
+                    'who_receives',
                     'postal_code',
                     'state',
                     'municipality',
@@ -256,47 +238,24 @@ class SaleController extends Controller
                     'street',
                     'no_ext',
                     'no_int',
-                    'address_type',
-                    'address_references',
-                    'parking',
-                    'who_sends',
-                    'who_receives',
-                    'package',
-                    'thematic',
-                    'modifications',
-                    'buy_message',
-                    'delivery_date',
-                    'schedule_id',
-                    'observations',
-                    'how_know_us',
-                    'how_know_us_other',
-                    'return_reason',
-                    'delivery_man',
-                    'status_id',
-                    'created_at'
-                )
-                ->first();
-        $item = $item ? $item->toArray() : array();
-        
-        $sale = Sale::where('slug', $slug)
-                ->select(
+                    'nd_contact_means_id',
+                    'contact_mean_other',
                     'quantity',
                     'seller_package',
                     'seller_modifications',
-                    'delivery_type',
+                    'nd_delivery_types_id',
                     'preferential_schedule',
-                    'seller_observations',
                     'observations_finances',
                     'observations_buildings',
                     'observations_shippings',
-                    'shipping_cost',
+                    'delivery_price',
                     'proof_of_payment',
-                    'created_at'
+                    'nd_status_id',
                 )
                 ->first();
-        $sale = $sale ? $sale->toArray() : array();
+        $item = $item ? $item->toArray() : array();
 
-        return view('admin.crud.show', compact($this->compact, 'sale'));
+        return view('admin.crud.show', compact($this->compact));
     }
 
     /**

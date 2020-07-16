@@ -12,7 +12,7 @@
                 <form method="post" action="{{ route($active.'.delete') }}">
                     <input type="hidden" name="_method" value="DELETE">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                    <input type="hidden" id="id_delete" name="id">
+                    <input type="hidden" id="id_delete" name="nd_status_id">
                     <button type="button" class="btn btn-light" data-dismiss="modal">{{ trans('crud.delete.modal.cancel') }}</button>
                     <input type="submit" class="btn btn-danger" value="{{ trans('crud.delete.modal.delete') }}">
                 </form>

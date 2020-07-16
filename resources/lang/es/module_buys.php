@@ -18,33 +18,9 @@ return [
         'delivery_address'      => 'Dirección de entrega',
         'delivery_data'         => 'Datos de entrega',
     ],
-    'how_know_us'           => [
-        'facebook'              => 'facebook',
-        'instagram'             => 'instagram',
-        'recommendation'        => 'recomendación',
-        'site_web'              => 'sitio web',
-        'other'                 => 'otro',
-    ],
-    'delivery_schedule'     => [
-        'early'                 => '09:00 - 12:00',
-        'late'                  => '13:00 - 18:00',
-        'preferential'          => 'Horario preferencial (costo extra)',
-    ],
-    'address_type'          => [
-        'private'               => 'Particular',
-        'business'              => 'Negocio',
-        'company'               => 'Empresa',
-    ],
-    'parking'               => [
-        'yes'                   => 'Si',
-        'no'                    => 'No',
-        'unknow'                => 'Desconozco',
-    ],
-    'thematic'               => [
-        'birthdate'             => 'Cumpleaños',
-        'anniversary'           => 'Aniversario',
-        'love'                  => 'Amor',
-        'friendship'            => 'Amistad',
-        'other'                 => 'Otro',
+    'modifications_message' => '(aquí escribes todos los cambios que se harán  a la sorpresa o si quieres agregar algo adicional)',
+    // Sidebar
+    'sidebar'               => [
+        'route_title_singular'  => $singular_ucfirst,
     ],
 ];
