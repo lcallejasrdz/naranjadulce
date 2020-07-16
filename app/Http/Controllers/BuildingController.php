@@ -158,7 +158,7 @@ class BuildingController extends Controller
 
         NDReturnReason::create([
             'nd_buys_id' => $request->nd_buys_id,
-            'module' => 'finances',
+            'module' => 'buildings',
             'reason' => $request->return_reason,
         ]);
 

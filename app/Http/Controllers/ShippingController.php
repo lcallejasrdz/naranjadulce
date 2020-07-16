@@ -172,7 +172,7 @@ class ShippingController extends Controller
 
         NDReturnReason::create([
             'nd_buys_id' => $request->nd_buys_id,
-            'module' => 'finances',
+            'module' => 'shippings',
             'reason' => $request->return_reason,
         ]);
 
