@@ -165,18 +165,7 @@ class BuildingController extends Controller
         $buy->nd_status_id = 8;
 
         if(NDReturnReason::where('nd_buys_id', $request->nd_buys_id)->count() > 0 && $buy->save()){
-            $sale = NDSale::where('nd_buys_id', $request->nd_buys_id)->first();
-            
-            if(Storage::delete($sale->proof_of_payment)){
-                return Redirect::route($this->active)->with('success', trans('crud.building.message.returned'));
-            }else{
-                NDReturnReason::destroy(NDReturnReason::where('nd_buys_id', $request->nd_buys_id)->first()->id);
-
-                $buy->nd_status_id = $status_back;
-                $buy->save();
-
-                return Redirect::back()->with('error', trans('crud.building.message.error_returned'));
-            }
+            return Redirect::route($this->active)->with('success', trans('crud.building.message.returned'));
         }else{
             return Redirect::back()->with('error', trans('crud.building.message.error_returned'));
         }

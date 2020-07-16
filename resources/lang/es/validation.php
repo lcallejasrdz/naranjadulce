@@ -255,6 +255,7 @@ return [
         'observations_shippings'=> 'observaciones para logística',
         'shipping_cost'         => 'costo de envío',
         'delivery_price'        => 'costo de envío',
+        'reason'                => 'Motivo de verificación',
 
         // Finances
         'verified_payment'      => 'verificación de pago',

@@ -19,6 +19,7 @@ use App\NDDeliveryType;
 use App\NDSale;
 use App\NDPackageDetail;
 use App\NDSaleDetailView;
+use App\NDReturnReason;
 
 use Redirect;
 
@@ -122,8 +123,19 @@ class SaleController extends Controller
         $buy = $item ? $item->toArray() : array();
 
         $nd_delivery_types_id = NDDeliveryType::get()->pluck('name', 'id');
-        
-        return view('admin.crud.form', compact($this->compact, 'buy', 'nd_delivery_types_id'));
+
+        if($item->status_id == 8){
+            $last_reason = NDReturnReason::where('nd_buys_id', $item->id)->first();
+            $return_reason = $last_reason->reason;
+            $return_module = $last_reason->module;
+
+            $sale = NDSale::where('nd_buys_id', $item->id)->first();
+            $package_detail = NDPackageDetail::where('nd_buys_id', $item->id)->first();
+
+            return view('admin.crud.form', compact($this->compact, 'buy', 'return_reason', 'return_module', 'sale', 'package_detail', 'nd_delivery_types_id'));
+        }else{
+            return view('admin.crud.form', compact($this->compact, 'buy', 'nd_delivery_types_id'));
+        }
     }
 
     /**
@@ -136,45 +148,93 @@ class SaleController extends Controller
     {
         $buy = NDBuy::find($request->nd_buys_id);
 
+        if($buy->nd_status_id == 8){
+            $sale = NDSale::where('nd_buys_id', $request->nd_buys_id)->first();
+            $package_detail = NDPackageDetail::where('nd_buys_id', $request->nd_buys_id)->first();
+        }
+
         // Save File
-        $path = Storage::putFileAs(
-                'receipts',
-                $request->file('proof_of_payment'),
-                $buy->slug.'.'.$request->file('proof_of_payment')->extension()
-            );
+        if($request->proof_verified == 0)
+            $path = Storage::putFileAs(
+                    'receipts',
+                    $request->file('proof_of_payment'),
+                    $buy->slug.'.'.$request->file('proof_of_payment')->extension()
+                );
+        else{
+            $path = $sale->proof_of_payment;
+        }
 
-        NDSale::create([
-            'nd_buys_id' => $request->nd_buys_id,
-            'nd_delivery_types_id' => $request->nd_delivery_types_id,
-            'preferential_schedule' => $request->preferential_schedule,
-            'observations_finances' => $request->observations_finances,
-            'observations_buildings' => $request->observations_buildings,
-            'observations_shippings' => $request->observations_shippings,
-            'proof_of_payment' => $path,
-        ]);
+        if($buy->nd_status_id == 1){
+            NDSale::create([
+                'nd_buys_id' => $request->nd_buys_id,
+                'nd_delivery_types_id' => $request->nd_delivery_types_id,
+                'preferential_schedule' => $request->preferential_schedule,
+                'observations_finances' => $request->observations_finances,
+                'observations_buildings' => $request->observations_buildings,
+                'observations_shippings' => $request->observations_shippings,
+                'proof_of_payment' => $path,
+            ]);
 
-        NDPackageDetail::create([
-            'nd_buys_id' => $request->nd_buys_id,
-            'quantity' => $request->quantity,
-            'package' => $request->package,
-            'modifications' => $request->modifications,
-            'delivery_price' => $request->delivery_price,
-        ]);
+            NDPackageDetail::create([
+                'nd_buys_id' => $request->nd_buys_id,
+                'quantity' => $request->quantity,
+                'package' => $request->package,
+                'modifications' => $request->modifications,
+                'delivery_price' => $request->delivery_price,
+            ]);
 
-        $buy->nd_status_id = 4;
+            $buy->nd_status_id = 4;
 
-        if(NDSale::where('nd_buys_id', $request->nd_buys_id)->count() > 0 && NDPackageDetail::where('nd_buys_id', $request->nd_buys_id)->count() > 0 && $buy->save()){
-            return Redirect::route($this->active)->with('success', trans('crud.sale.message.success'));
+            if(NDSale::where('nd_buys_id', $request->nd_buys_id)->count() > 0 && NDPackageDetail::where('nd_buys_id', $request->nd_buys_id)->count() > 0 && $buy->save()){
+                return Redirect::route($this->active)->with('success', trans('crud.sale.message.success'));
+            }else{
+                NDSale::destroy(NDSale::where('nd_buys_id', $request->nd_buys_id)->first()->id);
+                Storage::delete($path);
+
+                NDPackageDetail::destroy(NDPackageDetail::where('nd_buys_id', $request->nd_buys_id)->first()->id);
+
+                $buy->nd_status_id = 1;
+                $buy->save();
+
+                return Redirect::back()->with('error', trans('crud.sale.message.error'));
+            }
         }else{
-            NDSale::destroy(NDSale::where('nd_buys_id', $request->nd_buys_id)->first()->id);
-            Storage::delete($path);
+            $sale->nd_buys_id = $request->nd_buys_id;
+            $sale->nd_delivery_types_id = $request->nd_delivery_types_id;
+            $sale->preferential_schedule = $request->preferential_schedule;
+            $sale->observations_finances = $request->observations_finances;
+            $sale->observations_buildings = $request->observations_buildings;
+            $sale->observations_shippings = $request->observations_shippings;
+            $sale->proof_of_payment = $path;
 
-            NDPackageDetail::destroy(NDPackageDetail::where('nd_buys_id', $request->nd_buys_id)->first()->id);
+            $package_detail->nd_buys_id = $request->nd_buys_id;
+            $package_detail->quantity = $request->quantity;
+            $package_detail->package = $request->package;
+            $package_detail->modifications = $request->modifications;
+            $package_detail->delivery_price = $request->delivery_price;
 
-            $buy->nd_status_id = 1;
-            $buy->save();
+            if($request->return_module == 'finances'){
+                $buy->nd_status_id = 4;
+            }else if($request->return_module == 'buildings'){
+                $buy->nd_status_id = 3;
+            }else{
+                $buy->nd_status_id = 5;
+            }
 
-            return Redirect::back()->with('error', trans('crud.sale.message.error'));
+            if($sale->save() && $package_detail->save() && $buy->save()){
+                NDReturnReason::destroy(NDReturnReason::where('nd_buys_id', $request->nd_buys_id)->first()->id);
+
+                return Redirect::route($this->active)->with('success', trans('crud.sale.message.success'));
+            }else{
+                if($request->proof_verified == 0){
+                    Storage::delete($path);
+                }
+
+                $buy->nd_status_id = 8;
+                $buy->save();
+
+                return Redirect::back()->with('error', trans('crud.sale.message.error'));
+            }
         }
     }
 

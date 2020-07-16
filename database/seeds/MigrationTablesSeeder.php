@@ -51,6 +51,7 @@ class MigrationTablesSeeder extends Seeder
 		DB::table('nd_buildings')->truncate();
 		DB::table('nd_shippings')->truncate();
 		DB::table('nd_deliveries')->truncate();
+		DB::table('nd_return_reasons')->truncate();
 
 		$buys = Buy::withTrashed()
 				->get();

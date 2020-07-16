@@ -95,7 +95,7 @@ class DataTablesController extends Controller
                     }
                 }else if($view == 'sales'){
                     $actions = '';
-                    if($row->status_id != 1){
+                    if($row->status_id != 1 && $row->status_id != 8){
                         $actions .= ' <a href="'. route($active.'.show', $row->slug) .'" class="btn btn-success btn-circle btn-sm"><i class="fas fa-edit"></i></a>';
                     }else{
                         $actions .= ' <a href="'. route($active.'.create', $row->slug) .'" class="btn btn-success btn-circle btn-sm"><i class="fas fa-edit"></i></a>';
