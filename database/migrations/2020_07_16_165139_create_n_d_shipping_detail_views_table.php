@@ -39,7 +39,7 @@ class CreateNDShippingDetailViewsTable extends Migration
                     nd_customer_forms.street,
                     nd_customer_forms.no_ext,
                     nd_customer_forms.no_int,
-                    nd_customer_forms.references,
+                    nd_customer_forms.address_references,
                     nd_address_types.name as nd_address_types_id,
                     nd_parkings.name as nd_parkings_id,
                     nd_sales.observations_shippings,

@@ -35,7 +35,7 @@ class NDCustomerForm extends Model
         'no_ext',
         'no_int',
         'nd_address_types_id',
-        'references',
+        'address_references',
         'nd_parkings_id',
         'package',
         'nd_themathics_id',

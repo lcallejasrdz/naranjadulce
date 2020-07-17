@@ -130,8 +130,8 @@
             </div>
         </div>
         <div class="form-group">
-            <textarea class="form-control form-control-user @error('references') is-invalid @enderror" id="references" name="references" placeholder="{{ ucfirst(trans('validation.attributes.references')) }} *">{{ old('references') }}</textarea>
-            @error('references')
+            <textarea class="form-control form-control-user @error('address_references') is-invalid @enderror" id="address_references" name="address_references" placeholder="{{ ucfirst(trans('validation.attributes.address_references')) }} *">{{ old('address_references') }}</textarea>
+            @error('address_references')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
         </div>

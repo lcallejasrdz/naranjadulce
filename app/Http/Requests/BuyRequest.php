@@ -44,7 +44,7 @@ class BuyRequest extends FormRequest
                     'no_ext' => 'required|max:255',
                     'no_int' => 'nullable|max:255',
                     'nd_address_types_id' => 'required',
-                    'references' => 'required|min:3|max:1000',
+                    'address_references' => 'required|min:3|max:1000',
                     'nd_parkings_id' => 'required',
                     'who_sends' => 'required|min:3|max:255',
                     'who_receives' => 'required|min:3|max:255',

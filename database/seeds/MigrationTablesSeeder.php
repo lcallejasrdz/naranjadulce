@@ -121,7 +121,7 @@ class MigrationTablesSeeder extends Seeder
 				'no_ext' => $buy->no_ext,
 				'no_int' => $buy->no_int,
 				'nd_address_types_id' => NDAddressType::where('name', $buy->address_type)->first()->id,
-				'references' => $buy->address_references,
+				'address_references' => $buy->address_references,
 				'nd_parkings_id' => NDParking::where('name', $buy->parking)->first()->id,
 				'package' => $buy->package,
 				'nd_themathics_id' => $themathic,

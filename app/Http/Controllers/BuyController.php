@@ -102,7 +102,7 @@ class BuyController extends Controller
             'no_ext' => $request->no_ext,
             'no_int' => $request->no_int,
             'nd_address_types_id' => $request->nd_address_types_id,
-            'references' => $request->references,
+            'address_references' => $request->address_references,
             'nd_parkings_id' => $request->nd_parkings_id,
             'package' => $request->package,
             'nd_themathics_id' => $request->nd_themathics_id,

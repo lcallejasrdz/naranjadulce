@@ -28,7 +28,7 @@ class CreateNdCustomerFormsTable extends Migration
             $table->string('no_ext')->default('');
             $table->string('no_int')->nullable();
             $table->foreignId('nd_address_types_id');
-            $table->string('references', 1000)->default('');
+            $table->string('address_references', 1000)->default('');
             $table->foreignId('nd_parkings_id');
             $table->string('package')->default('');
             $table->foreignId('nd_themathics_id');
