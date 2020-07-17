@@ -57,7 +57,13 @@ class MigrationTablesSeeder extends Seeder
 				->get();
 
 		foreach ($buys as $buy) {
-			$sale = Sale::where('slug', $buy->slug)->first();
+			$this->command->info($buy->id);
+
+			$countSale = 0;
+			if(Sale::where('slug', $buy->slug)->count() > 0){
+				$sale = Sale::where('slug', $buy->slug)->first();
+				$countSale = 1;
+			}
 			$countFinance = 0;
 			if(Finance::where('slug', $buy->slug)->count() > 0){
 				$finance = Finance::where('slug', $buy->slug)->first();
@@ -95,6 +101,12 @@ class MigrationTablesSeeder extends Seeder
 				'deleted_at' => $item->deleted_at,
 			]);
 
+			if(NDThemathic::where('name', $buy->thematic)->count() > 0){
+				$themathic = NDThemathic::where('name', $buy->thematic)->first()->id;
+			}else{
+				$themathic = 5;
+			}
+
 			NDCustomerForm::create([
 				'nd_buys_id' => $item->id,
 				'first_name' => $buy->first_name,
@@ -112,7 +124,7 @@ class MigrationTablesSeeder extends Seeder
 				'references' => $buy->address_references,
 				'nd_parkings_id' => NDParking::where('name', $buy->parking)->first()->id,
 				'package' => $buy->package,
-				'nd_themathics_id' => NDThemathic::where('name', $buy->thematic)->first()->id,
+				'nd_themathics_id' => $themathic,
 				'modifications' => $buy->modifications,
 				'observations' => $buy->observations,
 				'nd_contact_means_id' => NDContactMean::where('name', $buy->how_know_us)->first()->id,
@@ -141,29 +153,39 @@ class MigrationTablesSeeder extends Seeder
 				'deleted_at' => $item->deleted_at,
 			]);
 
-			NDSale::create([
-				'nd_buys_id' => $item->id,
-				'nd_delivery_types_id' => NDDeliveryType::where('name', $sale->delivery_type)->first()->id,
-				'preferential_schedule' => $sale->preferential_schedule,
-				'observations_finances' => $sale->observations_finances != null ? $sale->observations_finances : '',
-				'observations_buildings' => $sale->observations_buildings != null ? $sale->observations_buildings : '',
-				'observations_shippings' => $sale->observations_shippings != null ? $sale->observations_shippings : '',
-				'proof_of_payment' => $sale->proof_of_payment != null ? $sale->proof_of_payment : '',
-				'created_at' => $sale->created_at,
-				'updated_at' => $sale->updated_at,
-				'deleted_at' => $item->deleted_at,
-			]);
+			if($countFinance > 0){
+				if(NDDeliveryType::where('name', $sale->delivery_type)->count() > 0){
+					$delivery_type = NDDeliveryType::where('name', $sale->delivery_type)->first()->id;
+				}else if($sale->delivery_type != 'Especial'){
+					$delivery_type = 2;
+				}else{
+					$delivery_type = 1;
+				}
 
-			NDPackageDetail::create([
-				'nd_buys_id' => $item->id,
-				'quantity' => $sale->quantity,
-				'package' => $sale->seller_package,
-				'modifications' => $sale->seller_modifications,
-				'delivery_price' => $sale->shipping_cost != null ? $sale->shipping_cost : 0,
-				'created_at' => $sale->created_at,
-				'updated_at' => $sale->updated_at,
-				'deleted_at' => $item->deleted_at,
-			]);
+				NDSale::create([
+					'nd_buys_id' => $item->id,
+					'nd_delivery_types_id' => $delivery_type,
+					'preferential_schedule' => $sale->preferential_schedule,
+					'observations_finances' => $sale->observations_finances != null ? $sale->observations_finances : '',
+					'observations_buildings' => $sale->observations_buildings != null ? $sale->observations_buildings : '',
+					'observations_shippings' => $sale->observations_shippings != null ? $sale->observations_shippings : '',
+					'proof_of_payment' => $sale->proof_of_payment != null ? $sale->proof_of_payment : '',
+					'created_at' => $sale->created_at,
+					'updated_at' => $sale->updated_at,
+					'deleted_at' => $item->deleted_at,
+				]);
+
+				NDPackageDetail::create([
+					'nd_buys_id' => $item->id,
+					'quantity' => $sale->quantity,
+					'package' => $sale->seller_package,
+					'modifications' => $sale->seller_modifications,
+					'delivery_price' => $sale->shipping_cost != null ? $sale->shipping_cost : 0,
+					'created_at' => $sale->created_at,
+					'updated_at' => $sale->updated_at,
+					'deleted_at' => $item->deleted_at,
+				]);
+			}
 
 			if($countFinance > 0){
 				NDFinance::create([
