@@ -22,7 +22,7 @@ class CreateNDDeliveryConfirmViewsTable extends Migration
                     nd_customer_forms.last_name,
                     nd_customer_forms.phone,
                     nd_delivery_types.name as nd_delivery_types_id,
-                    DATE_FORMAT(nd_detail_buys.delivery_date, '%d/%m/%Y') as delivery_date,
+                    nd_detail_buys.delivery_date,
                     nd_delivery_schedules.name as nd_delivery_schedules_id,
                     nd_sales.preferential_schedule,
                     nd_shippings.delivery_man,

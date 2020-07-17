@@ -24,9 +24,6 @@ class CreateNdSalesTable extends Migration
             $table->string('proof_of_payment')->default('');
             $table->timestamps();
             $table->softDeletes();
-
-            $table->foreign('nd_buys_id')->references('id')->on('nd_buys');
-            $table->foreign('nd_delivery_types_id')->references('id')->on('nd_delivery_types');
         });
     }
 

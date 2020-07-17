@@ -13,8 +13,6 @@ class CatalogsTablesSeeder extends Seeder
      */
     public function run()
     {
-    	DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-    	
     	/**
     	* Status
     	*/
@@ -209,7 +207,5 @@ class CatalogsTablesSeeder extends Seeder
 			'slug' => Str::slug('Preferencial'),
 			'name' => 'Preferencial',
 		]);
-		
-		DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }

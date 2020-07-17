@@ -19,8 +19,6 @@ class CreateNdPinkBasketsTable extends Migration
             $table->string('code_store');
             $table->timestamps();
             $table->softDeletes();
-
-            $table->foreign('nd_buys_id')->references('id')->on('nd_buys');
         });
     }
 

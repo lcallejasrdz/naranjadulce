@@ -29,12 +29,6 @@ class CreateNdStatusTable extends Migration
      */
     public function down()
     {
-        if (Schema::hasTable('nd_buys')) {
-            Schema::table('nd_buys', function (Blueprint $table) {
-                $table->dropForeign(['nd_status_id']);
-            });
-        }
-
         Schema::dropIfExists('nd_status');
     }
 }

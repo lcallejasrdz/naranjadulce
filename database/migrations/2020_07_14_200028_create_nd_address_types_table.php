@@ -29,12 +29,6 @@ class CreateNdAddressTypesTable extends Migration
      */
     public function down()
     {
-        if (Schema::hasTable('nd_customer_forms')) {
-            Schema::table('nd_customer_forms', function (Blueprint $table) {
-                $table->dropForeign(['nd_address_types_id']);
-            });
-        }
-
         Schema::dropIfExists('nd_address_types');
     }
 }

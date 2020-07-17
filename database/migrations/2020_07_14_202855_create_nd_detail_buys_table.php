@@ -23,9 +23,6 @@ class CreateNdDetailBuysTable extends Migration
             $table->foreignId('nd_delivery_schedules_id');
             $table->timestamps();
             $table->softDeletes();
-
-            $table->foreign('nd_buys_id')->references('id')->on('nd_buys');
-            $table->foreign('nd_delivery_schedules_id')->references('id')->on('nd_delivery_schedules');
         });
     }
 

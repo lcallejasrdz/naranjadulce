@@ -38,12 +38,6 @@ class CreateNdCustomerFormsTable extends Migration
             $table->string('contact_mean_other')->nullable();
             $table->timestamps();
             $table->softDeletes();
-
-            $table->foreign('nd_buys_id')->references('id')->on('nd_buys');
-            $table->foreign('nd_address_types_id')->references('id')->on('nd_address_types');
-            $table->foreign('nd_parkings_id')->references('id')->on('nd_parkings');
-            $table->foreign('nd_themathics_id')->references('id')->on('nd_themathics');
-            $table->foreign('nd_contact_means_id')->references('id')->on('nd_contact_means');
         });
     }
 

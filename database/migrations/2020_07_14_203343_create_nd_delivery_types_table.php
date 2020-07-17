@@ -29,12 +29,6 @@ class CreateNdDeliveryTypesTable extends Migration
      */
     public function down()
     {
-        if (Schema::hasTable('nd_sales')) {
-            Schema::table('nd_sales', function (Blueprint $table) {
-                $table->dropForeign(['nd_delivery_types_id']);
-            });
-        }
-
         Schema::dropIfExists('nd_delivery_types');
     }
 }

@@ -26,7 +26,7 @@ class CreateNDFinanceDetailViewsTable extends Migration
                     nd_package_details.modifications,
                     nd_sales.observations_finances,
                     nd_package_details.delivery_price,
-                    DATE_FORMAT(nd_detail_buys.delivery_date, '%d/%m/%Y') as delivery_date,
+                    nd_detail_buys.delivery_date,
                     nd_delivery_schedules.name as nd_delivery_schedules_id,
                     nd_sales.preferential_schedule,
                     nd_sales.proof_of_payment,

@@ -29,7 +29,7 @@ class CreateNDShippingConfirmViewsTable extends Migration
                     nd_detail_buys.who_sends,
                     nd_detail_buys.who_receives,
                     nd_delivery_types.name as nd_delivery_types_id,
-                    DATE_FORMAT(nd_detail_buys.delivery_date, '%d/%m/%Y') as delivery_date,
+                    nd_detail_buys.delivery_date,
                     nd_delivery_schedules.name as nd_delivery_schedules_id,
                     nd_sales.preferential_schedule,
                     nd_customer_forms.postal_code,

@@ -20,7 +20,7 @@ class CreateNDBuildingFinishedListViewsTable extends Migration
                     nd_buys.slug,
                     nd_customer_forms.first_name,
                     nd_customer_forms.last_name,
-                    DATE_FORMAT(nd_detail_buys.delivery_date, '%d/%m/%Y') as delivery_date,
+                    nd_detail_buys.delivery_date,
                     nd_buys.nd_status_id as status_id,
                     nd_status.name as nd_status_id,
                     nd_buys.created_at,

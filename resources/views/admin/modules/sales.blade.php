@@ -7,7 +7,11 @@
 	                    {{ ucfirst(trans('validation.attributes.'.$column)) }}
 	                </th>
 	                <td>
-	                    {{ $value }}
+                        @if($column == 'delivery_date')
+                            {{ \Carbon\Carbon::parse($value)->format("d/m/Y") }}
+                        @else
+                        	{{ $value }}
+                        @endif
 	                </td>
 	            </tr>
 	        @endif

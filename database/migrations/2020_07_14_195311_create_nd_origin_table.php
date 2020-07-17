@@ -29,12 +29,6 @@ class CreateNdOriginTable extends Migration
      */
     public function down()
     {
-        if (Schema::hasTable('nd_buy_origins')) {
-            Schema::table('nd_buy_origins', function (Blueprint $table) {
-                $table->dropForeign(['nd_origins_id']);
-            });
-        }
-
         Schema::dropIfExists('nd_origins');
     }
 }

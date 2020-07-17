@@ -22,8 +22,6 @@ class CreateNdPackageDetailsTable extends Migration
             $table->double('delivery_price')->default(0);
             $table->timestamps();
             $table->softDeletes();
-
-            $table->foreign('nd_buys_id')->references('id')->on('nd_buys');
         });
     }
 

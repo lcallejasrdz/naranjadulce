@@ -29,12 +29,6 @@ class CreateNdThemathicsTable extends Migration
      */
     public function down()
     {
-        if (Schema::hasTable('nd_customer_forms')) {
-            Schema::table('nd_customer_forms', function (Blueprint $table) {
-                $table->dropForeign(['nd_thematics_id']);
-            });
-        }
-
         Schema::dropIfExists('nd_themathics');
     }
 }

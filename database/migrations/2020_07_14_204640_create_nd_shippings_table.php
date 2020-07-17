@@ -19,8 +19,6 @@ class CreateNdShippingsTable extends Migration
             $table->string('delivery_man')->default('');
             $table->timestamps();
             $table->softDeletes();
-
-            $table->foreign('nd_buys_id')->references('id')->on('nd_buys');
         });
     }
 

@@ -19,9 +19,6 @@ class CreateNdBuyOriginsTable extends Migration
             $table->foreignId('nd_origins_id');
             $table->timestamps();
             $table->softDeletes();
-
-            $table->foreign('nd_buys_id')->references('id')->on('nd_buys');
-            $table->foreign('nd_origins_id')->references('id')->on('nd_origins');
         });
     }
 

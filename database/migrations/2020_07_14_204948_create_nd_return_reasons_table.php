@@ -20,8 +20,6 @@ class CreateNdReturnReasonsTable extends Migration
             $table->string('reason', 1000)->default('');
             $table->timestamps();
             $table->softDeletes();
-
-            $table->foreign('nd_buys_id')->references('id')->on('nd_buys');
         });
     }
 

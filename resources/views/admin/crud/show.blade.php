@@ -35,6 +35,8 @@
                                     <td>
                                         @if($column == 'proof_of_payment')
                                             <i class="fa fa-download"></i>{!! link_to($value, ' Download File', ['target' => '_blank']) !!}
+                                        @elseif($column == 'delivery_date')
+                                            {{ \Carbon\Carbon::parse($value)->format("d/m/Y") }}
                                         @else
                                             {{ $value }}
                                         @endif

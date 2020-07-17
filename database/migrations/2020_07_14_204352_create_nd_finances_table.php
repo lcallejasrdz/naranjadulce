@@ -18,8 +18,6 @@ class CreateNdFinancesTable extends Migration
             $table->foreignId('nd_buys_id');
             $table->timestamps();
             $table->softDeletes();
-
-            $table->foreign('nd_buys_id')->references('id')->on('nd_buys');
         });
     }
 
