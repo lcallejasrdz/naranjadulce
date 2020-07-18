@@ -6,7 +6,6 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 
-use App\Shipping;
 use Sentinel;
 
 class ShippingModuleTest extends DuskTestCase
@@ -59,78 +58,12 @@ class ShippingModuleTest extends DuskTestCase
         Sentinel::logout();
         
         $buy = ObjectsDusk::createBuy();
-        
-        $sale = ObjectsDusk::createSale();
-        
-        $finance = ObjectsDusk::createFinance();
-        
-        $building = ObjectsDusk::createBuilding();
 
-        $authuser = ObjectsDusk::authenticated();
+        $sale = ObjectsDusk::createSale($buy);
 
-        $this->browse(function (Browser $browser) use ($authuser, $buy) {
-            $browser->visit('/')
-                    ->type('email', $authuser['email'])
-                    ->type('password', $authuser['password'])
-                    ->press(trans('auth.submit'))
-                    ->waitForText(ucfirst(trans('module_users.controller.word')))
-                    ->assertSee(ucfirst(trans('module_users.controller.word')))
-                    ->assertSee(ucfirst(trans('validation.attributes.id')))
-                    ->assertSee(ucfirst(trans('validation.attributes.first_name')))
-                    ->assertSee(ucfirst(trans('validation.attributes.last_name')))
-                    ->assertSee(ucfirst(trans('validation.attributes.email')))
-                    ->assertSee(ucfirst(trans('validation.attributes.created_at')))
-                    ->assertSee(ucfirst(trans('validation.attributes.actions')))
+        $finance = ObjectsDusk::createFinance($buy);
 
-                    ->visit('/buildings/'.$buy->slug)
-                    ->waitForText(ucfirst(trans('module_buildings.controller.create_word')))
-                    ->assertSee(ucfirst(trans('module_buildings.controller.create_word')))
-
-                    ->assertSee(ucfirst(trans('validation.attributes.id')))
-                    ->assertSee(ucfirst(trans('validation.attributes.first_name')))
-                    ->assertSee(ucfirst(trans('validation.attributes.last_name')))
-                    ->assertSee(ucfirst(trans('validation.attributes.quantity')))
-                    ->assertSee(ucfirst(trans('validation.attributes.seller_package')))
-                    ->assertSee(ucfirst(trans('validation.attributes.seller_modifications')))
-                    ->assertSee(ucfirst(trans('validation.attributes.observations_buildings')))
-                    ->assertSee(ucfirst(trans('validation.attributes.buy_message')))
-                    ->assertSee(ucfirst(trans('validation.attributes.who_sends')))
-                    ->assertSee(ucfirst(trans('validation.attributes.who_receives')))
-                    ->assertSee(ucfirst(trans('validation.attributes.delivery_date')))
-                    ->assertSee(ucfirst(trans('validation.attributes.delivery_type')))
-                    ->assertSee(ucfirst(trans('validation.attributes.delivery_schedule')))
-                    ->assertSee(ucfirst(trans('validation.attributes.preferential_schedule')))
-
-                    ->visit('/logout')
-                    ->waitForText(trans('auth.title'))
-                    ->assertSee(trans('auth.title'));
-        });
-
-        ObjectsDusk::deleteUser($authuser['email']);
-
-        $buy->forceDelete();
-
-        $sale->forceDelete();
-
-        $finance->forceDelete();
-
-        $building->forceDelete();
-    }
-
-    /**
-     * @test
-     */
-    function itTestsTheCreateShippingMethod()
-    {
-        Sentinel::logout();
-        
-        $buy = ObjectsDusk::createBuy();
-        
-        $sale = ObjectsDusk::createSale();
-        
-        $finance = ObjectsDusk::createFinance();
-        
-        $building = ObjectsDusk::createBuilding();
+        $building = ObjectsDusk::createBuilding($buy);
 
         $authuser = ObjectsDusk::authenticated();
 
@@ -152,6 +85,81 @@ class ShippingModuleTest extends DuskTestCase
                     ->waitForText(ucfirst(trans('module_shippings.controller.create_word')))
                     ->assertSee(ucfirst(trans('module_shippings.controller.create_word')))
 
+                    ->assertSee(ucfirst(trans('validation.attributes.id')))
+                    ->assertSee(ucfirst(trans('validation.attributes.first_name')))
+                    ->assertSee(ucfirst(trans('validation.attributes.last_name')))
+                    ->assertSee(ucfirst(trans('validation.attributes.phone')))
+                    ->assertSee(ucfirst(trans('validation.attributes.quantity')))
+                    ->assertSee(ucfirst(trans('validation.attributes.package')))
+                    ->assertSee(ucfirst(trans('validation.attributes.nd_themathics_id')))
+                    ->assertSee(ucfirst(trans('validation.attributes.modifications')))
+                    ->assertSee(ucfirst(trans('validation.attributes.dedication')))
+                    ->assertSee(ucfirst(trans('validation.attributes.who_sends')))
+                    ->assertSee(ucfirst(trans('validation.attributes.who_receives')))
+                    ->assertSee(ucfirst(trans('validation.attributes.nd_delivery_types_id')))
+                    ->assertSee(ucfirst(trans('validation.attributes.delivery_date')))
+                    ->assertSee(ucfirst(trans('validation.attributes.postal_code')))
+                    ->assertSee(ucfirst(trans('validation.attributes.state')))
+                    ->assertSee(ucfirst(trans('validation.attributes.municipality')))
+                    ->assertSee(ucfirst(trans('validation.attributes.colony')))
+                    ->assertSee(ucfirst(trans('validation.attributes.street')))
+                    ->assertSee(ucfirst(trans('validation.attributes.no_ext')))
+                    ->assertSee(ucfirst(trans('validation.attributes.address_references')))
+                    ->assertSee(ucfirst(trans('validation.attributes.nd_address_types_id')))
+                    ->assertSee(ucfirst(trans('validation.attributes.nd_parkings_id')))
+                    ->assertSee(ucfirst(trans('validation.attributes.observations_shippings')))
+                    ->assertSee(ucfirst(trans('validation.attributes.delivery_price')))
+                    ->assertSee(ucfirst(trans('validation.attributes.nd_status_id')))
+
+                    ->visit('/logout')
+                    ->waitForText(trans('auth.title'))
+                    ->assertSee(trans('auth.title'));
+        });
+
+        ObjectsDusk::deleteUser($authuser['email']);
+        ObjectsDusk::deleteBuy($buy->id);
+        ObjectsDusk::deleteSale($buy->id);
+        ObjectsDusk::deleteFinance($buy->id);
+        ObjectsDusk::deleteBuilding($buy->id);
+    }
+
+    /**
+     * @test
+     */
+    function itTestsTheCreateShippingMethod()
+    {
+        Sentinel::logout();
+        
+        $buy = ObjectsDusk::createBuy();
+
+        $sale = ObjectsDusk::createSale($buy);
+
+        $finance = ObjectsDusk::createFinance($buy);
+
+        $building = ObjectsDusk::createBuilding($buy);
+
+        $shipping = ObjectsDusk::newShipping();
+
+        $authuser = ObjectsDusk::authenticated();
+
+        $this->browse(function (Browser $browser) use ($authuser, $buy, $shipping) {
+            $browser->visit('/')
+                    ->type('email', $authuser['email'])
+                    ->type('password', $authuser['password'])
+                    ->press(trans('auth.submit'))
+                    ->waitForText(ucfirst(trans('module_users.controller.word')))
+                    ->assertSee(ucfirst(trans('module_users.controller.word')))
+                    ->assertSee(ucfirst(trans('validation.attributes.id')))
+                    ->assertSee(ucfirst(trans('validation.attributes.first_name')))
+                    ->assertSee(ucfirst(trans('validation.attributes.last_name')))
+                    ->assertSee(ucfirst(trans('validation.attributes.email')))
+                    ->assertSee(ucfirst(trans('validation.attributes.created_at')))
+                    ->assertSee(ucfirst(trans('validation.attributes.actions')))
+
+                    ->visit('/shippings/'.$buy->slug)
+                    ->waitForText(ucfirst(trans('module_shippings.controller.create_word')))
+                    ->assertSee(ucfirst(trans('module_shippings.controller.create_word')))
+                    ->type('delivery_man', $shipping['delivery_man'])
                     ->press(ucfirst(trans('crud.shipping.submit')))
                     ->waitForText(ucfirst(trans('crud.shipping.message.success')))
                     ->assertSee(ucfirst(trans('crud.shipping.message.success')))
@@ -162,17 +170,11 @@ class ShippingModuleTest extends DuskTestCase
         });
 
         ObjectsDusk::deleteUser($authuser['email']);
-
-        $shipping = Shipping::where('slug', $buy->slug)->first();
-        $shipping->forceDelete();
-
-        $buy->forceDelete();
-
-        $sale->forceDelete();
-
-        $finance->forceDelete();
-
-        $building->forceDelete();
+        ObjectsDusk::deleteBuy($buy->id);
+        ObjectsDusk::deleteSale($buy->id);
+        ObjectsDusk::deleteFinance($buy->id);
+        ObjectsDusk::deleteBuilding($buy->id);
+        ObjectsDusk::deleteShipping($buy->id);
     }
 
     /**
@@ -225,16 +227,14 @@ class ShippingModuleTest extends DuskTestCase
         Sentinel::logout();
         
         $buy = ObjectsDusk::createBuy();
-        
-        $sale = ObjectsDusk::createSale();
-        
-        $finance = ObjectsDusk::createFinance();
-        
-        $building = ObjectsDusk::createBuilding();
-        
-        $shipping = ObjectsDusk::createShipping();
-        
-        $delivery = ObjectsDusk::createDelivery();
+
+        $sale = ObjectsDusk::createSale($buy);
+
+        $finance = ObjectsDusk::createFinance($buy);
+
+        $building = ObjectsDusk::createBuilding($buy);
+
+        $shipping = ObjectsDusk::createShipping($buy);
 
         $authuser = ObjectsDusk::authenticated();
 
@@ -257,34 +257,28 @@ class ShippingModuleTest extends DuskTestCase
                     ->assertSee(ucfirst(trans('module_shippings.controller.word')))
 
                     ->assertSee(ucfirst(trans('validation.attributes.id')))
-                    ->assertSee(ucfirst(trans('validation.attributes.slug')))
                     ->assertSee(ucfirst(trans('validation.attributes.first_name')))
                     ->assertSee(ucfirst(trans('validation.attributes.last_name')))
                     ->assertSee(ucfirst(trans('validation.attributes.phone')))
                     ->assertSee(ucfirst(trans('validation.attributes.quantity')))
-                    ->assertSee(ucfirst(trans('validation.attributes.seller_package')))
-                    ->assertSee(ucfirst(trans('validation.attributes.thematic')))
-                    ->assertSee(ucfirst(trans('validation.attributes.seller_modifications')))
-                    ->assertSee(ucfirst(trans('validation.attributes.buy_message')))
+                    ->assertSee(ucfirst(trans('validation.attributes.package')))
+                    ->assertSee(ucfirst(trans('validation.attributes.nd_themathics_id')))
+                    ->assertSee(ucfirst(trans('validation.attributes.modifications')))
+                    ->assertSee(ucfirst(trans('validation.attributes.dedication')))
                     ->assertSee(ucfirst(trans('validation.attributes.who_sends')))
                     ->assertSee(ucfirst(trans('validation.attributes.who_receives')))
-                    ->assertSee(ucfirst(trans('validation.attributes.delivery_type')))
-                    ->assertSee(ucfirst(trans('validation.attributes.delivery_schedule')))
-                    ->assertSee(ucfirst(trans('validation.attributes.delivery_schedule')))
-                    ->assertSee(ucfirst(trans('validation.attributes.preferential_schedule')))
+                    ->assertSee(ucfirst(trans('validation.attributes.nd_delivery_types_id')))
+                    ->assertSee(ucfirst(trans('validation.attributes.delivery_date')))
                     ->assertSee(ucfirst(trans('validation.attributes.postal_code')))
                     ->assertSee(ucfirst(trans('validation.attributes.state')))
                     ->assertSee(ucfirst(trans('validation.attributes.municipality')))
                     ->assertSee(ucfirst(trans('validation.attributes.colony')))
                     ->assertSee(ucfirst(trans('validation.attributes.street')))
                     ->assertSee(ucfirst(trans('validation.attributes.no_ext')))
-                    ->assertSee(ucfirst(trans('validation.attributes.no_int')))
                     ->assertSee(ucfirst(trans('validation.attributes.address_references')))
-                    ->assertSee(ucfirst(trans('validation.attributes.address_type')))
-                    ->assertSee(ucfirst(trans('validation.attributes.parking')))
-                    ->assertSee(ucfirst(trans('validation.attributes.observations_shippings')))
-                    ->assertSee(ucfirst(trans('validation.attributes.shipping_cost')))
-                    ->assertSee(ucfirst(trans('validation.attributes.status_id')))
+                    ->assertSee(ucfirst(trans('validation.attributes.nd_address_types_id')))
+                    ->assertSee(ucfirst(trans('validation.attributes.nd_parkings_id')))
+                    ->assertSee(ucfirst(trans('validation.attributes.nd_status_id')))
 
                     ->visit('/logout')
                     ->waitForText(trans('auth.title'))
@@ -292,17 +286,10 @@ class ShippingModuleTest extends DuskTestCase
         });
 
         ObjectsDusk::deleteUser($authuser['email']);
-
-        $buy->forceDelete();
-
-        $sale->forceDelete();
-
-        $finance->forceDelete();
-
-        $building->forceDelete();
-
-        $shipping->forceDelete();
-
-        $delivery->forceDelete();
+        ObjectsDusk::deleteBuy($buy->id);
+        ObjectsDusk::deleteSale($buy->id);
+        ObjectsDusk::deleteFinance($buy->id);
+        ObjectsDusk::deleteBuilding($buy->id);
+        ObjectsDusk::deleteShipping($buy->id);
     }
 }

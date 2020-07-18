@@ -15,6 +15,9 @@ use App\NDCustomerForm;
 use App\NDDetailBuy;
 use App\NDSale;
 use App\NDPackageDetail;
+use App\NDFinance;
+use App\NDBuilding;
+use App\NDShipping;
 
 
 use App\Buy;
@@ -189,113 +192,95 @@ class ObjectsDusk extends DuskTestCase
         NDPackageDetail::destroy(NDPackageDetail::where('nd_buys_id', $id)->first()->id);
     }
 
-    static function createSale()
+    static function createSale($buy)
     {
-        $item = ObjectsDusk::newSale();
+        $sale = ObjectsDusk::newSale();
 
-        DB::table('sales')->insert($item);
+        $item = NDSale::create([
+            'nd_buys_id' => $buy->id,
+            'nd_delivery_types_id' => $sale['nd_delivery_types_id'],
+            'preferential_schedule' => $sale['preferential_schedule'],
+            'observations_finances' => $sale['observations_finances'],
+            'observations_buildings' => $sale['observations_buildings'],
+            'observations_shippings' => $sale['observations_shippings'],
+            'proof_of_payment' => $sale['proof_of_payment'],
+        ]);
 
-        $buy = Buy::where('slug', $item['slug'])->first();
-        $buy->status_id = 2;
+        NDPackageDetail::create([
+            'nd_buys_id' => $buy->id,
+            'quantity' => $sale['quantity'],
+            'package' => $sale['package'],
+            'modifications' => $sale['modifications'],
+            'delivery_price' => $sale['delivery_price'],
+        ]);
+
+        $buy->nd_status_id = 4;
         $buy->save();
 
-        $sale = Sale::where('slug', $item['slug'])->first();
-
-        return $sale;
+        return $item;
     }
 
-    static function newFinance()
+    static function deleteFinance($id)
     {
-        $item = ObjectsDusk::newBuy();
-
-        $new_item = [
-            'slug' => $item['slug'],
-            'user_id' => 1,
-            'verified_payment' => 1,
-        ];
-
-        return $new_item;
+        NDFinance::destroy(NDFinance::where('nd_buys_id', $id)->first()->id);
     }
 
-    static function createFinance()
+    static function createFinance($buy)
     {
-        $item = ObjectsDusk::newFinance();
+        $finance = NDFinance::create([
+            'nd_buys_id' => $buy->id,
+        ]);
 
-        DB::table('finances')->insert($item);
-
-        $buy = Buy::where('slug', $item['slug'])->first();
-        $count = Building::where('slug', $item['slug'])->count();
-        if($count == 0){
-            $buy->status_id = 3;
-        }else{
-            $buy->status_id = 5;
-        }
+        $buy->nd_status_id = 3;
         $buy->save();
-
-        $finance = Finance::where('slug', $item['slug'])->first();
 
         return $finance;
     }
 
-    static function newBuilding()
+    static function deleteBuilding($id)
     {
-        $item = ObjectsDusk::newBuy();
-
-        $new_item = [
-            'slug' => $item['slug'],
-            'user_id' => 1,
-            'verified_building' => 1,
-        ];
-
-        return $new_item;
+        NDBuilding::destroy(NDBuilding::where('nd_buys_id', $id)->first()->id);
     }
 
-    static function createBuilding()
+    static function createBuilding($buy)
     {
-        $item = ObjectsDusk::newBuilding();
+        $building = NDBuilding::create([
+            'nd_buys_id' => $buy->id,
+        ]);
 
-        DB::table('buildings')->insert($item);
-
-        $buy = Buy::where('slug', $item['slug'])->first();
-        $count = Finance::where('slug', $item['slug'])->count();
-        if($count == 0){
-            $buy->status_id = 4;
-        }else{
-            $buy->status_id = 5;
-        }
+        $buy->nd_status_id = 5;
         $buy->save();
-
-        $building = Building::where('slug', $item['slug'])->first();
 
         return $building;
     }
 
-    static function newShipping()
+    static function deleteShipping($id)
     {
-        $item = ObjectsDusk::newBuy();
-
-        $new_item = [
-            'slug' => $item['slug'],
-            'user_id' => 1,
-            'verified_sent' => 1,
-        ];
-
-        return $new_item;
+        NDShipping::destroy(NDShipping::where('nd_buys_id', $id)->first()->id);
     }
 
-    static function createShipping()
+    static function newShipping()
     {
-        $item = ObjectsDusk::newShipping();
-
-        DB::table('shippings')->insert($item);
-
-        $buy = Buy::where('slug', $item['slug'])->first();
-        $buy->status_id = 6;
-        $buy->save();
-
-        $shipping = Shipping::where('slug', $item['slug'])->first();
+        $shipping = [
+            'delivery_man' => 'John Connor',
+        ];
 
         return $shipping;
+    }
+
+    static function createShipping($buy)
+    {
+        $shipping = ObjectsDusk::newShipping();
+
+        $item = NDShipping::create([
+            'nd_buys_id' => $buy->id,
+            'delivery_man' => $shipping['delivery_man'],
+        ]);
+
+        $buy->nd_status_id = 6;
+        $buy->save();
+
+        return $item;
     }
 
     static function newDelivery()

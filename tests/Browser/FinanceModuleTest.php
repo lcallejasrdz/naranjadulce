@@ -6,7 +6,6 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 
-use App\Finance;
 use Sentinel;
 
 class FinanceModuleTest extends DuskTestCase
@@ -60,7 +59,7 @@ class FinanceModuleTest extends DuskTestCase
         
         $buy = ObjectsDusk::createBuy();
         
-        $sale = ObjectsDusk::createSale();
+        $sale = ObjectsDusk::createSale($buy);
 
         $authuser = ObjectsDusk::authenticated();
 
@@ -86,14 +85,15 @@ class FinanceModuleTest extends DuskTestCase
                     ->assertSee(ucfirst(trans('validation.attributes.first_name')))
                     ->assertSee(ucfirst(trans('validation.attributes.last_name')))
                     ->assertSee(ucfirst(trans('validation.attributes.quantity')))
-                    ->assertSee(ucfirst(trans('validation.attributes.seller_package')))
-                    ->assertSee(ucfirst(trans('validation.attributes.seller_modifications')))
+                    ->assertSee(ucfirst(trans('validation.attributes.package')))
+                    ->assertSee(ucfirst(trans('validation.attributes.nd_themathics_id')))
+                    ->assertSee(ucfirst(trans('validation.attributes.modifications')))
                     ->assertSee(ucfirst(trans('validation.attributes.observations_finances')))
-                    ->assertSee(ucfirst(trans('validation.attributes.shipping_cost')))
+                    ->assertSee(ucfirst(trans('validation.attributes.delivery_price')))
+                    ->assertSee(ucfirst(trans('validation.attributes.delivery_date')))
                     ->assertSee(ucfirst(trans('validation.attributes.proof_of_payment')))
                     ->assertSee(ucfirst(trans('validation.attributes.delivery_date')))
-                    ->assertSee(ucfirst(trans('validation.attributes.delivery_schedule')))
-                    ->assertSee(ucfirst(trans('validation.attributes.preferential_schedule')))
+                    ->assertSee(ucfirst(trans('validation.attributes.nd_status_id')))
 
                     ->visit('/logout')
                     ->waitForText(trans('auth.title'))
@@ -101,10 +101,8 @@ class FinanceModuleTest extends DuskTestCase
         });
 
         ObjectsDusk::deleteUser($authuser['email']);
-
-        $buy->forceDelete();
-
-        $sale->forceDelete();
+        ObjectsDusk::deleteBuy($buy->id);
+        ObjectsDusk::deleteSale($buy->id);
     }
 
     /**
@@ -116,7 +114,7 @@ class FinanceModuleTest extends DuskTestCase
         
         $buy = ObjectsDusk::createBuy();
         
-        $sale = ObjectsDusk::createSale();
+        $sale = ObjectsDusk::createSale($buy);
 
         $authuser = ObjectsDusk::authenticated();
 
@@ -148,13 +146,9 @@ class FinanceModuleTest extends DuskTestCase
         });
 
         ObjectsDusk::deleteUser($authuser['email']);
-
-        $finance = Finance::where('slug', $buy->slug)->first();
-        $finance->forceDelete();
-
-        $buy->forceDelete();
-
-        $sale->forceDelete();
+        ObjectsDusk::deleteBuy($buy->id);
+        ObjectsDusk::deleteSale($buy->id);
+        ObjectsDusk::deleteFinance($buy->id);
     }
 
     /**
@@ -207,16 +201,10 @@ class FinanceModuleTest extends DuskTestCase
         Sentinel::logout();
         
         $buy = ObjectsDusk::createBuy();
-        
-        $sale = ObjectsDusk::createSale();
-        
-        $finance = ObjectsDusk::createFinance();
-        
-        $building = ObjectsDusk::createBuilding();
-        
-        $shipping = ObjectsDusk::createShipping();
-        
-        $delivery = ObjectsDusk::createDelivery();
+
+        $sale = ObjectsDusk::createSale($buy);
+
+        $finance = ObjectsDusk::createFinance($buy);
 
         $authuser = ObjectsDusk::authenticated();
 
@@ -239,18 +227,14 @@ class FinanceModuleTest extends DuskTestCase
                     ->assertSee(ucfirst(trans('module_finances.controller.word')))
 
                     ->assertSee(ucfirst(trans('validation.attributes.id')))
-                    ->assertSee(ucfirst(trans('validation.attributes.slug')))
                     ->assertSee(ucfirst(trans('validation.attributes.first_name')))
                     ->assertSee(ucfirst(trans('validation.attributes.last_name')))
                     ->assertSee(ucfirst(trans('validation.attributes.quantity')))
-                    ->assertSee(ucfirst(trans('validation.attributes.seller_package')))
-                    ->assertSee(ucfirst(trans('validation.attributes.seller_modifications')))
-                    ->assertSee(ucfirst(trans('validation.attributes.observations_finances')))
-                    ->assertSee(ucfirst(trans('validation.attributes.shipping_cost')))
-                    ->assertSee(ucfirst(trans('validation.attributes.proof_of_payment')))
+                    ->assertSee(ucfirst(trans('validation.attributes.package')))
+                    ->assertSee(ucfirst(trans('validation.attributes.nd_themathics_id')))
+                    ->assertSee(ucfirst(trans('validation.attributes.modifications')))
                     ->assertSee(ucfirst(trans('validation.attributes.delivery_date')))
-                    ->assertSee(ucfirst(trans('validation.attributes.delivery_schedule')))
-                    ->assertSee(ucfirst(trans('validation.attributes.preferential_schedule')))
+                    ->assertSee(ucfirst(trans('validation.attributes.proof_of_payment')))
 
                     ->visit('/logout')
                     ->waitForText(trans('auth.title'))
@@ -258,17 +242,8 @@ class FinanceModuleTest extends DuskTestCase
         });
 
         ObjectsDusk::deleteUser($authuser['email']);
-
-        $buy->forceDelete();
-
-        $sale->forceDelete();
-
-        $finance->forceDelete();
-
-        $building->forceDelete();
-
-        $shipping->forceDelete();
-
-        $delivery->forceDelete();
+        ObjectsDusk::deleteBuy($buy->id);
+        ObjectsDusk::deleteSale($buy->id);
+        ObjectsDusk::deleteFinance($buy->id);
     }
 }

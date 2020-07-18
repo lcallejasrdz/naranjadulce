@@ -133,7 +133,7 @@ class ShippingController extends Controller
         $buy = NDBuy::find($request->nd_buys_id);
         $status_back = $buy->nd_status_id;
 
-        NDShipping::create([
+        $item = NDShipping::create([
             'nd_buys_id' => $request->nd_buys_id,
             'delivery_man' => $request->delivery_man,
         ]);
