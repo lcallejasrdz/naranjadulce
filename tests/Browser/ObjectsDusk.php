@@ -9,6 +9,14 @@ use Tests\DuskTestCase;
 use Sentinel;
 use Activation;
 use App\User;
+use App\NDBuy;
+use App\NDBuysOrigin;
+use App\NDCustomerForm;
+use App\NDDetailBuy;
+use App\NDSale;
+use App\NDPackageDetail;
+
+
 use App\Buy;
 use App\Sale;
 use App\Finance;
@@ -64,32 +72,33 @@ class ObjectsDusk extends DuskTestCase
     static function newBuy()
     {
         $new_item = [
-            'email' => 'example@email.com',
+            '_token' => 'kaljdshfkjadsht6t676thagvjdsfASDF',
+            'slug' => 'kaljdshfkjadsht6t676thagvjdsfASDF',
             'first_name' => 'John',
             'last_name' => 'Connor',
-            'phone' => '5512341234',
-            'postal_code' => '12345',
-            'state' => 'Ciudad de México',
-            'municipality' => 'Naucalpan de Juárez',
-            'colony' => 'Satelite',
-            'street' => 'Gorrión',
-            'no_ext' => '34',
-            'no_int' => '2',
-            'package' => 'Paquete ejemplo',
-            'thematic' => 'Amor',
-            'modifications' => 'Ejemplo de modificaciones',
-            'buy_message' => 'Ejemplo de dedicatoria',
-            'delivery_date' => '31/12/2021',
-            'delivery_schedule' => '13:00 - 18:00',
-            'observations' => 'Ejemplo de observaciones',
-            'how_know_us' => 'Instagram',
-            'how_know_us_other' => 'Ejemplo de otro medio',
-            'address_references' => 'Ejemplo de referencias',
-            'address_type' => 'Particular',
-            'parking' => 'No',
-            'who_sends' => 'John',
-            'who_receives' => 'Yadira',
-            'slug' => 'kaljdshfkjadsht6t676thagvjdsfASDF'
+            'email' => 'userexample@test.com',
+            'phone' => '5512874592',
+            'postal_code' => '52928',
+            'state' => 'Quintana Roo',
+            'municipality' => 'Atizapán de Zaragoza',
+            'colony' => 'Villas',
+            'street' => 'Dominicos',
+            'no_ext' => '11',
+            'no_int' => '3',
+            'nd_address_types_id' => 1,
+            'address_references' => 'Entre la calle principal y la secundaria',
+            'nd_parkings_id' => 1,
+            'package' => 'Paquete Chocolates',
+            'nd_themathics_id' => 1,
+            'modifications' => 'Sin modificaciones',
+            'observations' => 'Sin observaciones',
+            'nd_contact_means_id' => 5,
+            'contact_mean_other' => 'Publicidad',
+            'who_sends' => 'Eduardo Callejas',
+            'who_receives' => 'Karen Zavala',
+            'dedication' => 'Para nuestra madre',
+            'delivery_date' => '10/12/2020',
+            'nd_delivery_schedules_id' => 1,
         ];
 
         return $new_item;
@@ -97,35 +106,87 @@ class ObjectsDusk extends DuskTestCase
 
     static function createBuy()
     {
-        $item = ObjectsDusk::newBuy();
+        $buy = ObjectsDusk::newBuy();
 
-        DB::table('buys')->insert($item);
+        $item = NDBuy::create([
+                    'slug' => $buy['slug'],
+                    'nd_status_id' => 1,
+                ]);
 
-        $buy = Buy::where('slug', $item['slug'])->first();
+        NDBuysOrigin::create([
+            'nd_buys_id' => $item->id,
+            'nd_origins_id' => 1,
+        ]);
 
-        return $buy;
+        NDCustomerForm::create([
+            'nd_buys_id' => $item->id,
+            'first_name' => $buy['first_name'],
+            'last_name' => $buy['last_name'],
+            'email' => $buy['email'],
+            'phone' => $buy['phone'],
+            'postal_code' => $buy['postal_code'],
+            'state' => $buy['state'],
+            'municipality' => $buy['municipality'],
+            'colony' => $buy['colony'],
+            'street' => $buy['street'],
+            'no_ext' => $buy['no_ext'],
+            'no_int' => $buy['no_int'],
+            'nd_address_types_id' => $buy['nd_address_types_id'],
+            'address_references' => $buy['address_references'],
+            'nd_parkings_id' => $buy['nd_parkings_id'],
+            'package' => $buy['package'],
+            'nd_themathics_id' => $buy['nd_themathics_id'],
+            'modifications' => $buy['modifications'],
+            'observations' => $buy['observations'],
+            'nd_contact_means_id' => $buy['nd_contact_means_id'],
+            'contact_mean_other' => $buy['contact_mean_other'],
+        ]);
+
+        $date = explode('/', $buy['delivery_date']);
+        $delivery_date = new \DateTime($date[2].'-'.$date[1].'-'.$date[0]);
+
+        NDDetailBuy::create([
+            'nd_buys_id' => $item->id,
+            'who_sends' => $buy['who_sends'],
+            'who_receives' => $buy['who_receives'],
+            'dedication' => $buy['dedication'],
+            'delivery_date' => $delivery_date,
+            'nd_delivery_schedules_id' => $buy['nd_delivery_schedules_id'],
+        ]);
+
+        return $item;
+    }
+
+    static function deleteBuy($id)
+    {
+        NDDetailBuy::destroy(NDDetailBuy::where('nd_buys_id', $id)->first()->id);
+        NDCustomerForm::destroy(NDCustomerForm::where('nd_buys_id', $id)->first()->id);
+        NDBuysOrigin::destroy(NDBuysOrigin::where('nd_buys_id', $id)->first()->id);
+        NDBuy::destroy($id);
     }
 
     static function newSale()
     {
-        $item = ObjectsDusk::newBuy();
-
-        $new_item = [
-            'slug' => $item['slug'],
-            'user_id' => 1,
+        $sale = [
+            'nd_delivery_types_id' => 2,
+            'preferential_schedule' => '23:59',
+            'observations_finances' => 'Sin observaciones para finanzas',
+            'observations_buildings' => 'Sin observaciones para producción',
+            'observations_shippings' => 'Sin observaciones para logística',
             'proof_of_payment' => 'testing_upload.pdf',
             'quantity' => 3,
-            'seller_package' => 'Paquete vendedor',
-            'seller_modifications' => 'Modificaciones vendedor',
-            'delivery_type' => 'Preferencial',
-            'preferential_schedule' => '14:00',
-            'observations_finances' => 'Observaciones finanzas',
-            'observations_buildings' => 'Observaciones producción',
-            'observations_shippings' => 'Observaciones entregas',
-            'shipping_cost' => 85.50,
+            'package' => 'Paquete ejemplo para test',
+            'modifications' => 'Sin modificaciones',
+            'delivery_price' => 39.5,
         ];
 
-        return $new_item;
+        return $sale;
+    }
+
+    static function deleteSale($id)
+    {
+        NDSale::destroy(NDSale::where('nd_buys_id', $id)->first()->id);
+        NDPackageDetail::destroy(NDPackageDetail::where('nd_buys_id', $id)->first()->id);
     }
 
     static function createSale()
