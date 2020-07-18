@@ -270,5 +270,8 @@ return [
 
         // Deliveries
         'verified_delivered'    => 'verificación de entrega',
+
+        // Canasta Rosa
+        'origins_code'          => 'código de tienda',
     ],
 ];

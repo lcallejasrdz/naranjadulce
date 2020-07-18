@@ -24,10 +24,6 @@ use App\NDReturnReason;
 
 use Redirect;
 
-use App\Building;
-use App\Finance;
-use App\Buy;
-
 class SaleController extends Controller
 {
     public function __construct()

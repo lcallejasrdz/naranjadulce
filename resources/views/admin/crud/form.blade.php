@@ -3,6 +3,9 @@
 @section('title', '| '.$word)
 
 @section('styles')
+    @if($active == 'canastarosa')
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    @endif
 @endsection
 
 @section('page-header', $word)
@@ -43,6 +46,8 @@
                     <a class="btn btn-warning" href="#" data-toggle="modal" data-target="#returnModal">{{ trans('crud.building.return') }}</a>
                 @elseif($active == 'deliveries')
                     <input type="submit" class="btn btn-primary" value="{{ trans('crud.delivery.submit') }}">
+                @elseif($active == 'canastarosa')
+                    <input type="submit" class="btn btn-primary" value="{{ trans('crud.canastarosa.submit') }}">
                 @endif
             </form>
         </div>
@@ -70,6 +75,20 @@
                 }else{
                 }
             }
+        </script>
+    @endif
+    @if($active == 'canastarosa')
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script>
+            $(function(){
+                $("#datepicker").datepicker({
+                    showOtherMonths: true,
+                    selectOtherMonths: true,
+                    dateFormat: "dd/mm/yy",
+                    minDate: 0,
+                });
+            });
         </script>
     @endif
 @endsection

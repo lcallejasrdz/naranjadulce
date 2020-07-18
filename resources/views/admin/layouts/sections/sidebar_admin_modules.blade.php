@@ -12,15 +12,16 @@
 	    $route_module = 'sales';
 	@endphp
 	<!-- Nav Item - Pages Collapse Menu -->
-	<li class="nav-item {!! (Request::is($route_module) || Request::is($route_module.'/*') ? 'active' : '') !!}">
-		<a class="nav-link {!! (Request::is($route_module) || Request::is($route_module.'/*') ? '' : 'collapsed') !!}" href="#" data-toggle="collapse" data-target="#collapse{{ trans('module_'.$route_module.'.controller.model') }}" aria-expanded="true" aria-controls="collapse{{ trans('module_'.$route_module.'.controller.model') }}">
+	<li class="nav-item {!! (Request::is($route_module) || Request::is($route_module.'/*') || Request::is('canastarosa') || Request::is('canastarosa/*') ? 'active' : '') !!}">
+		<a class="nav-link {!! (Request::is($route_module) || Request::is($route_module.'/*') || Request::is('canastarosa') || Request::is('canastarosa/*') ? '' : 'collapsed') !!}" href="#" data-toggle="collapse" data-target="#collapse{{ trans('module_'.$route_module.'.controller.model') }}" aria-expanded="true" aria-controls="collapse{{ trans('module_'.$route_module.'.controller.model') }}">
 			<i class="fas fa-fw fa-{{ trans('module_'.$route_module.'.sidebar.route_font_awesome') }}"></i>
 			<span>{{ trans('module_'.$route_module.'.sidebar.route_title_plural') }}</span>
 		</a>
-		<div id="collapse{{ trans('module_'.$route_module.'.controller.model') }}" class="collapse {!! (Request::is($route_module) || Request::is($route_module.'/*') ? 'show' : '') !!}" aria-labelledby="heading{{ trans('module_'.$route_module.'.controller.model') }}" data-parent="#accordionSidebar">
+		<div id="collapse{{ trans('module_'.$route_module.'.controller.model') }}" class="collapse {!! (Request::is($route_module) || Request::is($route_module.'/*') || Request::is('canastarosa') || Request::is('canastarosa/*') ? 'show' : '') !!}" aria-labelledby="heading{{ trans('module_'.$route_module.'.controller.model') }}" data-parent="#accordionSidebar">
 			<div class="bg-white py-2 collapse-inner rounded">
 				<h6 class="collapse-header">{{ trans('crud.manage') }} {{ trans('module_'.$route_module.'.sidebar.route_title_plural') }}:</h6>
 				<a class="collapse-item {!! (Request::is($route_module) ? 'active' : '') !!}" href="{!! URL::route($route_module) !!}">{{ trans('module_'.$route_module.'.sidebar.title') }}</a>
+				<a class="collapse-item {!! (Request::is('canastarosa') ? 'active' : '') !!}" href="{!! URL::route('canastarosa') !!}">{{ trans('module_canastarosa.sidebar.title') }}</a>
 				<a class="collapse-item {!! (Request::is($route_module.'/finished') ? 'active' : '') !!}" href="{!! URL::route($route_module.'.finished') !!}">{{ trans('module_'.$route_module.'.sidebar.finished') }}</a>
 			</div>
 		</div>

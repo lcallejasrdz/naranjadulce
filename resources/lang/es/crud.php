@@ -131,4 +131,13 @@ return [
         'add'                   => 'Verificar entrega',
         'submit'                => 'Entregado',
     ],
+
+    // Create
+    'canastarosa'           => [
+        'message'               => [
+            'success'               => 'El pedido se ha confirmado con éxito',
+            'error'                 => 'Error al confirmar el pedido',
+        ],
+        'submit'                => 'Confirmar',
+    ],
 ];
