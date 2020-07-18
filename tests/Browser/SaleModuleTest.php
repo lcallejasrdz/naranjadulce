@@ -14,112 +14,112 @@ class SaleModuleTest extends DuskTestCase
     /**
      * @test
      */
-    // public function itLoadsTheSalesListPage()
-    // {
-    //     $authuser = ObjectsDusk::authenticated();
+    public function itLoadsTheSalesListPage()
+    {
+        $authuser = ObjectsDusk::authenticated();
 
-    //     $this->browse(function (Browser $browser) use ($authuser) {
-    //         $browser->visit('/')
-    //                 ->type('email', $authuser['email'])
-    //                 ->type('password', $authuser['password'])
-    //                 ->press(trans('auth.submit'))
-    //                 ->waitForText(ucfirst(trans('module_users.controller.word')))
-    //                 ->assertSee(ucfirst(trans('module_users.controller.word')))
-    //                 ->assertSee(ucfirst(trans('validation.attributes.id')))
-    //                 ->assertSee(ucfirst(trans('validation.attributes.first_name')))
-    //                 ->assertSee(ucfirst(trans('validation.attributes.last_name')))
-    //                 ->assertSee(ucfirst(trans('validation.attributes.email')))
-    //                 ->assertSee(ucfirst(trans('validation.attributes.created_at')))
-    //                 ->assertSee(ucfirst(trans('validation.attributes.actions')))
+        $this->browse(function (Browser $browser) use ($authuser) {
+            $browser->visit('/')
+                    ->type('email', $authuser['email'])
+                    ->type('password', $authuser['password'])
+                    ->press(trans('auth.submit'))
+                    ->waitForText(ucfirst(trans('module_users.controller.word')))
+                    ->assertSee(ucfirst(trans('module_users.controller.word')))
+                    ->assertSee(ucfirst(trans('validation.attributes.id')))
+                    ->assertSee(ucfirst(trans('validation.attributes.first_name')))
+                    ->assertSee(ucfirst(trans('validation.attributes.last_name')))
+                    ->assertSee(ucfirst(trans('validation.attributes.email')))
+                    ->assertSee(ucfirst(trans('validation.attributes.created_at')))
+                    ->assertSee(ucfirst(trans('validation.attributes.actions')))
 
-    //                 ->visit('/sales')
-    //                 ->waitForText(ucfirst(trans('module_sales.controller.word')))
-    //                 ->assertSee(ucfirst(trans('module_sales.controller.word')))
+                    ->visit('/sales')
+                    ->waitForText(ucfirst(trans('module_sales.controller.word')))
+                    ->assertSee(ucfirst(trans('module_sales.controller.word')))
 
-    //                 ->assertSee(ucfirst(trans('validation.attributes.id')))
-    //                 ->assertSee(ucfirst(trans('validation.attributes.first_name')))
-    //                 ->assertSee(ucfirst(trans('validation.attributes.last_name')))
-    //                 ->assertSee(ucfirst(trans('validation.attributes.package')))
-    //                 ->assertSee(ucfirst(trans('validation.attributes.delivery_date')))
-    //                 ->assertSee(ucfirst(trans('validation.attributes.nd_status_id')))
-    //                 ->assertSee(ucfirst(trans('validation.attributes.created_at')))
-    //                 ->assertSee(ucfirst(trans('validation.attributes.actions')))
+                    ->assertSee(ucfirst(trans('validation.attributes.id')))
+                    ->assertSee(ucfirst(trans('validation.attributes.first_name')))
+                    ->assertSee(ucfirst(trans('validation.attributes.last_name')))
+                    ->assertSee(ucfirst(trans('validation.attributes.package')))
+                    ->assertSee(ucfirst(trans('validation.attributes.delivery_date')))
+                    ->assertSee(ucfirst(trans('validation.attributes.nd_status_id')))
+                    ->assertSee(ucfirst(trans('validation.attributes.created_at')))
+                    ->assertSee(ucfirst(trans('validation.attributes.actions')))
 
-    //                 ->visit('/logout')
-    //                 ->waitForText(trans('auth.title'))
-    //                 ->assertSee(trans('auth.title'));
-    //     });
+                    ->visit('/logout')
+                    ->waitForText(trans('auth.title'))
+                    ->assertSee(trans('auth.title'));
+        });
 
-    //     ObjectsDusk::deleteUser($authuser['email']);
-    // }
+        ObjectsDusk::deleteUser($authuser['email']);
+    }
 
     /**
      * @test
      */
-    // function itLoadsTheSaleFormPage()
-    // {
-    //     Sentinel::logout();
+    function itLoadsTheSaleFormPage()
+    {
+        Sentinel::logout();
         
-    //     $buy = ObjectsDusk::createBuy();
+        $buy = ObjectsDusk::createBuy();
 
-    //     $authuser = ObjectsDusk::authenticated();
+        $authuser = ObjectsDusk::authenticated();
 
-    //     $this->browse(function (Browser $browser) use ($authuser, $buy) {
-    //         $browser->visit('/')
-    //                 ->type('email', $authuser['email'])
-    //                 ->type('password', $authuser['password'])
-    //                 ->press(trans('auth.submit'))
-    //                 ->waitForText(ucfirst(trans('module_users.controller.word')))
-    //                 ->assertSee(ucfirst(trans('module_users.controller.word')))
-    //                 ->assertSee(ucfirst(trans('validation.attributes.id')))
-    //                 ->assertSee(ucfirst(trans('validation.attributes.first_name')))
-    //                 ->assertSee(ucfirst(trans('validation.attributes.last_name')))
-    //                 ->assertSee(ucfirst(trans('validation.attributes.email')))
-    //                 ->assertSee(ucfirst(trans('validation.attributes.created_at')))
-    //                 ->assertSee(ucfirst(trans('validation.attributes.actions')))
+        $this->browse(function (Browser $browser) use ($authuser, $buy) {
+            $browser->visit('/')
+                    ->type('email', $authuser['email'])
+                    ->type('password', $authuser['password'])
+                    ->press(trans('auth.submit'))
+                    ->waitForText(ucfirst(trans('module_users.controller.word')))
+                    ->assertSee(ucfirst(trans('module_users.controller.word')))
+                    ->assertSee(ucfirst(trans('validation.attributes.id')))
+                    ->assertSee(ucfirst(trans('validation.attributes.first_name')))
+                    ->assertSee(ucfirst(trans('validation.attributes.last_name')))
+                    ->assertSee(ucfirst(trans('validation.attributes.email')))
+                    ->assertSee(ucfirst(trans('validation.attributes.created_at')))
+                    ->assertSee(ucfirst(trans('validation.attributes.actions')))
 
-    //                 ->visit('/sales/'.$buy->slug)
-    //                 ->waitForText(ucfirst(trans('module_sales.controller.create_word')))
-    //                 ->assertSee(ucfirst(trans('module_sales.controller.create_word')))
+                    ->visit('/sales/'.$buy->slug)
+                    ->waitForText(ucfirst(trans('module_sales.controller.create_word')))
+                    ->assertSee(ucfirst(trans('module_sales.controller.create_word')))
 
-    //                 ->assertSee(ucfirst(trans('validation.attributes.id')))
-    //                 ->assertSee(ucfirst(trans('validation.attributes.first_name')))
-    //                 ->assertSee(ucfirst(trans('validation.attributes.last_name')))
-    //                 ->assertSee(ucfirst(trans('validation.attributes.phone')))
-    //                 ->assertSee(ucfirst(trans('validation.attributes.package')))
-    //                 ->assertSee(ucfirst(trans('validation.attributes.nd_themathics_id')))
-    //                 ->assertSee(ucfirst(trans('validation.attributes.modifications')))
-    //                 ->assertSee(ucfirst(trans('validation.attributes.dedication')))
-    //                 ->assertSee(ucfirst(trans('validation.attributes.delivery_date')))
-    //                 ->assertSee(ucfirst(trans('validation.attributes.who_sends')))
-    //                 ->assertSee(ucfirst(trans('validation.attributes.who_receives')))
-    //                 ->assertSee(ucfirst(trans('validation.attributes.postal_code')))
-    //                 ->assertSee(ucfirst(trans('validation.attributes.state')))
-    //                 ->assertSee(ucfirst(trans('validation.attributes.municipality')))
-    //                 ->assertSee(ucfirst(trans('validation.attributes.colony')))
-    //                 ->assertSee(ucfirst(trans('validation.attributes.street')))
-    //                 ->assertSee(ucfirst(trans('validation.attributes.no_ext')))
-    //                 ->assertSee(ucfirst(trans('validation.attributes.nd_contact_means_id')))
-    //                 ->assertSee(ucfirst(trans('validation.attributes.nd_status_id')))
-    //                 ->assertPresent('#quantity')
-    //                 ->assertPresent('#package')
-    //                 ->assertPresent('#modifications')
-    //                 ->assertPresent('#nd_delivery_types_id')
-    //                 ->assertPresent('#preferential_schedule')
-    //                 ->assertPresent('#observations_finances')
-    //                 ->assertPresent('#observations_buildings')
-    //                 ->assertPresent('#observations_shippings')
-    //                 ->assertPresent('#delivery_price')
-    //                 ->assertPresent('#proof_of_payment')
+                    ->assertSee(ucfirst(trans('validation.attributes.id')))
+                    ->assertSee(ucfirst(trans('validation.attributes.first_name')))
+                    ->assertSee(ucfirst(trans('validation.attributes.last_name')))
+                    ->assertSee(ucfirst(trans('validation.attributes.phone')))
+                    ->assertSee(ucfirst(trans('validation.attributes.package')))
+                    ->assertSee(ucfirst(trans('validation.attributes.nd_themathics_id')))
+                    ->assertSee(ucfirst(trans('validation.attributes.modifications')))
+                    ->assertSee(ucfirst(trans('validation.attributes.dedication')))
+                    ->assertSee(ucfirst(trans('validation.attributes.delivery_date')))
+                    ->assertSee(ucfirst(trans('validation.attributes.who_sends')))
+                    ->assertSee(ucfirst(trans('validation.attributes.who_receives')))
+                    ->assertSee(ucfirst(trans('validation.attributes.postal_code')))
+                    ->assertSee(ucfirst(trans('validation.attributes.state')))
+                    ->assertSee(ucfirst(trans('validation.attributes.municipality')))
+                    ->assertSee(ucfirst(trans('validation.attributes.colony')))
+                    ->assertSee(ucfirst(trans('validation.attributes.street')))
+                    ->assertSee(ucfirst(trans('validation.attributes.no_ext')))
+                    ->assertSee(ucfirst(trans('validation.attributes.nd_contact_means_id')))
+                    ->assertSee(ucfirst(trans('validation.attributes.nd_status_id')))
+                    ->assertPresent('#quantity')
+                    ->assertPresent('#package')
+                    ->assertPresent('#modifications')
+                    ->assertPresent('#nd_delivery_types_id')
+                    ->assertPresent('#preferential_schedule')
+                    ->assertPresent('#observations_finances')
+                    ->assertPresent('#observations_buildings')
+                    ->assertPresent('#observations_shippings')
+                    ->assertPresent('#delivery_price')
+                    ->assertPresent('#proof_of_payment')
 
-    //                 ->visit('/logout')
-    //                 ->waitForText(trans('auth.title'))
-    //                 ->assertSee(trans('auth.title'));
-    //     });
+                    ->visit('/logout')
+                    ->waitForText(trans('auth.title'))
+                    ->assertSee(trans('auth.title'));
+        });
 
-    //     ObjectsDusk::deleteUser($authuser['email']);
-    //     ObjectsDusk::deleteBuy($buy->id);
-    // }
+        ObjectsDusk::deleteUser($authuser['email']);
+        ObjectsDusk::deleteBuy($buy->id);
+    }
 
     /**
      * @test
