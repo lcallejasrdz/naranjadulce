@@ -153,7 +153,7 @@ class MigrationTablesSeeder extends Seeder
 				'deleted_at' => $item->deleted_at,
 			]);
 
-			if($countFinance > 0){
+			if($countSale > 0){
 				if(NDDeliveryType::where('name', $sale->delivery_type)->count() > 0){
 					$delivery_type = NDDeliveryType::where('name', $sale->delivery_type)->first()->id;
 				}else if($sale->delivery_type != 'Especial'){
