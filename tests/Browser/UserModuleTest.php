@@ -79,7 +79,6 @@ class UserModuleTest extends DuskTestCase
                     ->click('a[href="'.env('APP_URL').'/users/'.$user->slug.'"]')
                     ->assertPathIs('/users/'.$user->slug)
                     ->assertSee($user->id)
-                    ->assertSee($user->slug)
                     ->assertSee($user->first_name)
                     ->assertSee($user->last_name)
                     ->assertSee($user->email)

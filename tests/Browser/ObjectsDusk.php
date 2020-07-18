@@ -18,14 +18,7 @@ use App\NDPackageDetail;
 use App\NDFinance;
 use App\NDBuilding;
 use App\NDShipping;
-
-
-use App\Buy;
-use App\Sale;
-use App\Finance;
-use App\Building;
-use App\Shipping;
-use App\Delivery;
+use App\NDDelivery;
 use DB;
 
 class ObjectsDusk extends DuskTestCase
@@ -162,10 +155,18 @@ class ObjectsDusk extends DuskTestCase
 
     static function deleteBuy($id)
     {
-        NDDetailBuy::destroy(NDDetailBuy::where('nd_buys_id', $id)->first()->id);
-        NDCustomerForm::destroy(NDCustomerForm::where('nd_buys_id', $id)->first()->id);
-        NDBuysOrigin::destroy(NDBuysOrigin::where('nd_buys_id', $id)->first()->id);
-        NDBuy::destroy($id);
+        if(NDDetailBuy::where('nd_buys_id', $id)->count() > 0){
+            NDDetailBuy::destroy(NDDetailBuy::where('nd_buys_id', $id)->first()->id);
+        }
+        if(NDCustomerForm::where('nd_buys_id', $id)->count() > 0){
+            NDCustomerForm::destroy(NDCustomerForm::where('nd_buys_id', $id)->first()->id);
+        }
+        if(NDBuysOrigin::where('nd_buys_id', $id)->count() > 0){
+            NDBuysOrigin::destroy(NDBuysOrigin::where('nd_buys_id', $id)->first()->id);
+        }
+        if(NDBuy::where('id', $id)->count() > 0){
+            NDBuy::destroy($id);
+        }
     }
 
     static function newSale()
@@ -188,8 +189,12 @@ class ObjectsDusk extends DuskTestCase
 
     static function deleteSale($id)
     {
-        NDSale::destroy(NDSale::where('nd_buys_id', $id)->first()->id);
-        NDPackageDetail::destroy(NDPackageDetail::where('nd_buys_id', $id)->first()->id);
+        if(NDSale::where('nd_buys_id', $id)->count() > 0){
+            NDSale::destroy(NDSale::where('nd_buys_id', $id)->first()->id);
+        }
+        if(NDPackageDetail::where('nd_buys_id', $id)->count() > 0){
+            NDPackageDetail::destroy(NDPackageDetail::where('nd_buys_id', $id)->first()->id);
+        }
     }
 
     static function createSale($buy)
@@ -222,7 +227,9 @@ class ObjectsDusk extends DuskTestCase
 
     static function deleteFinance($id)
     {
-        NDFinance::destroy(NDFinance::where('nd_buys_id', $id)->first()->id);
+        if(NDFinance::where('nd_buys_id', $id)->count() > 0){
+            NDFinance::destroy(NDFinance::where('nd_buys_id', $id)->first()->id);
+        }
     }
 
     static function createFinance($buy)
@@ -239,7 +246,9 @@ class ObjectsDusk extends DuskTestCase
 
     static function deleteBuilding($id)
     {
-        NDBuilding::destroy(NDBuilding::where('nd_buys_id', $id)->first()->id);
+        if(NDBuilding::where('nd_buys_id', $id)->count() > 0){
+            NDBuilding::destroy(NDBuilding::where('nd_buys_id', $id)->first()->id);
+        }
     }
 
     static function createBuilding($buy)
@@ -256,7 +265,9 @@ class ObjectsDusk extends DuskTestCase
 
     static function deleteShipping($id)
     {
-        NDShipping::destroy(NDShipping::where('nd_buys_id', $id)->first()->id);
+        if(NDShipping::where('nd_buys_id', $id)->count() > 0){
+            NDShipping::destroy(NDShipping::where('nd_buys_id', $id)->first()->id);
+        }
     }
 
     static function newShipping()
@@ -283,30 +294,21 @@ class ObjectsDusk extends DuskTestCase
         return $item;
     }
 
-    static function newDelivery()
+    static function deleteDelivery($id)
     {
-        $item = ObjectsDusk::newBuy();
-
-        $new_item = [
-            'slug' => $item['slug'],
-            'user_id' => 1,
-            'verified_delivered' => 1,
-        ];
-
-        return $new_item;
+        if(NDDelivery::where('nd_buys_id', $id)->count() > 0){
+            NDDelivery::destroy(NDDelivery::where('nd_buys_id', $id)->first()->id);
+        }
     }
 
-    static function createDelivery()
+    static function createDelivery($buy)
     {
-        $item = ObjectsDusk::newDelivery();
+        $delivery = NDDelivery::create([
+            'nd_buys_id' => $buy->id,
+        ]);
 
-        DB::table('deliveries')->insert($item);
-
-        $buy = Buy::where('slug', $item['slug'])->first();
-        $buy->status_id = 7;
+        $buy->nd_status_id = 7;
         $buy->save();
-
-        $delivery = Delivery::where('slug', $item['slug'])->first();
 
         return $delivery;
     }

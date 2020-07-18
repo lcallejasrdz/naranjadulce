@@ -50,7 +50,7 @@
 		</a>
 		<!-- Logout Modal-->
 		@include('admin.layouts.modals.logout_modal')
-		@if($view == 'sales')
+		@if($view == 'users' || $view == 'sales')
 			@include('admin.layouts.modals.delete_modal')
 		@endif
 		@if(($active == 'finances' || $active == 'buildings' || $active == 'shippings') && isset($item) && $view != 'show')
