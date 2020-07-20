@@ -76,7 +76,9 @@ class BuyController extends Controller
     public function store(MasterRequest $request)
     {
         /* Slug */
-        $slug = Str::slug($request->_token);
+        $now = new DateTime();
+        $current_date = $now->format('YmdHis');
+        $slug = Str::slug($current_date.$request->_token.rand(1000,9999));
 
         $item = NDBuy::create([
                     'slug' => $slug,
