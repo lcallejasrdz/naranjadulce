@@ -13,6 +13,7 @@ use App\NDCustomerForm;
 use App\NDDetailBuy;
 use App\NDSale;
 use App\NDPackageDetail;
+use App\NDFinance;
 
 use Redirect;
 
@@ -107,7 +108,7 @@ class CanastaRosaController extends Controller
         NDBuysOrigin::create([
             'nd_buys_id' => $item->id,
             'nd_origins_id' => 2,
-            // 'origins_code' => 'Code',
+            'origins_code' => $request->origins_code,
         ]);
 
         NDCustomerForm::create([
@@ -164,7 +165,11 @@ class CanastaRosaController extends Controller
             'delivery_price' => 0,
         ]);
 
-        if(NDBuy::where('id', $item->id)->count() > 0 && NDBuysOrigin::where('nd_buys_id', $item->id)->count() > 0 && NDCustomerForm::where('nd_buys_id', $item->id)->count() > 0 && NDDetailBuy::where('nd_buys_id', $item->id)->count() > 0 && NDSale::where('nd_buys_id', $item->id)->count() > 0 && NDPackageDetail::where('nd_buys_id', $item->id)->count() > 0){
+        NDFinance::create([
+            'nd_buys_id' => $item->id,
+        ]);
+
+        if(NDBuy::where('id', $item->id)->count() > 0 && NDBuysOrigin::where('nd_buys_id', $item->id)->count() > 0 && NDCustomerForm::where('nd_buys_id', $item->id)->count() > 0 && NDDetailBuy::where('nd_buys_id', $item->id)->count() > 0 && NDSale::where('nd_buys_id', $item->id)->count() > 0 && NDPackageDetail::where('nd_buys_id', $item->id)->count() > 0 && NDFinance::where('nd_buys_id', $item->id)->count() > 0){
             return Redirect::route('sales')->with('success', trans('crud.buy.message.success').$item->id);
         }else{
             NDPackageDetail::destroy(NDPackageDetail::where('nd_buys_id', $item->id)->first()->id);

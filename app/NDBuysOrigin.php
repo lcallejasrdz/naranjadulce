@@ -24,6 +24,7 @@ class NDBuysOrigin extends Model
     protected $fillable = [
         'nd_buys_id',
         'nd_origins_id',
+        'origins_code',
     ];
 
     /**
