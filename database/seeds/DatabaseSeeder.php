@@ -31,11 +31,11 @@ class DatabaseSeeder extends Seeder
         }
         else if(env('APP_ENV') == 'testing')
         {
-            
+            $this->call(SlugsCheckSeeder::class);
         }
         else
         {
-
+            $this->call(SlugsCheckSeeder::class);
         }
     }
 }
