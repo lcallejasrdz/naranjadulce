@@ -14,7 +14,7 @@ class CanastaRosaModuleTest extends DuskTestCase
     /**
      * @test
      */
-    function itLoadsTheSaleFormPage()
+    function itLoadsTheCanastaRosaFormPage()
     {
         $authuser = ObjectsDusk::authenticated();
 
@@ -57,7 +57,7 @@ class CanastaRosaModuleTest extends DuskTestCase
     /**
      * @test
      */
-    function itTestsTheCreateSaleMethod()
+    function itTestsTheCreateCanastaRosaMethod()
     {
         Sentinel::logout();
 

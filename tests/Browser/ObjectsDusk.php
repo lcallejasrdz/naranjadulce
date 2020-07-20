@@ -317,6 +317,8 @@ class ObjectsDusk extends DuskTestCase
     static function newCanastaRosa()
     {
         $canastarosa = [
+            '_token' => 'kaljdshfkjadsht6t676thagvjdsfASDF',
+            'slug' => 'kaljdshfkjadsht6t676thagvjdsfASDF',
             'origins_code' => 'CANASTAROSACODE20201230',
             'delivery_date' => '30/12/2020',
             'who_sends' => 'John Connor',
@@ -329,5 +331,81 @@ class ObjectsDusk extends DuskTestCase
         ];
 
         return $canastarosa;
+    }
+
+    static function createCanastaRosa()
+    {
+        $buy = ObjectsDusk::newCanastaRosa();
+
+        $item = NDBuy::create([
+                    'slug' => $buy['slug'],
+                    'nd_status_id' => 3,
+                    'origins_code' => $buy['origins_code'],
+                ]);
+
+        NDBuysOrigin::create([
+            'nd_buys_id' => $item->id,
+            'nd_origins_id' => 2,
+        ]);
+
+        NDCustomerForm::create([
+            'nd_buys_id' => $item->id,
+            'first_name' => '',
+            'last_name' => '',
+            'email' => '',
+            'phone' => '',
+            'postal_code' => '',
+            'state' => '',
+            'municipality' => '',
+            'colony' => '',
+            'street' => '',
+            'no_ext' => '',
+            'no_int' => '',
+            'nd_address_types_id' => 1,
+            'address_references' => '',
+            'nd_parkings_id' => 1,
+            'package' => '',
+            'nd_themathics_id' => 1,
+            'modifications' => '',
+            'observations' => '',
+            'nd_contact_means_id' => 5,
+            'contact_mean_other' => '',
+        ]);
+
+        $date = explode('/', $buy['delivery_date']);
+        $delivery_date = new \DateTime($date[2].'-'.$date[1].'-'.$date[0]);
+
+        NDDetailBuy::create([
+            'nd_buys_id' => $item->id,
+            'who_sends' => $buy['who_sends'],
+            'who_receives' => $buy['who_receives'],
+            'dedication' => $buy['dedication'],
+            'delivery_date' => $delivery_date,
+            'nd_delivery_schedules_id' => 3,
+        ]);
+
+        NDSale::create([
+            'nd_buys_id' => $item->id,
+            'nd_delivery_types_id' => 2,
+            'preferential_schedule' => $buy['preferential_schedule'],
+            'observations_finances' => '',
+            'observations_buildings' => '',
+            'observations_shippings' => '',
+            'proof_of_payment' => '',
+        ]);
+
+        NDPackageDetail::create([
+            'nd_buys_id' => $item->id,
+            'quantity' => $buy['quantity'],
+            'package' => $buy['package'],
+            'modifications' => $buy['modifications'],
+            'delivery_price' => 0,
+        ]);
+
+        NDFinance::create([
+            'nd_buys_id' => $item->id,
+        ]);
+
+        return $item;
     }
 }

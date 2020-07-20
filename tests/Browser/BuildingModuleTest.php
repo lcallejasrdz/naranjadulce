@@ -85,6 +85,7 @@ class BuildingModuleTest extends DuskTestCase
                     ->assertSee(ucfirst(trans('module_buildings.controller.create_word')))
 
                     ->assertSee(ucfirst(trans('validation.attributes.id')))
+                    ->assertSee(ucfirst(trans('validation.attributes.nd_origins_id')))
                     ->assertSee(ucfirst(trans('validation.attributes.first_name')))
                     ->assertSee(ucfirst(trans('validation.attributes.last_name')))
                     ->assertSee(ucfirst(trans('validation.attributes.quantity')))
@@ -156,6 +157,53 @@ class BuildingModuleTest extends DuskTestCase
         ObjectsDusk::deleteSale($buy->id);
         ObjectsDusk::deleteFinance($buy->id);
         ObjectsDusk::deleteBuilding($buy->id);
+    }
+
+    /**
+     * @test
+     */
+    function itTestsTheCreateBuildingCanastaRosaMethod()
+    {
+        Sentinel::logout();
+        
+        $buy = ObjectsDusk::createCanastaRosa();
+
+        $authuser = ObjectsDusk::authenticated();
+
+        $this->browse(function (Browser $browser) use ($authuser, $buy) {
+            $browser->visit('/')
+                    ->type('email', $authuser['email'])
+                    ->type('password', $authuser['password'])
+                    ->press(trans('auth.submit'))
+                    ->waitForText(ucfirst(trans('module_users.controller.word')))
+                    ->assertSee(ucfirst(trans('module_users.controller.word')))
+                    ->assertSee(ucfirst(trans('validation.attributes.id')))
+                    ->assertSee(ucfirst(trans('validation.attributes.first_name')))
+                    ->assertSee(ucfirst(trans('validation.attributes.last_name')))
+                    ->assertSee(ucfirst(trans('validation.attributes.email')))
+                    ->assertSee(ucfirst(trans('validation.attributes.created_at')))
+                    ->assertSee(ucfirst(trans('validation.attributes.actions')))
+
+                    ->visit('/buildings/'.$buy->slug)
+                    ->waitForText(ucfirst(trans('module_buildings.controller.create_word')))
+                    ->assertSee(ucfirst(trans('module_buildings.controller.create_word')))
+
+                    ->press(ucfirst(trans('crud.building.submit')))
+                    ->waitForText(ucfirst(trans('crud.building.message.success')))
+                    ->assertSee(ucfirst(trans('crud.building.message.success')))
+
+                    ->visit('/logout')
+                    ->waitForText(trans('auth.title'))
+                    ->assertSee(trans('auth.title'));
+        });
+
+        ObjectsDusk::deleteUser($authuser['email']);
+        ObjectsDusk::deleteBuy($buy->id);
+        ObjectsDusk::deleteSale($buy->id);
+        ObjectsDusk::deleteFinance($buy->id);
+        ObjectsDusk::deleteBuilding($buy->id);
+        ObjectsDusk::deleteShipping($buy->id);
+        ObjectsDusk::deleteDelivery($buy->id);
     }
 
     /**
@@ -237,6 +285,7 @@ class BuildingModuleTest extends DuskTestCase
                     ->assertSee(ucfirst(trans('module_buildings.controller.word')))
 
                     ->assertSee(ucfirst(trans('validation.attributes.id')))
+                    ->assertSee(ucfirst(trans('validation.attributes.nd_origins_id')))
                     ->assertSee(ucfirst(trans('validation.attributes.first_name')))
                     ->assertSee(ucfirst(trans('validation.attributes.last_name')))
                     ->assertSee(ucfirst(trans('validation.attributes.quantity')))
