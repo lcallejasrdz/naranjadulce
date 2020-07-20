@@ -6,7 +6,10 @@ use App\Http\Requests\BuildingRequest as MasterRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use App\NDBuy;
+use App\NDBuysOrigin;
 use App\NDBuilding;
+use App\NDShipping;
+use App\NDDelivery;
 use App\NDBuildingConfirmView;
 use App\NDBuildingDetailView;
 use App\NDReturnReason;
@@ -84,6 +87,8 @@ class BuildingController extends Controller
                 ->select(
                     'id',
                     'slug',
+                    'nd_origins_id',
+                    'origins_code',
                     'first_name',
                     'last_name',
                     'quantity',
@@ -125,17 +130,43 @@ class BuildingController extends Controller
             'nd_buys_id' => $request->nd_buys_id,
         ]);
 
-        $buy->nd_status_id = 5;
+        if(NDBuysOrigin::where('nd_buys_id', $request->nd_buys_id)->first()->nd_origins_id == 1){
+            $buy->nd_status_id = 5;
 
-        if(NDBuilding::where('nd_buys_id', $request->nd_buys_id)->count() > 0 && $buy->save()){
-            return Redirect::route($this->active)->with('success', trans('crud.building.message.success'));
+            if(NDBuilding::where('nd_buys_id', $request->nd_buys_id)->count() > 0 && $buy->save()){
+                return Redirect::route($this->active)->with('success', trans('crud.building.message.success'));
+            }else{
+                NDBuilding::destroy(NDBuilding::where('nd_buys_id', $request->nd_buys_id)->first()->id);
+
+                $buy->status_id = $status_back;
+                $buy->save();
+
+                return Redirect::back()->with('error', trans('crud.building.message.error'));
+            }
         }else{
-            NDBuilding::destroy(NDBuilding::where('nd_buys_id', $request->nd_buys_id)->first()->id);
+            NDShipping::create([
+                'nd_buys_id' => $request->nd_buys_id,
+                'delivery_man' => '',
+            ]);
 
-            $buy->status_id = $status_back;
-            $buy->save();
+            NDDelivery::create([
+                'nd_buys_id' => $request->nd_buys_id,
+            ]);
 
-            return Redirect::back()->with('error', trans('crud.building.message.error'));
+            $buy->nd_status_id = 7;
+            
+            if(NDDelivery::where('nd_buys_id', $request->nd_buys_id)->count() > 0 && NDShipping::where('nd_buys_id', $request->nd_buys_id)->count() > 0 && NDBuilding::where('nd_buys_id', $request->nd_buys_id)->count() > 0 && $buy->save()){
+                return Redirect::route($this->active)->with('success', trans('crud.building.message.success'));
+            }else{
+                NDBuilding::destroy(NDBuilding::where('nd_buys_id', $request->nd_buys_id)->first()->id);
+                NDShipping::destroy(NDBuilding::where('nd_buys_id', $request->nd_buys_id)->first()->id);
+                NDDelivery::destroy(NDBuilding::where('nd_buys_id', $request->nd_buys_id)->first()->id);
+
+                $buy->status_id = $status_back;
+                $buy->save();
+
+                return Redirect::back()->with('error', trans('crud.building.message.error'));
+            }
         }
     }
 
@@ -206,6 +237,8 @@ class BuildingController extends Controller
                 ->select(
                     'id',
                     'slug',
+                    'nd_origins_id',
+                    'origins_code',
                     'first_name',
                     'last_name',
                     'quantity',
