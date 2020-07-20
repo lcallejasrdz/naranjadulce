@@ -20,6 +20,7 @@ class AddColumnsToNdSaleListViewTable extends Migration
                 SELECT
                     nd_buys.id,
                     nd_buys.slug,
+                    nd_buy_origins.nd_origins_id as origins_id,
                     nd_origins.name as nd_origins_id,
                     nd_customer_forms.first_name,
                     nd_customer_forms.last_name,

@@ -129,7 +129,11 @@ class DataTablesController extends Controller
                     if($row->status_id != 1 && $row->status_id != 8){
                         $actions .= ' <a href="'. route($active.'.show', $row->slug) .'" class="btn btn-success btn-circle btn-sm"><i class="fas fa-edit"></i></a>';
                     }else{
-                        $actions .= ' <a href="'. route($active.'.create', $row->slug) .'" class="btn btn-success btn-circle btn-sm"><i class="fas fa-edit"></i></a>';
+                        if($row->origins_id == 1){
+                            $actions .= ' <a href="'. route($active.'.create', $row->slug) .'" class="btn btn-success btn-circle btn-sm"><i class="fas fa-edit"></i></a>';
+                        }else{
+                            $actions .= ' <a href="'. route('canastarosa.edit', $row->slug) .'" class="btn btn-success btn-circle btn-sm"><i class="fas fa-edit"></i></a>';
+                        }
                     }
                     if(Sentinel::getUser()->role_id == 1 && ($row->status_id == 1 || $row->status_id == 8)){
                         $actions .= ' <a href="#" class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#deleteModal" onClick="deleteModal('.$row->id.')"><i class="fas fa-minus-circle"></i></a>';

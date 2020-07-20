@@ -14,6 +14,8 @@ use App\NDDetailBuy;
 use App\NDSale;
 use App\NDPackageDetail;
 use App\NDFinance;
+use App\NDSaleDetailView;
+use App\NDReturnReason;
 
 use Redirect;
 
@@ -97,89 +99,132 @@ class CanastaRosaController extends Controller
      */
     public function store(MasterRequest $request)
     {
-        /* Slug */
-        $slug = Str::slug($request->_token);
+        if($request->nd_buys_id == 0){
+            /* Slug */
+            $slug = Str::slug($request->_token);
 
-        $item = NDBuy::create([
-                    'slug' => $slug,
-                    'nd_status_id' => 3,
-                ]);
+            $item = NDBuy::create([
+                        'slug' => $slug,
+                        'nd_status_id' => 3,
+                    ]);
 
-        NDBuysOrigin::create([
-            'nd_buys_id' => $item->id,
-            'nd_origins_id' => 2,
-            'origins_code' => $request->origins_code,
-        ]);
+            NDBuysOrigin::create([
+                'nd_buys_id' => $item->id,
+                'nd_origins_id' => 2,
+                'origins_code' => $request->origins_code,
+            ]);
 
-        NDCustomerForm::create([
-            'nd_buys_id' => $item->id,
-            'first_name' => '',
-            'last_name' => '',
-            'email' => '',
-            'phone' => '',
-            'postal_code' => '',
-            'state' => '',
-            'municipality' => '',
-            'colony' => '',
-            'street' => '',
-            'no_ext' => '',
-            'no_int' => '',
-            'nd_address_types_id' => 1,
-            'address_references' => '',
-            'nd_parkings_id' => 1,
-            'package' => '',
-            'nd_themathics_id' => 1,
-            'modifications' => '',
-            'observations' => '',
-            'nd_contact_means_id' => 5,
-            'contact_mean_other' => '',
-        ]);
+            NDCustomerForm::create([
+                'nd_buys_id' => $item->id,
+                'first_name' => '',
+                'last_name' => '',
+                'email' => '',
+                'phone' => '',
+                'postal_code' => '',
+                'state' => '',
+                'municipality' => '',
+                'colony' => '',
+                'street' => '',
+                'no_ext' => '',
+                'no_int' => '',
+                'nd_address_types_id' => 1,
+                'address_references' => '',
+                'nd_parkings_id' => 1,
+                'package' => '',
+                'nd_themathics_id' => 1,
+                'modifications' => '',
+                'observations' => '',
+                'nd_contact_means_id' => 5,
+                'contact_mean_other' => '',
+            ]);
 
-        $date = explode('/', $request->delivery_date);
-        $delivery_date = new DateTime($date[2].'-'.$date[1].'-'.$date[0]);
+            $date = explode('/', $request->delivery_date);
+            $delivery_date = new DateTime($date[2].'-'.$date[1].'-'.$date[0]);
 
-        NDDetailBuy::create([
-            'nd_buys_id' => $item->id,
-            'who_sends' => $request->who_sends,
-            'who_receives' => $request->who_receives,
-            'dedication' => $request->dedication,
-            'delivery_date' => $delivery_date,
-            'nd_delivery_schedules_id' => 3,
-        ]);
+            NDDetailBuy::create([
+                'nd_buys_id' => $item->id,
+                'who_sends' => $request->who_sends,
+                'who_receives' => $request->who_receives,
+                'dedication' => $request->dedication,
+                'delivery_date' => $delivery_date,
+                'nd_delivery_schedules_id' => 3,
+            ]);
 
-        NDSale::create([
-            'nd_buys_id' => $item->id,
-            'nd_delivery_types_id' => 2,
-            'preferential_schedule' => $request->preferential_schedule,
-            'observations_finances' => '',
-            'observations_buildings' => '',
-            'observations_shippings' => '',
-            'proof_of_payment' => '',
-        ]);
+            NDSale::create([
+                'nd_buys_id' => $item->id,
+                'nd_delivery_types_id' => 2,
+                'preferential_schedule' => $request->preferential_schedule,
+                'observations_finances' => '',
+                'observations_buildings' => '',
+                'observations_shippings' => '',
+                'proof_of_payment' => '',
+            ]);
 
-        NDPackageDetail::create([
-            'nd_buys_id' => $item->id,
-            'quantity' => $request->quantity,
-            'package' => $request->package,
-            'modifications' => $request->modifications,
-            'delivery_price' => 0,
-        ]);
+            NDPackageDetail::create([
+                'nd_buys_id' => $item->id,
+                'quantity' => $request->quantity,
+                'package' => $request->package,
+                'modifications' => $request->modifications,
+                'delivery_price' => 0,
+            ]);
 
-        NDFinance::create([
-            'nd_buys_id' => $item->id,
-        ]);
+            NDFinance::create([
+                'nd_buys_id' => $item->id,
+            ]);
 
-        if(NDBuy::where('id', $item->id)->count() > 0 && NDBuysOrigin::where('nd_buys_id', $item->id)->count() > 0 && NDCustomerForm::where('nd_buys_id', $item->id)->count() > 0 && NDDetailBuy::where('nd_buys_id', $item->id)->count() > 0 && NDSale::where('nd_buys_id', $item->id)->count() > 0 && NDPackageDetail::where('nd_buys_id', $item->id)->count() > 0 && NDFinance::where('nd_buys_id', $item->id)->count() > 0){
-            return Redirect::route('sales')->with('success', trans('crud.canastarosa.message.success'));
+            if(NDBuy::where('id', $item->id)->count() > 0 && NDBuysOrigin::where('nd_buys_id', $item->id)->count() > 0 && NDCustomerForm::where('nd_buys_id', $item->id)->count() > 0 && NDDetailBuy::where('nd_buys_id', $item->id)->count() > 0 && NDSale::where('nd_buys_id', $item->id)->count() > 0 && NDPackageDetail::where('nd_buys_id', $item->id)->count() > 0 && NDFinance::where('nd_buys_id', $item->id)->count() > 0){
+                return Redirect::route('sales')->with('success', trans('crud.canastarosa.message.success'));
+            }else{
+                NDPackageDetail::destroy(NDPackageDetail::where('nd_buys_id', $item->id)->first()->id);
+                NDSale::destroy(NDSale::where('nd_buys_id', $item->id)->first()->id);
+                NDDetailBuy::destroy(NDDetailBuy::where('nd_buys_id', $item->id)->first()->id);
+                NDCustomerForm::destroy(NDCustomerForm::where('nd_buys_id', $item->id)->first()->id);
+                NDBuysOrigin::destroy(NDBuysOrigin::where('nd_buys_id', $item->id)->first()->id);
+                NDBuy::destroy($item->id);
+
+                return Redirect::back()->with('error', trans('crud.canastarosa.message.error'));
+            }
         }else{
-            NDPackageDetail::destroy(NDPackageDetail::where('nd_buys_id', $item->id)->first()->id);
-            NDSale::destroy(NDSale::where('nd_buys_id', $item->id)->first()->id);
-            NDDetailBuy::destroy(NDDetailBuy::where('nd_buys_id', $item->id)->first()->id);
-            NDCustomerForm::destroy(NDCustomerForm::where('nd_buys_id', $item->id)->first()->id);
-            NDBuysOrigin::destroy(NDBuysOrigin::where('nd_buys_id', $item->id)->first()->id);
-            NDBuy::destroy($item->id);
+            $buy = NDBuy::find($request->nd_buys_id);
+            $item = NDPackageDetail::where('nd_buys_id', $buy->id)->first();
 
-            return Redirect::back()->with('error', trans('crud.canastarosa.message.error'));
+            $item->modifications = $request->modifications;
+            $buy->nd_status_id = 3;
+
+            if($item->save() && $buy->save()){
+                NDReturnReason::destroy(NDReturnReason::where('nd_buys_id', $request->nd_buys_id)->first()->id);
+
+                return Redirect::route('sales')->with('success', trans('crud.canastarosa.message.success'));
+            }else{
+                $buy->nd_buys_id = 8;
+                $buy->save();
+
+                return Redirect::back()->with('error', trans('crud.canastarosa.message.error'));
+            }
         }
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($slug)
+    {
+        $view = 'create';
+
+        $active = $this->active;
+        $word = $this->create_word;
+        $model = null;
+        $select = null;
+        $columns = null;
+        $actions = null;
+
+        $id = NDBuy::where('slug', $slug)->first()->id;
+        $item = NDSaleDetailView::where('slug', $slug)->first();
+        $return_reason = NDReturnReason::where('nd_buys_id', $id)->first()->reason;
+
+        return view('admin.crud.form', compact($this->compact, 'return_reason'));
     }
 }
