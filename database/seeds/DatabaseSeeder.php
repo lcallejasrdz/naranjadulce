@@ -25,8 +25,8 @@ class DatabaseSeeder extends Seeder
             // $this->call(AddVerificarStatusSeeder::class);
             // $this->call(ScheduleTableSeeder::class);
             // $this->call(UpdateStatusSeeder::class);
-            // $this->call(CatalogsTablesSeeder::class);
-            // $this->call(MigrationTablesSeeder::class);
+            $this->call(CatalogsTablesSeeder::class);
+            $this->call(MigrationTablesSeeder::class);
         }
         else if(env('APP_ENV') == 'testing')
         {

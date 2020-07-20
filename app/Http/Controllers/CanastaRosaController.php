@@ -170,7 +170,7 @@ class CanastaRosaController extends Controller
         ]);
 
         if(NDBuy::where('id', $item->id)->count() > 0 && NDBuysOrigin::where('nd_buys_id', $item->id)->count() > 0 && NDCustomerForm::where('nd_buys_id', $item->id)->count() > 0 && NDDetailBuy::where('nd_buys_id', $item->id)->count() > 0 && NDSale::where('nd_buys_id', $item->id)->count() > 0 && NDPackageDetail::where('nd_buys_id', $item->id)->count() > 0 && NDFinance::where('nd_buys_id', $item->id)->count() > 0){
-            return Redirect::route('sales')->with('success', trans('crud.buy.message.success').$item->id);
+            return Redirect::route('sales')->with('success', trans('crud.canastarosa.message.success'));
         }else{
             NDPackageDetail::destroy(NDPackageDetail::where('nd_buys_id', $item->id)->first()->id);
             NDSale::destroy(NDSale::where('nd_buys_id', $item->id)->first()->id);
@@ -179,7 +179,7 @@ class CanastaRosaController extends Controller
             NDBuysOrigin::destroy(NDBuysOrigin::where('nd_buys_id', $item->id)->first()->id);
             NDBuy::destroy($item->id);
 
-            return Redirect::back()->with('error', trans('crud.buy.message.error'));
+            return Redirect::back()->with('error', trans('crud.canastarosa.message.error'));
         }
     }
 }

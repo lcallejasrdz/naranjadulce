@@ -103,6 +103,6 @@ class BuyModuleTest extends DuskTestCase
         });
 
         $buy = NDBuy::latest()->first();
-        $buy->forceDelete();
+        ObjectsDusk::deleteBuy($buy->id);
     }
 }

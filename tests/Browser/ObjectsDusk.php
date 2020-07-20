@@ -44,6 +44,7 @@ class ObjectsDusk extends DuskTestCase
         Activation::complete($user, $activation->code);
 
         $role = Sentinel::findRoleById($authuser->role_id);
+        $role->users()->detach($user);
         $role->users()->attach($user);
 
         $newuser = [
@@ -311,5 +312,22 @@ class ObjectsDusk extends DuskTestCase
         $buy->save();
 
         return $delivery;
+    }
+
+    static function newCanastaRosa()
+    {
+        $canastarosa = [
+            'origins_code' => 'CANASTAROSACODE20201230',
+            'delivery_date' => '30/12/2020',
+            'who_sends' => 'John Connor',
+            'who_receives' => 'Karen Zavala',
+            'dedication' => 'Por la amistad',
+            'preferential_schedule' => '23:59',
+            'quantity' => 3,
+            'package' => 'Paquete ejemplo para test',
+            'modifications' => 'Sin modificaciones',
+        ];
+
+        return $canastarosa;
     }
 }
