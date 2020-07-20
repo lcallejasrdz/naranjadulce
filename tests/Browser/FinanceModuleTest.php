@@ -36,6 +36,7 @@ class FinanceModuleTest extends DuskTestCase
                     ->assertSee(ucfirst(trans('module_finances.controller.word')))
 
                     ->assertSee(ucfirst(trans('validation.attributes.id')))
+                    ->assertSee(ucfirst(trans('validation.attributes.nd_origins_id')))
                     ->assertSee(ucfirst(trans('validation.attributes.first_name')))
                     ->assertSee(ucfirst(trans('validation.attributes.last_name')))
                     ->assertSee(ucfirst(trans('validation.attributes.delivery_date')))
