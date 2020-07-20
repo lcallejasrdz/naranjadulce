@@ -86,7 +86,7 @@ class BuyModuleTest extends DuskTestCase
                     ->type('modifications', $new_item['modifications'])
                     ->type('dedication', $new_item['dedication'])
                     ->click('#datepicker')
-                    ->click('.ui-datepicker-calendar tbody tr td a.ui-state-default')
+                    ->click('.ui-datepicker-calendar tbody tr td:not(.ui-datepicker-today) a.ui-state-default')
                     ->pause(5000)
                     ->select('nd_delivery_schedules_id', $new_item['nd_delivery_schedules_id'])
                     ->type('observations', $new_item['observations'])
