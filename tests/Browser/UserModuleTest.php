@@ -262,6 +262,11 @@ class UserModuleTest extends DuskTestCase
     {
         Sentinel::logout();
         
+        if(User::where('email', 'userexample@test.com')->count() > 0){
+            $user = User::where('email', 'userexample@test.com')->first();
+            $user->forceDelete();
+        }
+        
         $authuser = ObjectsDusk::authenticated();
 
         $this->browse(function (Browser $browser) use ($authuser) {
