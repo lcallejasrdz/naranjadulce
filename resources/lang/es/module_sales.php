@@ -12,6 +12,7 @@ return [
         'model'                 => $model,
         'select'                => [
             'id',
+            'nd_origins_id',
             'first_name',
             'last_name',
             'package',

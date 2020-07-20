@@ -272,6 +272,7 @@ return [
         'verified_delivered'    => 'verificación de entrega',
 
         // Canasta Rosa
+        'nd_origins_id'         => 'origen',
         'origins_code'          => 'código de tienda',
     ],
 ];

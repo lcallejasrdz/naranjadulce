@@ -280,6 +280,8 @@ class SaleController extends Controller
                 ->select(
                     'id',
                     'slug',
+                    'nd_origins_id',
+                    'origins_code',
                     'first_name',
                     'last_name',
                     'phone',
