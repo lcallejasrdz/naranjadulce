@@ -7,6 +7,7 @@
 <script src="{{ env('APP_URL') }}/js/sb-admin-2.min.js"></script>
 <!-- Page level plugins -->
 @if($active != 'buys')
+{{-- @if($active != 'buys' && (isset($view) && ($view == 'index' || $view == 'sales' || $view == 'finished' || $view == 'finances' || $view == 'financefinished' || $view == 'buildings' || $view == 'buildingfinished' || $view == 'shippings' || $view == 'shippingfinished' || $view == 'deliveries' || $view == 'deliveryfinished')) || !isset($view)) --}}
 	<script src="{{ env('APP_URL') }}/vendor/datatables/jquery.dataTables.min.js"></script>
 	<script src="{{ env('APP_URL') }}/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 	<!-- Page level custom scripts -->

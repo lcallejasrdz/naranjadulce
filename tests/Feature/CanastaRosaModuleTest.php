@@ -267,10 +267,12 @@ class CanastaRosaModuleTest extends TestCase
             'who_sends' => 'John Connor',
             'who_receives' => 'Karen Zavala',
             'dedication' => 'Por la amistad',
-            'preferential_schedule' => '23:59',
+            'nd_delivery_schedules_id' => 1,
             'quantity' => 3,
             'package' => 'Paquete ejemplo para test',
+            'nd_themathics_id' => 3,
             'modifications' => 'Sin modificaciones',
+            'observations_buildings' => 'Sin observaciones para producción',
         ];
 
         return $newcanastarosa;

@@ -252,8 +252,6 @@
         var currentDay = "{{ $current_day }}";
         var currentTime = "{{ $current_time }}";
 
-        console.log("Current date:" + currentDate + "; current day:" + currentDay + "; current time:" + currentTime);
-
         $(function(){
             if(currentTime >= '19:00:00' || currentDay == 'Saturday' || currentDay == 'Sunday'){
                 $("#datepicker").datepicker({

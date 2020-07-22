@@ -8,6 +8,8 @@ use Tests\TestCase;
 
 class HomePageTest extends TestCase
 {
+    use RefreshDatabase;
+    
     /**
      * @test
      */

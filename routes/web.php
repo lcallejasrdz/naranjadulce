@@ -59,6 +59,7 @@ Route::group(array('middleware' => 'sentinelAuth'), function () {
 	$route = 'canastarosa';
 	$controller = 'CanastaRosaController';
 	Route::group(array('prefix' => $route), function () use ($route, $controller) {
+		Route::get('datepicker/{day}/{month}/{year}', array('as' => $route.'.getschedules', 'uses' => $controller.'@getSchedules'));
 	    Route::get('/', array('as' => $route, 'uses' => $controller.'@create'));
 	    Route::get('{slug_buy}', array('as' => $route.'.edit', 'uses' => $controller.'@edit'));
 		Route::post('create', array('as' => $route.'.store', 'uses' => $controller.'@store'));

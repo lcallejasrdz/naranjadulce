@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str as Str;
 use Illuminate\Support\Arr;
 use DateTime;
+use DateInterval;
 use App\NDBuy;
 use App\NDBuysOrigin;
 use App\NDCustomerForm;
@@ -16,6 +17,8 @@ use App\NDPackageDetail;
 use App\NDFinance;
 use App\NDSaleDetailView;
 use App\NDReturnReason;
+use App\NDDeliverySchedule;
+use App\NDThemathic;
 
 use Redirect;
 
@@ -88,7 +91,15 @@ class CanastaRosaController extends Controller
         $actions = null;
         $item = null;
 
-        return view('admin.crud.form', compact($this->compact));
+        $nd_themathics_id = NDThemathic::get()->pluck('name', 'id');
+        $nd_delivery_schedules_id = [];
+
+        $now = new DateTime();
+        $current_date = $now->format('d/m/Y');
+        $current_time = $now->format('H:i:s');
+        $current_day = $now->format('l');
+
+        return view('admin.crud.form', compact($this->compact, 'nd_themathics_id', 'nd_delivery_schedules_id', 'current_date', 'current_time', 'current_day'));
     }
 
     /**
@@ -101,7 +112,9 @@ class CanastaRosaController extends Controller
     {
         if($request->nd_buys_id == 0){
             /* Slug */
-            $slug = Str::slug($request->_token);
+            $now = new DateTime();
+            $current_date = $now->format('YmdHis');
+            $slug = Str::slug($current_date.$request->_token.rand(1000,9999));
 
             $item = NDBuy::create([
                         'slug' => $slug,
@@ -131,7 +144,7 @@ class CanastaRosaController extends Controller
                 'address_references' => '',
                 'nd_parkings_id' => 1,
                 'package' => '',
-                'nd_themathics_id' => 1,
+                'nd_themathics_id' => $request->nd_themathics_id,
                 'modifications' => '',
                 'observations' => '',
                 'nd_contact_means_id' => 5,
@@ -147,15 +160,15 @@ class CanastaRosaController extends Controller
                 'who_receives' => $request->who_receives,
                 'dedication' => $request->dedication,
                 'delivery_date' => $delivery_date,
-                'nd_delivery_schedules_id' => 3,
+                'nd_delivery_schedules_id' => $request->nd_delivery_schedules_id,
             ]);
 
             NDSale::create([
                 'nd_buys_id' => $item->id,
                 'nd_delivery_types_id' => 2,
-                'preferential_schedule' => $request->preferential_schedule,
+                'preferential_schedule' => '',
                 'observations_finances' => '',
-                'observations_buildings' => '',
+                'observations_buildings' => $request->observations_buildings,
                 'observations_shippings' => '',
                 'proof_of_payment' => '',
             ]);
@@ -186,12 +199,14 @@ class CanastaRosaController extends Controller
             }
         }else{
             $buy = NDBuy::find($request->nd_buys_id);
+            $sale = NDSale::where('nd_buys_id', $buy->id)->first();
             $item = NDPackageDetail::where('nd_buys_id', $buy->id)->first();
 
             $item->modifications = $request->modifications;
+            $sale->observations_buildings = $request->observations_buildings;
             $buy->nd_status_id = 3;
 
-            if($item->save() && $buy->save()){
+            if($item->save() && $sale->save() && $buy->save()){
                 NDReturnReason::destroy(NDReturnReason::where('nd_buys_id', $request->nd_buys_id)->first()->id);
 
                 return Redirect::route('sales')->with('success', trans('crud.canastarosa.message.success'));
@@ -223,8 +238,57 @@ class CanastaRosaController extends Controller
 
         $id = NDBuy::where('slug', $slug)->first()->id;
         $item = NDSaleDetailView::where('slug', $slug)->first();
+        $item->nd_themathics_id = NDThemathic::where('name', $item->nd_themathics_id)->first()->id;
+        $item->nd_delivery_schedules_id = NDDeliverySchedule::where('name', $item->nd_delivery_schedules_id)->first()->id;
         $return_reason = NDReturnReason::where('nd_buys_id', $id)->first()->reason;
 
-        return view('admin.crud.form', compact($this->compact, 'return_reason'));
+        $nd_themathics_id = NDThemathic::get()->pluck('name', 'id');
+        $nd_delivery_schedules_id = NDDeliverySchedule::whereIn('id', [1,2])->get()->pluck('name', 'id');
+
+        $now = new DateTime();
+        $current_date = $now->format('d/m/Y');
+        $current_time = $now->format('H:i:s');
+        $current_day = $now->format('l');
+
+        return view('admin.crud.form', compact($this->compact, 'return_reason', 'nd_themathics_id', 'nd_delivery_schedules_id', 'current_date', 'current_time', 'current_day'));
+    }
+
+    public function getSchedules(Request $request, $day, $month, $year)
+    {
+        if($request->ajax()){
+            $request_date = new DateTime($year.'-'.$month.'-'.$day);
+            $selected_date = $request_date->format('Y-m-d H:i:s');
+            $selected_day = $request_date->format('l');
+            $selected_date = strtotime($selected_date);
+
+            $now = new DateTime();
+            $current_date = $now->format('Y-m-d H:i:s');
+            $current_time = $now->format('H:i:s');
+            $current_day = $now->format('l');
+            $current_date = strtotime($current_date);
+
+            $now->add(new DateInterval('P1D'));
+            $tomorrow_date = $now->format('Y-m-d H:i:s');
+            $tomorrow_date = strtotime($tomorrow_date);
+
+            // Si estoy pidiendo para hoy
+            if($selected_date <= $current_date){
+                $catalog_schedules = NDDeliverySchedule::whereIn('id', [2])->get();
+            // Si estoy pidiendo para mañana
+            }else if($selected_date <= $tomorrow_date){
+                // Si es antes de las 7:00
+                if($current_time <= '18:59:59'){
+                    $catalog_schedules = NDDeliverySchedule::whereIn('id', [1,2])->get();
+                // Si es después de las 7:00
+                }else{
+                    $catalog_schedules = NDDeliverySchedule::whereIn('id', [2])->get();
+                }
+            // Si estoy pidiendo para después de mañana
+            }else{
+                $catalog_schedules = NDDeliverySchedule::whereIn('id', [1,2])->get();
+            }
+
+            return response()->json($catalog_schedules);
+        }
     }
 }

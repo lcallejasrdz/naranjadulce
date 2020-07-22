@@ -81,14 +81,64 @@
         <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script>
+            var currentDate = "{{ $current_date }}";
+            var currentDay = "{{ $current_day }}";
+            var currentTime = "{{ $current_time }}";
+
             $(function(){
-                $("#datepicker").datepicker({
-                    showOtherMonths: true,
-                    selectOtherMonths: true,
-                    dateFormat: "dd/mm/yy",
-                    minDate: 0,
-                });
+                if(currentTime >= '13:00:00'){
+                    $("#datepicker").datepicker({
+                        showOtherMonths: true,
+                        selectOtherMonths: true,
+                        dateFormat: "dd/mm/yy",
+                        minDate: 1,
+                        beforeShowDay: noSundays,
+                        onSelect: function(dateText) {
+                            getSchedules(dateText);
+                        }
+                    });
+                }else{
+                    $("#datepicker").datepicker({
+                        showOtherMonths: true,
+                        selectOtherMonths: true,
+                        dateFormat: "dd/mm/yy",
+                        minDate: 0,
+                        beforeShowDay: noSundays,
+                        onSelect: function(dateText) {
+                            getSchedules(dateText);
+                        }
+                    });
+                }
             });
+
+            function noSundays(date){
+                if (date.getDay() === 0)  /* Monday */
+                    return [ false, "closed", "Closed on Monday" ]
+                else
+                    return [ true, "", "" ]
+            }
+
+            function getSchedules(value){
+                if(value == '' || value == null)
+                {
+                    $( "#nd_delivery_schedules_id" ).find("option:gt(0)").remove();
+                }
+                else
+                {
+                    $.get(direction+"/canastarosa/datepicker/"+value, function(response, value){
+                        $( "#nd_delivery_schedules_id" ).find("option:gt(0)").remove();
+                        for(i=0; i<response.length; i++){
+                            $( "#nd_delivery_schedules_id" ).append("<option value='"+ response[i].id +"'>"+ response[i].name +"</option>");
+                        }
+                    });
+                }
+            }
+
+            @if(!isset($item))
+                $(document).ready(function() {
+                    getSchedules($( "#datepicker" ).val());
+                });
+            @endif
         </script>
     @endif
 @endsection

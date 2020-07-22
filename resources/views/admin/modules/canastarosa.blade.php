@@ -43,6 +43,35 @@
 	@enderror
 </div>
 
+@if(isset($item))
+	<div class="form-group">
+		<label for="nd_themathics_id">{{ ucfirst(trans('validation.attributes.nd_themathics_id')) }} *</label>
+	    <select class="form-control @error('nd_themathics_id') is-invalid @enderror" id="nd_themathics_id" disabled>
+	        <option selected disabled>{{ ucfirst(trans('validation.attributes.nd_themathics_id')) }} *</option>
+	        @foreach($nd_themathics_id as $key => $value)
+	            <option value="{{ $key }}" @if(isset($item)){{ $item->nd_themathics_id == $key ? 'selected' : '' }}@else{{ old('nd_themathics_id') == $key ? 'selected' : '' }}@endif>{{ $value }}</option>
+	        @endforeach
+	    </select>
+	    @error('nd_delivery_schedules_id')
+	        <div class="alert alert-danger">{{ $message }}</div>
+	    @enderror
+	</div>
+	<input type="hidden" value="{{ $item->nd_themathics_id }}" name="nd_themathics_id">
+@else
+	<div class="form-group">
+		<label for="nd_themathics_id">{{ ucfirst(trans('validation.attributes.nd_themathics_id')) }} *</label>
+	    <select class="form-control @error('nd_themathics_id') is-invalid @enderror" id="nd_themathics_id" name="nd_themathics_id">
+	        <option selected disabled>{{ ucfirst(trans('validation.attributes.nd_themathics_id')) }} *</option>
+	        @foreach($nd_themathics_id as $key => $value)
+	            <option value="{{ $key }}">{{ $value }}</option>
+	        @endforeach
+	    </select>
+	    @error('nd_delivery_schedules_id')
+	        <div class="alert alert-danger">{{ $message }}</div>
+	    @enderror
+	</div>
+@endif
+
 <div class="form-group">
 	<label for="modifications">{{ ucfirst(trans('validation.attributes.modifications')) }} *</label>
 	<textarea class="form-control form-control-user @error('modifications') is-invalid @enderror" id="modifications" name="modifications" placeholder="{{ ucfirst(trans('validation.attributes.modifications')) }}">{{ old('modifications') }}</textarea>
@@ -83,10 +112,39 @@
 	@enderror
 </div>
 
+@if(isset($item))
+	<div class="form-group">
+		<label for="nd_delivery_schedules_id">{{ ucfirst(trans('validation.attributes.nd_delivery_schedules_id')) }} *</label>
+	    <select class="form-control @error('nd_delivery_schedules_id') is-invalid @enderror" id="nd_delivery_schedules_id" disabled>
+	        <option selected disabled>{{ ucfirst(trans('validation.attributes.nd_delivery_schedules_id')) }} *</option>
+	        @foreach($nd_delivery_schedules_id as $key => $value)
+	            <option value="{{ $key }}" @if(isset($item)){{ $item->nd_delivery_schedules_id == $key ? 'selected' : '' }}@else{{ old('nd_delivery_schedules_id') == $key ? 'selected' : '' }}@endif>{{ $value }}</option>
+	        @endforeach
+	    </select>
+	    @error('nd_delivery_schedules_id')
+	        <div class="alert alert-danger">{{ $message }}</div>
+	    @enderror
+	</div>
+	<input type="hidden" value="{{ $item->nd_delivery_schedules_id }}" name="nd_delivery_schedules_id">
+@else
+	<div class="form-group">
+		<label for="nd_delivery_schedules_id">{{ ucfirst(trans('validation.attributes.nd_delivery_schedules_id')) }} *</label>
+	    <select class="form-control @error('nd_delivery_schedules_id') is-invalid @enderror" id="nd_delivery_schedules_id" name="nd_delivery_schedules_id">
+	        <option selected disabled>{{ ucfirst(trans('validation.attributes.nd_delivery_schedules_id')) }} *</option>
+	        @foreach($nd_delivery_schedules_id as $key => $value)
+	            <option value="{{ $key }}"{{ old('nd_delivery_schedules_id') == $key ? 'selected' : '' }}>{{ $value }}</option>
+	        @endforeach
+	    </select>
+	    @error('nd_delivery_schedules_id')
+	        <div class="alert alert-danger">{{ $message }}</div>
+	    @enderror
+	</div>
+@endif
+
 <div class="form-group">
-	<label for="preferential_schedule">{{ ucfirst(trans('validation.attributes.preferential_schedule')) }} *</label>
-	<input type="text" class="form-control @error('preferential_schedule') is-invalid @enderror" id="preferential_schedule" name="preferential_schedule" value="@if(isset($item)){{ $item->preferential_schedule }}@else{{ old('preferential_schedule') }}@endif" @if(isset($item)){{ 'readonly' }}@endif>
-	@error('preferential_schedule')
+	<label for="observations_buildings">{{ ucfirst(trans('validation.attributes.observations_buildings')) }} *</label>
+	<textarea class="form-control form-control-user @error('observations_buildings') is-invalid @enderror" id="observations_buildings" name="observations_buildings" placeholder="{{ ucfirst(trans('validation.attributes.observations_buildings')) }}">{{ old('observations_buildings') }}</textarea>
+	@error('observations_buildings')
 	    <div class="alert alert-danger">{{ $message }}</div>
 	@enderror
 </div>

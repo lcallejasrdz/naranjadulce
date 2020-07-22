@@ -324,10 +324,12 @@ class ObjectsDusk extends DuskTestCase
             'who_sends' => 'John Connor',
             'who_receives' => 'Karen Zavala',
             'dedication' => 'Por la amistad',
-            'preferential_schedule' => '23:59',
+            'nd_delivery_schedules_id' => 1,
             'quantity' => 3,
             'package' => 'Paquete ejemplo para test',
+            'nd_themathics_id' => 3,
             'modifications' => 'Sin modificaciones',
+            'observations_buildings' => 'Sin observaciones para producción',
         ];
 
         return $canastarosa;
@@ -365,7 +367,7 @@ class ObjectsDusk extends DuskTestCase
             'address_references' => '',
             'nd_parkings_id' => 1,
             'package' => '',
-            'nd_themathics_id' => 1,
+            'nd_themathics_id' => $buy['nd_themathics_id'],
             'modifications' => '',
             'observations' => '',
             'nd_contact_means_id' => 5,
@@ -381,15 +383,15 @@ class ObjectsDusk extends DuskTestCase
             'who_receives' => $buy['who_receives'],
             'dedication' => $buy['dedication'],
             'delivery_date' => $delivery_date,
-            'nd_delivery_schedules_id' => 3,
+            'nd_delivery_schedules_id' => $buy['nd_delivery_schedules_id'],
         ]);
 
         NDSale::create([
             'nd_buys_id' => $item->id,
             'nd_delivery_types_id' => 2,
-            'preferential_schedule' => $buy['preferential_schedule'],
+            'preferential_schedule' => '',
             'observations_finances' => '',
-            'observations_buildings' => '',
+            'observations_buildings' => $buy['observations_buildings'],
             'observations_shippings' => '',
             'proof_of_payment' => '',
         ]);

@@ -35,12 +35,14 @@ class CanastaRosaRequest extends FormRequest
                     'origins_code' => 'required|min:3|max:255',
                     'quantity' => 'required|numeric',
                     'package' => 'required|min:3|max:255',
+                    'nd_themathics_id' => 'required',
                     'modifications' => 'required|min:3|max:1000',
                     'who_sends' => 'required|min:3|max:255',
                     'who_receives' => 'required|min:3|max:255',
                     'dedication' => 'required|min:3|max:1000',
                     'delivery_date' => 'required|min:3|max:255',
-                    'preferential_schedule' => 'required|min:3|max:255',
+                    'nd_delivery_schedules_id' => 'required',
+                    'observations_buildings' => 'required|min:3|max:1000',
                 ];
             }
             case 'PUT': {
