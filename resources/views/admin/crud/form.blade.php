@@ -86,7 +86,7 @@
             var currentTime = "{{ $current_time }}";
 
             $(function(){
-                if(currentTime >= '13:00:00'){
+                if(currentTime >= '12:00:00'){
                     $("#datepicker").datepicker({
                         showOtherMonths: true,
                         selectOtherMonths: true,

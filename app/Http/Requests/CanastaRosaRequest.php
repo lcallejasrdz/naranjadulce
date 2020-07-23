@@ -37,7 +37,7 @@ class CanastaRosaRequest extends FormRequest
                     'package' => 'required|min:3|max:255',
                     'nd_themathics_id' => 'required',
                     'modifications' => 'required|min:3|max:1000',
-                    'who_sends' => 'required|min:3|max:255',
+                    'who_sends' => 'nullable|min:3|max:255',
                     'who_receives' => 'required|min:3|max:255',
                     'dedication' => 'required|min:3|max:1000',
                     'delivery_date' => 'required|min:3|max:255',

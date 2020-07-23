@@ -81,7 +81,7 @@
 </div>
 
 <div class="form-group">
-	<label for="who_sends">{{ ucfirst(trans('validation.attributes.who_sends')) }} *</label>
+	<label for="who_sends">{{ ucfirst(trans('validation.attributes.who_sends')) }}</label>
 	<input type="text" class="form-control @error('who_sends') is-invalid @enderror" id="who_sends" name="who_sends" value="@if(isset($item)){{ $item->who_sends }}@else{{ old('who_sends') }}@endif" @if(isset($item)){{ 'readonly' }}@endif>
 	@error('who_sends')
 	    <div class="alert alert-danger">{{ $message }}</div>
