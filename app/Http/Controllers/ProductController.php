@@ -10,6 +10,7 @@ use DateTime;
 use Redirect;
 use App\NDProduct;
 use App\NDInventoryProduct;
+use App\NDProductDetailView;
 
 class ProductController extends Controller
 {
@@ -119,6 +120,42 @@ class ProductController extends Controller
             $item->forceDelete();
             return Redirect::back()->with('error', trans('crud.create.message.error'));
         }
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($slug)
+    {
+        $view = 'show';
+
+        $active = $this->active;
+        $word = $this->word;
+        $model = null;
+        $select = null;
+        $columns = null;
+        $actions = null;
+        
+        $item = NDProductDetailView::where('slug', $slug)
+                ->select(
+                    'id',
+                    'slug',
+                    'code',
+                    'category',
+                    'type',
+                    'product_name',
+                    'supplier',
+                    'brand',
+                    'price',
+                    'quantity',
+                )
+                ->first();
+        $item = $item ? $item->toArray() : array();
+
+        return view('admin.crud.show', compact($this->compact, 'item'));
     }
 
     /**
