@@ -104,23 +104,15 @@
 			</div>
 		</div>
 	</li>
-	{{-- Almacén --}}
+@endif
+@if(Sentinel::getUser()->role_id == 1)
+	{{-- Users --}}
 	@php
-	    $route_module = '';
+	    $route_module = 'products';
 	@endphp
 	<!-- Nav Item - Pages Collapse Menu -->
-	<li class="nav-item">
-		<a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseAlmacen" aria-expanded="true" aria-controls="collapseAlmacen">
-			<i class="fas fa-fw fa-warehouse"></i>
-			<span>Almacén</span>
-		</a>
-		<div id="collapseAlmacen" class="collapse" aria-labelledby="heading" data-parent="#accordionSidebar">
-			<div class="bg-white py-2 collapse-inner rounded">
-				<h6 class="collapse-header">{{ trans('crud.manage') }} almacén:</h6>
-				<a class="collapse-item" href="#">{{ trans('crud.sidebar.list') }}</a>
-			</div>
-		</div>
-	</li>
+	@include('admin.layouts.sections.sidebar_module_template')
+
 	{{-- Paquetes --}}
 	@php
 	    $route_module = '';

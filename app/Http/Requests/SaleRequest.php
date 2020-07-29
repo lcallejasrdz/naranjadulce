@@ -32,7 +32,7 @@ class SaleRequest extends FormRequest
             }
             case 'POST': {
                 return [
-                    'quantity' => 'required|numeric',
+                    'quantity' => 'required|integer',
                     'package' => 'required|min:3|max:255',
                     'modifications' => 'required|min:3|max:1000',
                     'nd_delivery_types_id' => 'required',

@@ -58,7 +58,7 @@ return [
     'image'    => ':attribute debe ser una imagen.',
     'in'       => ':attribute es inválido.',
     'in_array' => 'El campo :attribute no existe en :other.',
-    'integer'  => ':attribute debe ser un número entero.',
+    'integer'  => 'El campo :attribute debe ser un número entero.',
     'ip'       => ':attribute debe ser una dirección IP válida.',
     'ipv4'     => ':attribute debe ser un dirección IPv4 válida',
     'ipv6'     => ':attribute debe ser un dirección IPv6 válida.',
@@ -274,5 +274,13 @@ return [
         // Canasta Rosa
         'nd_origins_id'         => 'origen',
         'origins_code'          => 'código de tienda',
+
+        // Products
+        'code'                  => 'código',
+        'category'              => 'categoría',
+        'product_name'          => 'producto',
+        'type'                  => 'tipo',
+        'supplier'              => 'proveedor',
+        'brand'                 => 'marca',
     ],
 ];

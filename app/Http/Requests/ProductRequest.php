@@ -32,13 +32,18 @@ class ProductRequest extends FormRequest
             }
             case 'POST': {
                 return [
-                    'name' => 'required|min:3|max:255',
+                    'code' => 'required|min:3|max:255',
+                    'category' => 'required|min:3|max:255',
+                    'type' => 'nullable|min:3|max:255',
+                    'product_name' => 'required|min:3|max:255',
+                    'supplier' => 'nullable|min:3|max:255',
+                    'brand' => 'nullable|min:3|max:255',
+                    'price' => 'required|numeric',
+                    'quantity' => 'required|integer',
                 ];
             }
             case 'PUT': {
-                return [
-                    'name' => 'required|min:3|max:255',
-                ];
+                return [];
             }
             case 'PATCH': {
                 return [];

@@ -30,8 +30,10 @@
 @endsection
 
 @section('modals')
-    @include('admin.layouts.modals.delete_modal')
-    @include('admin.layouts.modals.restore_modal')
+    @if($view == 'users' || $view == 'products')
+        @include('admin.layouts.modals.delete_modal')
+        @include('admin.layouts.modals.restore_modal')
+    @endif
 @endsection
 
 @section('scripts')

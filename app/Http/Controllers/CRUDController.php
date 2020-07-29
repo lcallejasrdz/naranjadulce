@@ -12,17 +12,17 @@ class CRUDController extends Controller
     {
         // General
         $this->active = explode('.',\Request::route()->getName())[0];
-        if($this->active = 'users'){
+        if($this->active == 'users'){
             $this->middleware('moduleUsers');
-        }else if($this->active = 'sales'){
+        }else if($this->active == 'sales'){
             $this->middleware('moduleSales');
-        }else if($this->active = 'finances'){
+        }else if($this->active == 'finances'){
             $this->middleware('moduleFinances');
-        }else if($this->active = 'buildings'){
+        }else if($this->active == 'buildings'){
             $this->middleware('moduleBuildings');
-        }else if($this->active = 'shippings'){
+        }else if($this->active == 'shippings'){
             $this->middleware('moduleShippings');
-        }else if($this->active = 'deliveries'){
+        }else if($this->active == 'deliveries'){
             $this->middleware('moduleDeliveries');
         }
 
