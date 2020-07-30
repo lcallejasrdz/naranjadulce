@@ -16,7 +16,7 @@ class ProductController extends Controller
 {
     public function __construct()
     {
-        // $this->middleware('moduleProduct');
+        $this->middleware('moduleProducts');
         
         // General
         $this->active = explode('.',\Request::route()->getName())[0];
