@@ -40,6 +40,9 @@ class ProductController extends Controller
         // Create
         $this->create_word = trans('module_'.$this->active.'.controller.create_word');
 
+        // Create
+        $this->edit_word = trans('module_'.$this->active.'.controller.edit_word');
+
         // Final compact
         $this->compact = ['view', 'active', 'word', 'model', 'select', 'columns', 'actions', 'item'];
     }
@@ -159,6 +162,41 @@ class ProductController extends Controller
     }
 
     /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $view = 'edit';
+
+        $active = $this->active;
+        $word = $this->edit_word;
+        $model = null;
+        $select = null;
+        $columns = null;
+        $actions = null;
+        
+        $item = NDProductDetailView::where('id', $id)
+                ->select(
+                    'id',
+                    'slug',
+                    'code',
+                    'category',
+                    'type',
+                    'product_name',
+                    'supplier',
+                    'brand',
+                    'price',
+                    'quantity',
+                )
+                ->first();
+
+        return view('admin.crud.form', compact($this->compact, 'item'));
+    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -167,14 +205,41 @@ class ProductController extends Controller
      */
     public function update(MasterRequest $request, $id)
     {
-        $item = $this->full_model::find($id);
+        $item = NDProduct::find($id);
 
-        $item->fill($request->only($this->create_fields));
+        $item->code = $request->code;
+        $item->category = $request->category;
+        $item->type = $request->type;
+        $item->product_name = $request->product_name;
+        $item->supplier = $request->supplier;
+        $item->brand = $request->brand;
+        $item->price = $request->price;
 
-        /* Slug */
-        $item->slug = Str::slug($item->name.' '.$item->id);
+        $count = NDInventoryProduct::where('nd_products_id', $item->id)->count();
 
-        if($item->save()){
+        if($request->income == '' && $request->outcome == ''){
+            $count -= 1;
+        }else{
+            if($request->income == ''){
+                $income = 0;
+            }else{
+                $income = $request->income;
+            }
+
+            if($request->outcome == ''){
+                $outcome = 0;
+            }else{
+                $outcome = $request->outcome;
+            }
+            
+            NDInventoryProduct::create([
+                'nd_products_id' => $item->id,
+                'income' => $income,
+                'outcome' => $outcome,
+            ]);
+        }
+
+        if($item->save() && NDInventoryProduct::where('nd_products_id', $item->id)->count() > $count){
             return Redirect::route($this->active.'.edit', $item->id)->with('success', trans('crud.update.message.success'));
         }else{
             return Redirect::back()->with('error', trans('crud.update.message.error'));

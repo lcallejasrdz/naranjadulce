@@ -16,8 +16,8 @@ class CreateNDInventoryProductsTable extends Migration
         Schema::create('nd_inventory_products', function (Blueprint $table) {
             $table->id();
             $table->foreignId('nd_products_id');
-            $table->integer('income');
-            $table->integer('outcome');
+            $table->integer('income')->default(0);
+            $table->integer('outcome')->default(0);
             $table->timestamps();
             $table->softDeletes();
 

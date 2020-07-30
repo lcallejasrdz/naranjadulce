@@ -282,5 +282,7 @@ return [
         'type'                  => 'tipo',
         'supplier'              => 'proveedor',
         'brand'                 => 'marca',
+        'income'                => 'agregar producto +',
+        'outcome'               => 'restar producto -',
     ],
 ];

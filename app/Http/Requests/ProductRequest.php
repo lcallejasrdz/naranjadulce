@@ -43,7 +43,18 @@ class ProductRequest extends FormRequest
                 ];
             }
             case 'PUT': {
-                return [];
+                return [
+                    'code' => 'required|min:3|max:255',
+                    'category' => 'required|min:3|max:255',
+                    'type' => 'nullable|min:3|max:255',
+                    'product_name' => 'required|min:3|max:255',
+                    'supplier' => 'nullable|min:3|max:255',
+                    'brand' => 'nullable|min:3|max:255',
+                    'price' => 'required|numeric',
+                    'quantity' => 'required|integer',
+                    'income' => 'nullable|integer',
+                    'outcome' => 'nullable|integer|lte:quantity',
+                ];
             }
             case 'PATCH': {
                 return [];
