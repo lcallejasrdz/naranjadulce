@@ -26,7 +26,6 @@ class CreateNDProductListViewsTable extends Migration
                     nd_products.deleted_at
 
                 FROM `nd_products`
-                    JOIN nd_inventory_products ON nd_inventory_products.nd_products_id = nd_products.id
 
                 WHERE nd_products.deleted_at IS NULL
         ");

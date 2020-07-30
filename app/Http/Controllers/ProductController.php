@@ -231,7 +231,7 @@ class ProductController extends Controller
             }else{
                 $outcome = $request->outcome;
             }
-            
+
             NDInventoryProduct::create([
                 'nd_products_id' => $item->id,
                 'income' => $income,
@@ -243,6 +243,21 @@ class ProductController extends Controller
             return Redirect::route($this->active.'.edit', $item->id)->with('success', trans('crud.update.message.success'));
         }else{
             return Redirect::back()->with('error', trans('crud.update.message.error'));
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Request $request)
+    {
+        if(NDProduct::destroy($request->id)){
+            return Redirect::route($this->active)->with('success', trans('crud.delete.message.success'));
+        }else{
+            return Redirect::back()->with('danger', trans('crud.delete.message.error'));
         }
     }
 }
