@@ -66,7 +66,7 @@
 	            <option value="{{ $key }}">{{ $value }}</option>
 	        @endforeach
 	    </select>
-	    @error('nd_delivery_schedules_id')
+	    @error('nd_themathics_id')
 	        <div class="alert alert-danger">{{ $message }}</div>
 	    @enderror
 	</div>
@@ -112,7 +112,7 @@
 	@enderror
 </div>
 
-@if(isset($item))
+{{-- @if(isset($item))
 	<div class="form-group">
 		<label for="nd_delivery_schedules_id">{{ ucfirst(trans('validation.attributes.nd_delivery_schedules_id')) }} *</label>
 	    <select class="form-control @error('nd_delivery_schedules_id') is-invalid @enderror" id="nd_delivery_schedules_id" disabled>
@@ -139,7 +139,7 @@
 	        <div class="alert alert-danger">{{ $message }}</div>
 	    @enderror
 	</div>
-@endif
+@endif --}}
 
 <div class="form-group">
 	<label for="observations_buildings">{{ ucfirst(trans('validation.attributes.observations_buildings')) }} *</label>

@@ -317,6 +317,9 @@ class SaleController extends Controller
                     'nd_status_id',
                 )
                 ->first();
+        if($item->nd_origins_id == 'CR'){
+            $item->nd_delivery_schedules_id = '';
+        }
         $item = $item ? $item->toArray() : array();
 
         return view('admin.crud.show', compact($this->compact));

@@ -160,7 +160,7 @@ class CanastaRosaController extends Controller
                 'who_receives' => $request->who_receives,
                 'dedication' => $request->dedication,
                 'delivery_date' => $delivery_date,
-                'nd_delivery_schedules_id' => $request->nd_delivery_schedules_id,
+                'nd_delivery_schedules_id' => 3,
             ]);
 
             NDSale::create([
@@ -239,7 +239,9 @@ class CanastaRosaController extends Controller
         $id = NDBuy::where('slug', $slug)->first()->id;
         $item = NDSaleDetailView::where('slug', $slug)->first();
         $item->nd_themathics_id = NDThemathic::where('name', $item->nd_themathics_id)->first()->id;
-        $item->nd_delivery_schedules_id = NDDeliverySchedule::where('name', $item->nd_delivery_schedules_id)->first()->id;
+        // if($item->nd_delivery_schedules_id > 0){
+        //     $item->nd_delivery_schedules_id = NDDeliverySchedule::where('name', $item->nd_delivery_schedules_id)->first()->id;
+        // }
         $return_reason = NDReturnReason::where('nd_buys_id', $id)->first()->reason;
 
         $nd_themathics_id = NDThemathic::get()->pluck('name', 'id');

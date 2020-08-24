@@ -41,7 +41,7 @@ class CanastaRosaRequest extends FormRequest
                     'who_receives' => 'required|min:3|max:255',
                     'dedication' => 'required|min:3|max:1000',
                     'delivery_date' => 'required|min:3|max:255',
-                    'nd_delivery_schedules_id' => 'required',
+                    // 'nd_delivery_schedules_id' => 'required',
                     'observations_buildings' => 'required|min:3|max:1000',
                 ];
             }
