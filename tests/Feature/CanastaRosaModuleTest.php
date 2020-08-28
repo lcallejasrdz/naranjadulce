@@ -267,7 +267,7 @@ class CanastaRosaModuleTest extends TestCase
             'who_sends' => 'John Connor',
             'who_receives' => 'Karen Zavala',
             'dedication' => 'Por la amistad',
-            'nd_delivery_schedules_id' => 1,
+            'nd_delivery_schedules_id' => 3,
             'quantity' => 3,
             'package' => 'Paquete ejemplo para test',
             'nd_themathics_id' => 3,
