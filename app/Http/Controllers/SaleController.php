@@ -260,6 +260,26 @@ class SaleController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function finishedCR()
+    {
+        $view = 'finishedcr';
+
+        $active = $this->active;
+        $word = $this->word;
+        $model = trans('module_buys.controller.model');
+        $select = $this->select;
+        $columns = $this->columns;
+        $actions = $this->actions;
+        $item = null;
+
+        return view('admin.crud.list', compact($this->compact));
+    }
+
+    /**
      * Display the specified resource.
      *
      * @param  int  $id

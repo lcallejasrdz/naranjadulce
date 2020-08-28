@@ -62,6 +62,13 @@ class DataTablesController extends Controller
             $table = Datatables::of($rows)
                 ->editColumn('created_at', '{!! \Carbon\Carbon::parse($created_at)->diffForHumans() !!}')
                 ->editColumn('delivery_date', '{!! \Carbon\Carbon::parse($delivery_date)->format("d/m/Y") !!}');
+        }else if($view == 'buildingcrfinished'){
+            $full_model = 'App\\NDBuildingCRFinishedListView';
+            $rows = $full_model::get();
+            
+            $table = Datatables::of($rows)
+                ->editColumn('created_at', '{!! \Carbon\Carbon::parse($created_at)->diffForHumans() !!}')
+                ->editColumn('delivery_date', '{!! \Carbon\Carbon::parse($delivery_date)->format("d/m/Y") !!}');
         }else if($view == 'shippings'){
             $full_model = 'App\\NDShippingListView';
             $rows = $full_model::get();
@@ -92,6 +99,13 @@ class DataTablesController extends Controller
                 ->editColumn('delivery_date', '{!! \Carbon\Carbon::parse($delivery_date)->format("d/m/Y") !!}');
         }else if($view == 'finished'){
             $full_model = 'App\\NDSaleFinishedListView';
+            $rows = $full_model::get();
+            
+            $table = Datatables::of($rows)
+                ->editColumn('created_at', '{!! \Carbon\Carbon::parse($created_at)->diffForHumans() !!}')
+                ->editColumn('delivery_date', '{!! \Carbon\Carbon::parse($delivery_date)->format("d/m/Y") !!}');
+        }else if($view == 'finishedcr'){
+            $full_model = 'App\\NDSaleCRFinishedListView';
             $rows = $full_model::get();
             
             $table = Datatables::of($rows)
@@ -162,7 +176,7 @@ class DataTablesController extends Controller
                 }else if($view == 'deliveries'){
                     $actions = '';
                     $actions .= ' <a href="'. route($active.'.create', $row->slug) .'" class="btn btn-success btn-circle btn-sm"><i class="fas fa-edit"></i></a>';
-                }else if($view == 'finished' || $view == 'financefinished' || $view == 'buildingfinished' || $view == 'shippingfinished' || $view == 'deliveryfinished'){
+                }else if($view == 'finished' || $view == 'finishedcr' || $view == 'financefinished' || $view == 'buildingfinished' || $view == 'buildingcrfinished' || $view == 'shippingfinished' || $view == 'deliveryfinished'){
                     $actions = '';
                     $actions .= ' <a href="'. route($active.'.show', $row->slug) .'" class="btn btn-success btn-circle btn-sm"><i class="fas fa-edit"></i></a>';
                 }else{
