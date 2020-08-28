@@ -273,7 +273,7 @@ return [
 
         // Canasta Rosa
         'nd_origins_id'         => 'origen',
-        'origins_code'          => 'código de tienda',
+        'origins_code'          => 'CR',
 
         // Products
         'code'                  => 'código',
