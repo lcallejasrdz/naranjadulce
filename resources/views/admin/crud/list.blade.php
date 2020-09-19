@@ -30,7 +30,7 @@
 @endsection
 
 @section('modals')
-    @if($view == 'index' || $view == 'deleted' || $view == 'products')
+    @if($view == 'index' || $view == 'deleted' || $view == 'products' || $view == 'packages')
         @include('admin.layouts.modals.delete_modal')
         @include('admin.layouts.modals.restore_modal')
     @endif

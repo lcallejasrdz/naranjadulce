@@ -117,19 +117,8 @@
 
 	{{-- Paquetes --}}
 	@php
-	    $route_module = '';
+	    $route_module = 'packages';
 	@endphp
 	<!-- Nav Item - Pages Collapse Menu -->
-	<li class="nav-item">
-		<a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePaquetes" aria-expanded="true" aria-controls="collapsePaquetes">
-			<i class="fas fa-fw fa-box-open"></i>
-			<span>Paquetes</span>
-		</a>
-		<div id="collapsePaquetes" class="collapse" aria-labelledby="heading" data-parent="#accordionSidebar">
-			<div class="bg-white py-2 collapse-inner rounded">
-				<h6 class="collapse-header">{{ trans('crud.manage') }} paquetes:</h6>
-				<a class="collapse-item" href="#">{{ trans('crud.sidebar.list') }}</a>
-			</div>
-		</div>
-	</li>
+	@include('admin.layouts.sections.sidebar_module_template')
 @endif

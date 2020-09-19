@@ -19,7 +19,7 @@
                     <tbody>
                         @foreach($item as $column => $value)
                             @if($column != 'status_id' && $column != 'slug' && $value != '')
-                                @if($column == 'id' && $active != 'products')
+                                @if($column == 'id' && $active != 'products' && $active != 'packages')
                                     <tr>
                                         <th colspan="2" class="text-center">{{ ucfirst(trans('module_buys.sidebar.route_title_singular')) }}</th>
                                     </tr>

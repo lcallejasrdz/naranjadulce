@@ -31,7 +31,7 @@
             @endif
                 @include('admin.modules.'.$active)
                 
-                @if($active == 'users' || $active == 'products')
+                @if($active == 'users' || $active == 'products' || $active == 'packages')
                     <input type="submit" class="btn {{ (isset($item) ? 'btn-success' : 'btn-primary') }}" value="{{ (isset($item) ? trans('crud.update.update') : trans('crud.create.add'))  }}">
                 @elseif($active == 'sales' && ($item->status_id == 1 || $item->status_id == 8))
                     <input type="submit" class="btn btn-primary" value="{{ trans('crud.sale.submit') }}">

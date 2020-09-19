@@ -117,6 +117,12 @@ class DataTablesController extends Controller
             
             $table = Datatables::of($rows)
                 ->editColumn('created_at', '{!! \Carbon\Carbon::parse($created_at)->diffForHumans() !!}');
+        }else if($view == 'packages'){
+            $full_model = 'App\\NDPackageListView';
+            $rows = $full_model::get();
+            
+            $table = Datatables::of($rows)
+                ->editColumn('created_at', '{!! \Carbon\Carbon::parse($created_at)->diffForHumans() !!}');
         }else{
             $full_model = 'App\\ViewDeleted'.$request->model;
             $rows = $full_model::data();
@@ -126,7 +132,7 @@ class DataTablesController extends Controller
         }
 
         $table = $table->addColumn('actions', function($row) use ($active, $view, $actions_value){
-                if($view == 'index' || $view == 'products'){
+                if($view == 'index' || $view == 'products' || $view == 'packages'){
                     // 1 = (show, edit, delete)
                     // 2 = (show, edit)
                     // 3 = (show, delete)

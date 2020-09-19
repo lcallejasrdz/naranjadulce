@@ -73,5 +73,6 @@ class Kernel extends HttpKernel
         'moduleDeliveries' => \App\Http\Middleware\ModuleDeliveriesMiddleware::class,
         'moduleCanastaRosa' => \App\Http\Middleware\ModuleCanastaRosaMiddleware::class,
         'moduleProducts' => \App\Http\Middleware\ModuleProductsMiddleware::class,
+        'modulePackages' => \App\Http\Middleware\ModulePackagesMiddleware::class,
     ];
 }
