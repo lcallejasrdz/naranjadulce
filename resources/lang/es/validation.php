@@ -284,5 +284,8 @@ return [
         'brand'                 => 'marca',
         'income'                => 'agregar producto +',
         'outcome'               => 'restar producto -',
+
+        // Packages
+        'nd_products_id'        => 'producto',
     ],
 ];

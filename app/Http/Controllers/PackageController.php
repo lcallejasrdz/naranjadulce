@@ -10,6 +10,7 @@ use DateTime;
 use Redirect;
 use App\NDPackage;
 use App\NDPackageDetailView;
+use App\NDProduct;
 
 class PackageController extends Controller
 {
@@ -83,7 +84,9 @@ class PackageController extends Controller
         $actions = null;
         $item = null;
 
-        return view('admin.crud.form', compact($this->compact));
+        $nd_products_id = NDProduct::get()->pluck('product_name', 'id');
+
+        return view('admin.crud.form', compact($this->compact, 'nd_products_id'));
     }
 
     /**
