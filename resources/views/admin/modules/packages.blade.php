@@ -6,6 +6,8 @@
 	@enderror
 </div>
 
+<hr>
+
 <div class="form-group">
 	<label for="price">{{ ucfirst(trans('validation.attributes.nd_products_id')) }} *</label>
 	<select class="form-control @error('nd_products_id') is-invalid @enderror" id="nd_products_id" name="nd_products_id">
@@ -28,17 +30,20 @@
 </div>
 
 <div class="form-group">
-	<a class="btn btn-warning" href="#" data-toggle="modal" data-target="#returnModal">{{ trans('module_products.controller.create_word') }}</a>
+	<button type="button" class="btn btn-warning" onclick="addProduct()">{{ trans('module_products.controller.create_word') }}</button>
 </div>
+
+<hr>
 
 <div class="form-group">
 	<div class="table">
-		<table class="table">
+		<table class="table" id="productsTable">
 			<thead>
 				<tr>
-					<th>Nombre</th>
+					<th>Producto</th>
 					<th>Precio</th>
 					<th>Cantidad</th>
+					<th>Eliminar</th>
 				</tr>
 			</thead>
 		</table>

@@ -141,4 +141,20 @@
             @endif
         </script>
     @endif
+    @if($active == 'packages')
+        <script>
+            function addProduct(){
+                var product_id = $("#nd_products_id").val();
+                var quantity = $("#quantity").val();
+
+                $.get(direction+"/packages/products/"+product_id, function(product, product_id, quantity){
+                    var price = product[0].price;
+
+                    $('#productsTable tr:last').after('<tr><td>'+ product[0].product_name +'</td><td>'+ product[0].price +'</td><td>'+ quantity +'</td><td>Eliminar</td></tr>');
+
+                    alert(price);
+                });
+            }
+        </script>
+    @endif
 @endsection

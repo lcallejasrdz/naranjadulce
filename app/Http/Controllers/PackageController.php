@@ -11,6 +11,7 @@ use Redirect;
 use App\NDPackage;
 use App\NDPackageDetailView;
 use App\NDProduct;
+use App\NDProductDetailView;
 
 class PackageController extends Controller
 {
@@ -208,6 +209,14 @@ class PackageController extends Controller
             return Redirect::route($this->active)->with('success', trans('crud.delete.message.success'));
         }else{
             return Redirect::back()->with('danger', trans('crud.delete.message.error'));
+        }
+    }
+
+    public function products(Request $request, $id)
+    {
+        if($request->ajax()){
+            $product = NDProductDetailView::where('id', $id)->get();
+            return response()->json($product);
         }
     }
 }

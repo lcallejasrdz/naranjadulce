@@ -146,6 +146,7 @@ Route::group(array('middleware' => 'sentinelAuth'), function () {
 		Route::get('{id}/edit', array('as' => $route.'.edit', 'uses' => $controller.'@edit'));
 		Route::put('{id}/edit', array('as' => $route.'.update', 'uses' => $controller.'@update'));
 		Route::get('{slug}', array('as' => $route.'.show', 'uses' => $controller.'@show'));
+		Route::get('products/{id}', array('as' => $route.'.products', 'uses' => $controller.'@products'));
 	});
 });
 
