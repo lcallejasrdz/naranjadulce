@@ -106,7 +106,7 @@ class PackageController extends Controller
         $item = NDPackage::create([
                     'slug' => $slug,
                     'name' => $request->name,
-                    'price' => $request->price,
+                    'price' => $request->amount,
                 ]);
 
         if(NDPackage::where('id', $item->id)->count() > 0){

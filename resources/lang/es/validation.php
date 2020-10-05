@@ -287,5 +287,7 @@ return [
 
         // Packages
         'nd_products_id'        => 'producto',
+        'products_table'        => 'producto',
+        'amount'                => 'costo total',
     ],
 ];

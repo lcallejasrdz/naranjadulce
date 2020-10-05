@@ -47,5 +47,15 @@
 				</tr>
 			</thead>
 		</table>
+
+		<input type="hidden" id="products_table" name="products_table" value="">
 	</div>
+</div>
+
+<div class="form-group">
+	<label for="amount">{{ ucfirst(trans('validation.attributes.amount')) }}</label>
+	<input type="text" class="form-control @error('amount') is-invalid @enderror" id="amount" name="amount" value="@if(isset($item)){{ $item->amount }}@else{{ 0 }}@endif" disabled>
+	@error('amount')
+	    <div class="alert alert-danger">{{ $message }}</div>
+	@enderror
 </div>

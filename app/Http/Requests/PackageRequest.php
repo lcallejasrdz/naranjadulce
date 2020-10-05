@@ -33,13 +33,13 @@ class PackageRequest extends FormRequest
             case 'POST': {
                 return [
                     'name' => 'required|min:3|max:255',
-                    'price' => 'required|numeric',
+                    'products_table' => 'required',
                 ];
             }
             case 'PUT': {
                 return [
                     'name' => 'required|min:3|max:255',
-                    'price' => 'required|numeric',
+                    'products_table' => 'required',
                 ];
             }
             case 'PATCH': {

@@ -19,6 +19,7 @@ return [
         ],
         'word'                  => $plural_ucfirst,
         'create_word'           => 'Agregar '.$singular_lcfirst,
+        'delete_word'           => 'Eliminar '.$singular_lcfirst,
         'edit_word'             => 'Editar '.$singular_lcfirst,
         'deleted_word'          => $plural_ucfirst.' eliminadas',
     ],

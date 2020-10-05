@@ -145,15 +145,86 @@
         <script>
             function addProduct(){
                 var product_id = $("#nd_products_id").val();
-                var quantity = $("#quantity").val();
 
-                $.get(direction+"/packages/products/"+product_id, function(product, product_id, quantity){
-                    var price = product[0].price;
+                if(product_id != ""){
+                    $.get(direction+"/packages/products/"+product_id, function(product, value){
+                        var price = product[0].price;
+                        var quantity = $("#quantity").val();
 
-                    $('#productsTable tr:last').after('<tr><td>'+ product[0].product_name +'</td><td>'+ product[0].price +'</td><td>'+ quantity +'</td><td>Eliminar</td></tr>');
+                        if((parseFloat(quantity) == parseInt(quantity)) && !isNaN(quantity)){
+                            $("#nd_products_id").val('{{ ucfirst(trans('validation.attributes.nd_products_id')) }} *');
+                            $("#quantity").val('');
 
-                    alert(price);
-                });
+                            var productsTable = $('#products_table').val();
+
+                            if(productsTable == ''){
+                                $('#products_table').val(product[0].id);
+
+                                $('#productsTable tr:last').after('<tr><td><input type="hidden" name="products[]" value="'+ product[0].id +'">'+ product[0].product_name +'</td><td><input type="hidden" name="prices[]" value="'+ product[0].price +'">'+ product[0].price +'</td><td><input type="hidden" name="quantities[]" value="'+ quantity +'">'+ quantity +'</td><td><input type="hidden" name="costs[]" value="'+ (product[0].price * quantity) +'"><button type="button" class="btn btn-danger" onclick="deleteProduct(' + product[0].id +', this, '+ product[0].price +', '+ quantity +')">{{ trans('module_products.controller.delete_word') }}</button></td></tr>');
+                            }else{
+                                var array = productsTable.split(",");
+
+                                var control = 0;
+                                for(i=0; i<array.length; i++){
+                                    if(array[i] == product[0].id){
+                                        control = 1;
+                                    }
+                                }
+
+                                if(control == 0){
+                                    var value = "";
+
+                                    for(i=0; i<array.length; i++){
+                                        if(value==""){
+                                            value = array[i];
+                                        }else{
+                                            value = value + "," + array[i];
+                                        }
+                                    }
+
+                                    value = value + "," + product[0].id;
+
+                                    $('#products_table').val(value);
+
+                                    $('#productsTable tr:last').after('<tr><td><input type="hidden" name="products[]" value="'+ product[0].id +'">'+ product[0].product_name +'</td><td><input type="hidden" name="prices[]" value="'+ product[0].price +'">'+ product[0].price +'</td><td><input type="hidden" name="quantities[]" value="'+ quantity +'">'+ quantity +'</td><td><input type="hidden" name="costs[]" value="'+ (product[0].price * quantity) +'"><button type="button" class="btn btn-danger" onclick="deleteProduct(' + product[0].id +', this, '+ product[0].price +', '+ quantity +')">{{ trans('module_products.controller.delete_word') }}</button></td></tr>');
+                                }else{
+                                    alert("product exists");
+                                }
+                            }
+
+                            var total = $("#amount").val();
+                            total = parseFloat(total) + (parseFloat(product[0].price) * parseFloat(quantity));
+                            $("#amount").val(total.toFixed(2));
+                        }else{
+                            alert("data is not an integer");
+                        }
+                    });
+                }else{
+                    alert("select a product");
+                }
+            }
+
+            function deleteProduct(id, button, price, quantity){
+                $(button).parents("tr").remove();
+
+                var productsTable = $('#products_table').val();
+                var array = productsTable.split(",");
+                var value = "";
+
+                for(i=0; i<array.length; i++){
+                    if(array[i] != id){
+                        if(value==""){
+                            value = array[i];
+                        }else{
+                            value = value + "," + array[i];
+                        }
+                    }
+                }
+                $('#products_table').val(value);
+
+                var total = $("#amount").val();
+                total = parseFloat(total) - (parseFloat(price) * parseFloat(quantity));
+                $("#amount").val(total.toFixed(2));
             }
         </script>
     @endif
