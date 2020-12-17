@@ -194,6 +194,7 @@
 
                             var total = $("#amount").val();
                             total = parseFloat(total) + (parseFloat(product[0].price) * parseFloat(quantity));
+                            $("#visible_amount").val(total.toFixed(2));
                             $("#amount").val(total.toFixed(2));
                         }else{
                             alert("data is not an integer");
@@ -224,6 +225,7 @@
 
                 var total = $("#amount").val();
                 total = parseFloat(total) - (parseFloat(price) * parseFloat(quantity));
+                $("#visible_amount").val(total.toFixed(2));
                 $("#amount").val(total.toFixed(2));
             }
         </script>

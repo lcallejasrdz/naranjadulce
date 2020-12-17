@@ -54,7 +54,8 @@
 
 <div class="form-group">
 	<label for="amount">{{ ucfirst(trans('validation.attributes.amount')) }}</label>
-	<input type="text" class="form-control @error('amount') is-invalid @enderror" id="amount" name="amount" value="@if(isset($item)){{ $item->amount }}@else{{ 0 }}@endif" disabled>
+	<input type="text" class="form-control @error('visible_amount') is-invalid @enderror" id="visible_amount" name="visible_amount" value="@if(isset($item)){{ $item->visible_amount }}@else{{ 0 }}@endif" disabled>
+	<input type="hidden" id="amount" name="amount" value="@if(isset($item)){{ $item->amount }}@else{{ 0 }}@endif">
 	@error('amount')
 	    <div class="alert alert-danger">{{ $message }}</div>
 	@enderror

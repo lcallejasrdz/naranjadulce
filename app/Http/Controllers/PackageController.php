@@ -12,6 +12,7 @@ use App\NDPackage;
 use App\NDPackageDetailView;
 use App\NDProduct;
 use App\NDProductDetailView;
+use App\NDProductPackage;
 
 class PackageController extends Controller
 {
@@ -108,6 +109,17 @@ class PackageController extends Controller
                     'name' => $request->name,
                     'price' => $request->amount,
                 ]);
+
+        $products = $request->products;
+        $quantities = $request->quantities;
+
+        for($i=0; $i<count($products); $i++){
+            NDProductPackage::create([
+                'nd_packages_id' => $item->id,
+                'nd_products_id' => $products[$i],
+                'quantity' => $quantities[$i],
+            ]);
+        }
 
         if(NDPackage::where('id', $item->id)->count() > 0){
             return Redirect::route($this->active)->with('success', trans('crud.create.message.success'));
